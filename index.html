@@ -1,0 +1,110 @@
+<html>
+<style>
+    body {
+        background-color: rgb(100,100,100)
+    }
+    .textBox {
+        background-color: rgb(200,200,200);
+        border: 3px solid rgb(225,225,225);
+        margin-left: 100px;
+        margin-right: 100px;
+        height: 200px;
+        overflow:scroll;
+    }
+    .div1 {
+        margin-left: 100px;
+        margin-right: 100px;
+        margin-top: 50px;
+        background-color: rgb(175,175,175);
+        height: 650px;
+        border: 5px solid rgb(150,150,150)
+    }
+</style> 
+<body>
+<h1 align="center">Slash Code</h1>
+<div class="div1">
+<br>
+<h3 align="center">Input</h3>
+<p contenteditable="true" class="textBox" id="input"></p>
+<table align="center">
+    <tr>
+        <th style="width: 140px"><button onmousedown="modeChange(1)">Encoding Mode</button></th>
+        <th style="width: 140px"><button onmousedown="modeChange(0)">Decoding Mode (Barely works)</button></th>
+    </tr>
+</table>
+<h3 align="center">Output</h3>
+<p class="textBox" id="output"></p>
+</div>
+<script>
+var mode = 1;
+document.addEventListener("keyup", keyUpHandler, false);
+function keyUpHandler() {
+    encode();
+}
+function encode() {
+    var input = document.getElementById("input").innerHTML;
+	if (mode == 1) {
+		document.getElementById("output").innerHTML = input;
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/ /gi, '');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/a/gi, '.,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/b/gi, '..,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/c/gi, '...,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/d/gi, '....,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/e/gi, '-,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/f/gi, '-.,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/g/gi, '-..,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/h/gi, '-...,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/i/gi, '-....,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/j/gi, '/,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/k/gi, '/.,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/l/gi, '/..,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/m/gi, '/...,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/n/gi, '/....,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/o/gi, '/-,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/p/gi, '/-.,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/q/gi, '/-..,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/r/gi, '/-...,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/s/gi, '/-....,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/t/gi, '//,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/u/gi, '//.,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/v/gi, '//..,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/w/gi, '//...,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/x/gi, '//....,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/y/gi, '//-,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/z/gi, '//-.,');
+	} else {
+		document.getElementById("output").innerHTML = input;
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//-.,', 'z');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//-,', 'y');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//....,', 'x');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//...,', 'w');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//..,', 'v');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//.,', 'u');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//,', 't');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/-....,', 's');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/-...,', 'r');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/-..,', 'q');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/-.,', 'p');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/-,', 'o');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/....,', 'n');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/...,', 'm');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/..,', 'l');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/.,', 'k');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('/,', 'j');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-....,', 'i');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-...,', 'h');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-..,', 'g');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-.,', 'f');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-,', 'e');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('....,', 'd');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('...,', 'c');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..,', 'b');
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.,', 'a');
+	}
+}
+function modeChange(n) {
+    mode = n;
+}
+</script>
+</body>
+</html>
