@@ -101,16 +101,16 @@ function encode() {
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..,', 'b');
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.,', 'a');
 		//Loss prevention thingy (Not done) \/ FINISH!
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.a,', 'b');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..a,', 'c');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('...a,', 'd');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.b,', 'c');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..b,', 'd');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.c,', 'd');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-a,', 'f');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-.a,', 'g');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-..a,', 'h');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-...a,', 'i');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.a', 'b');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..a', 'c');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('...a', 'd');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.b', 'c');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..b', 'd');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.c', 'd');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-a', 'f');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-.a', 'g');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-..a', 'h');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-...a', 'i');
 		
 		var newText = document.getElementById("output").innerHTML;
 		if (oldText !== newText) {
@@ -147,16 +147,16 @@ function decodeAgain() {
         document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..,', 'b');
         document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.,', 'a');
 	//Loss prevention thingy (Not done) \/ FINISH!
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.a,', 'b');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..a,', 'c');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('...a,', 'd');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.b,', 'c');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..b,', 'd');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.c,', 'd');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-a,', 'f');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-.a,', 'g');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-..a,', 'h');
-	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-...a,', 'i');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.a', 'b');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..a', 'c');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('...a', 'd');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.b', 'c');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..b', 'd');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.c', 'd');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-a', 'f');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-.a', 'g');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-..a', 'h');
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('-...a', 'i');
 	
 	var newText = document.getElementById("output").innerHTML;
 	if (oldText !== newText) {
