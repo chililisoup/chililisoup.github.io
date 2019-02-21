@@ -101,7 +101,10 @@ function encode() {
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('...,', 'c');
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('..,', 'b');
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.,', 'a');
-		var newText = document.getElementById("output").innerHTML;	
+		var newText = document.getElementById("output").innerHTML;
+		if (oldText !== newText) {
+			decodeAgain();	
+		}
 	}
 }
 function decodeAgain() {
