@@ -45,9 +45,6 @@ function encode() {
     var input = document.getElementById("input").innerHTML;
 	if (mode == 1) {
 		document.getElementById("output").innerHTML = input;
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/./g, '');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/,/g, '');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/-/g, '');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/a/gi, '.,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/b/gi, '..,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/c/gi, '...,');
