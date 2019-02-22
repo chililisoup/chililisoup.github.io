@@ -30,6 +30,7 @@
     <tr>
         <th style="width: 140px"><button onmousedown="modeChange(1)">Encoding Mode</button></th>
         <th style="width: 140px"><button onmousedown="modeChange(0)">Decoding Mode</button></th>
+	<th style="width: 140px"><button onmousedown="clearBoxes()">Clear</button></th>
     </tr>
 </table>
 <h3 align="center">Output</h3>
@@ -267,6 +268,10 @@ function decodeAgain() {
 }
 function modeChange(n) {
     mode = n;
+}
+function clearBoxes() {
+	document.getElementById("input").innerHTML = "";
+	document.getElementById("output").innerHTML = "";
 }
 </script>
 </body>
