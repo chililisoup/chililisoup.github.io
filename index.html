@@ -75,7 +75,6 @@ function encode() {
 	} else {
 		document.getElementById("output").innerHTML = input;
 		var oldText = document.getElementById("output").innerHTML;
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/,/g, '');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//-.', 'z');
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//-', 'y');
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//....', 'x');
@@ -165,6 +164,7 @@ function encode() {
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.b', 'c');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('.c', 'd');
 		
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/,/g, '');
 		var newText = document.getElementById("output").innerHTML;
 		if (oldText !== newText) {
 			decodeAgain();	
