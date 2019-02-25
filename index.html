@@ -1,4 +1,5 @@
 <html>
+<title>JS Projects</title>
 <style>
     body {
         background-color: rgb(100,100,100)
@@ -47,6 +48,7 @@ function encode() {
     var input = document.getElementById("input").innerHTML;
 	if (mode == 1) {
 		document.getElementById("output").innerHTML = input;
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/ /g, '_');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/,/g, '‚');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\//g, '∕');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/-/g, '–');
