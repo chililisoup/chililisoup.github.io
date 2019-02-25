@@ -21,6 +21,11 @@
         border: 5px solid rgb(150,150,150)
     }
     canvas {
+	padding: 0;
+    	margin: auto;
+    	display: block;
+    	width: 1000px;
+	height: 700px;
         border:5px solid rgb(125,125,125);
         background-color: rgb(150,150,150);
     }
@@ -366,8 +371,6 @@ var block; //dont change
     var area = {
         canvas : document.createElement("canvas"),
         start : function() {
-	    this.canvas.padding = 0;
-	    this.canvas.margin = auto;
             this.canvas.width = canvasWidth;
             this.canvas.height = canvasHeight;
             this.context = this.canvas.getContext("2d");
@@ -567,5 +570,6 @@ function resetBoard() {
     reset = true;
 }
 </script>
+<canvas id="gameCanvas"></canvas>
 </body>
 </html>
