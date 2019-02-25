@@ -78,9 +78,6 @@ function encode() {
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/x/gi, '//....,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/y/gi, '//-,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/z/gi, '//-.,');
-		var textStorage = document.getElementById("output").innerHTML;
-		textStorage.split(" ").join("\n");
-		document.getElementById("output").innerHTML = textStorage;
 	} else {
 		document.getElementById("output").innerHTML = input;
 		var oldText = document.getElementById("output").innerHTML;
