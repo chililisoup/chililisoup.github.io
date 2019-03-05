@@ -49,6 +49,9 @@
 	    background-color: rgb(175,175,175);
 	    border: 5px solid rgb(150,150,150);
     }
+    th {
+	    font-size: 2vw;
+    }
 </style>
 <body onload="start()">
 
@@ -336,7 +339,7 @@ function resetBoard() {
 <hr>
 <table>
     <tr>
-        <th colspan="2", style="width: 140px;">Bot Speed (Default: 0.875)</th>
+        <th colspan="2", style="width: 10vw;">Bot Speed (Default: 0.875)</th>
     </tr>
     <tr>
         <th><button onmousedown="enemySpeed(0.5)">0.5</button></th>
@@ -370,7 +373,7 @@ function resetBoard() {
 <hr>
 <table>
     <tr>
-        <th colspan="2", style="width: 140px;">Player Speed (Default: 0.75)</th>
+        <th colspan="2", style="width: 10vw;">Player Speed (Default: 0.75)</th>
     </tr>
     <tr>
         <th><button onmousedown="speed(0.5)">0.5</button></th>
@@ -407,15 +410,15 @@ function resetBoard() {
             <th colspan="2">Game Mode</th>
         </tr>
         <tr>
-            <th style="width:70px;"><button onmousedown="modeChange(0)">Bot</button></th>
-            <th style="width:70px;"><button onmousedown="modeChange(1)">Player</button></th>
+            <th style="width:5vw;"><button onmousedown="modeChange(0)">Bot</button></th>
+            <th style="width:5vw;"><button onmousedown="modeChange(1)">Player</button></th>
         </tr>
     </table>
 <hr>
-<table style="width:140px; border: 0px solid black;">
+<table style="width:10vw; border: 0px solid black;">
     <tr>
-        <th style="width:140px; border: 0px solid black;">
-            <button onmousedown="resetBoard()" style="font-size: 18px; width: 100px;">Reset</button>
+        <th style="width:10vw; border: 0px solid black;">
+            <button onmousedown="resetBoard()" style="font-size: 2vw; width: 8vw;">Reset</button>
         </th>
     </tr>
 </table>
