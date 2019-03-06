@@ -60,6 +60,9 @@
 	    width: 3.25vw;
 	    font-size: 0.8vw;
     }
+    p {
+	    font-size: 0.8vw;
+    }
 </style>
 <body onload="start()">
 
@@ -341,6 +344,18 @@ function resetBoard() {
     paddle2.y = Math.floor((canvasHeight * 0.5) - (paddleHeight * 0.5));
     reset = true;
 }
+function player1Controller(n) {
+    if (n == 0) {
+	upPressed = false;
+	downPressed = false;
+    }
+    if (n == 1) {
+	upPressed = true;
+    }
+    if (n == 2) {
+	downPressed = true;
+    }
+}
 </script>
 <br>
 <div class="sidebar">
@@ -410,6 +425,23 @@ function resetBoard() {
         </th>
     </tr>
 </table>
+<hr>
+<table>
+    <tr>
+	<th>
+	    <button onmousedown="player1Controller(1)" onmouseup="player1Controller(0)">/\</button>
+	</th>
+    </tr>
+    <tr>
+	<th>
+	    <button onmousedown="player1Controller(2)" onmouseup="player1Controller(0)">\/</button>
+	</th>
+    </tr>
+</table>
+<hr>
+<p>
+Use arrow keys and W/S for keyboard movement. Arrow buttons for mobile.
+</p>
 <hr>
 </div>
 </body>  
