@@ -20,11 +20,11 @@
         top: 7vw;
         right: 15vw;
         height: auto;
-        width: 12vw;
+        width: 16vw;
         background-color: rgb(200,200,200)
     }
     table, th, td {
-        border: 1vw solid black;
+        border: .1vw solid black;
     }
     a:link, a:visited {
 	    font-family: impact;
@@ -344,25 +344,23 @@ function resetBoard() {
 <hr>
 <table>
     <tr>
-        <th colspan="3", style="width: 10vw;">Bot Speed (Default: 0.875)</th>
+        <th colspan="4", style="width: 15vw;">Bot Speed (Default: 0.875)</th>
     </tr>
     <tr>
         <th><button onmousedown="enemySpeed(0.5)">0.5</button></th>
         <th><button onmousedown="enemySpeed(0.75)">0.75</button></th>
 	<th><button onmousedown="enemySpeed(0.825)">0.825</button></th>
+	<th><button onmousedown="enemySpeed(0.85)">0.85</button></th>
     </tr>
     <tr>
-        <th><button onmousedown="enemySpeed(0.85)">0.85</button></th>
 	<th><button onmousedown="enemySpeed(0.875)">0.875</button></th>
         <th><button onmousedown="enemySpeed(0.9)">0.9</button></th>
-    </tr>
-    <tr>
-        <th><button onmousedown="enemySpeed(1)">1</button></th>
+	<th><button onmousedown="enemySpeed(1)">1</button></th>
         <th><button onmousedown="enemySpeed(2)">2</button></th>
-	<th><button onmousedown="enemySpeed(3)">3</button></th>
     </tr>
     <tr>
-        <th><button onmousedown="enemySpeed(5)">5</button></th>
+	<th><button onmousedown="enemySpeed(3)">3</button></th>
+	<th><button onmousedown="enemySpeed(5)">5</button></th>
 	<th><button onmousedown="enemySpeed(10)">10</button></th>
         <th><button onmousedown="enemySpeed(20)">20</button></th>
     </tr>
@@ -370,25 +368,23 @@ function resetBoard() {
 <hr>
 <table>
     <tr>
-        <th colspan="3", style="width: 10vw;">Player Speed (Default: 0.75)</th>
+        <th colspan="4", style="width: 10vw;">Player Speed (Default: 0.75)</th>
     </tr>
     <tr>
         <th><button onmousedown="speed(0.5)">0.5</button></th>
         <th><button onmousedown="speed(0.75)">0.75</button></th>
         <th><button onmousedown="speed(0.825)">0.825</button></th>
+	<th><button onmousedown="speed(0.85)">0.85</button></th>
     </tr>
     <tr>
-        <th><button onmousedown="speed(0.85)">0.85</button></th>
         <th><button onmousedown="speed(0.875)">0.875</button></th>
         <th><button onmousedown="speed(0.9)">0.9</button></th>
+	<th><button onmousedown="speed(1)">1</button></th>
+        <th><button onmousedown="speed(2)">2</button></th>
     </tr>
     <tr>
-        <th><button onmousedown="speed(1)">1</button></th>
-        <th><button onmousedown="speed(2)">2</button></th>
 	<th><button onmousedown="speed(3)">3</button></th>
-    </tr>
-    <tr>      
-        <th><button onmousedown="speed(5)">5</button></th>
+	<th><button onmousedown="speed(5)">5</button></th>
 	<th><button onmousedown="speed(10)">10</button></th>
         <th><button onmousedown="speed(20)">20</button></th>
     </tr>
