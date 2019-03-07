@@ -346,10 +346,16 @@ function resetBoard() {
     reset = true;
 }
 function player1Controller(n) {
+    if (n == 0) {
+	upPressed = false;
+	downPressed = false;
+    }
     if (n == 1) {
+	downPressed = false;
 	upPressed = true;
     }
     if (n == 2) {
+	upPressed = false;
 	downPressed = true;
     }
 }
@@ -427,6 +433,11 @@ function player1Controller(n) {
     <tr>
 	<th>
 	    <button onmousedown="player1Controller(1)" style="width: 10vw; height: 3vw;">/\</button>
+	</th>
+    </tr>
+    <tr>
+	<th>
+	    <button onmousedown="player1Controller(0)" style="width: 10vw; height: 3vw;">--</button>
 	</th>
     </tr>
     <tr>
