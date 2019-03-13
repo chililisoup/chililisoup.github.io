@@ -12,6 +12,14 @@
         height: 200px;
         overflow: scroll;
     }
+    textarea {
+	background-color: rgb(200,200,200);
+        border: 3px solid rgb(225,225,225);
+        margin-left: 100px;
+        margin-right: 100px;
+        height: 200px;  
+	resize: none;
+    }
     .div1 {
         margin-left: 100px;
         margin-right: 100px;
@@ -55,7 +63,7 @@
 <div class="div1">
 <br>
 <h3 align="center">Input</h3>
-<p contenteditable="true" class="textBox" id="input"></p>
+<textarea id="input"></textarea>
 <table align="center">
     <tr>
         <th style="width: 150px; height: 50px;"><button onmousedown="modeChange(1)">Encoding Mode</button></th>
@@ -76,7 +84,7 @@ function keyUpHandler() {
     encode();
 }
 function encode() {
-    var input = document.getElementById("input").innerHTML;
+    var input = document.getElementById("input").value;
 	if (mode == 1) {
 		document.getElementById("output").innerHTML = input;
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/,/g, '‚');
