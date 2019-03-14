@@ -13,11 +13,13 @@
         height: 200px;
         overflow: scroll;
 	font-size: 1vw;
+	font-family: Arial, Helvetica, sans-serif;
     }
     textarea {
 	background-color: rgb(200,200,200);
         border: 5px solid rgb(225,225,225);
 	font-size: 1vw;
+	font-family: Arial, Helvetica, sans-serif;
 	width: 80%;
         position: relative;
 	left: 10%;
@@ -91,6 +93,7 @@ function encode() {
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/,/g, '‚');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\//g, '∕');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/-/g, '–');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/ /g, '_');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\./g, '․');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/a/gi, '.,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/b/gi, '..,');
