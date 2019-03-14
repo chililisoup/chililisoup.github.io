@@ -10,7 +10,7 @@
         width: 80%;
 	position: relative;
 	left: 10%;
-        height: 20vh;
+        height: 25vh;
         overflow: scroll;
 	font-size: 1vw;
 	font-family: Arial, Helvetica, sans-serif;
@@ -23,7 +23,7 @@
 	width: 80%;
         position: relative;
 	left: 10%;
-        height: 20vh;  
+        height: 25vh;  
 	resize: none;
     }
     .div1 {
@@ -75,11 +75,11 @@
         <th style="width: 150px; height: 50px;"><button onmousedown="modeChange(1)">Encoding Mode</button></th>
         <th style="width: 150px; height: 50px;"><button onmousedown="modeChange(0)">Decoding Mode</button></th>
 	<th style="width: 150px; height: 50px;"><button onmousedown="clearBoxes()">Clear Text Boxes</button></th>
+	<th style="width: 150px; height: 50px;"><button onmousedown="copyOutput()">Copy</button></th>
     </tr>
 </table>
 <h3 align="center">Output</h3>
 <p class="textBox" id="output"></p>
-<br>
 </div>
 <script>
 var mode = 1;
@@ -324,6 +324,11 @@ function modeChange(n) {
 function clearBoxes() {
 	document.getElementById("input").value = "";
 	document.getElementById("output").innerHTML = "";
+}
+function copyOutput() {
+	var outputBox = document.getElementById("output");
+	outputBox.select();
+	document.execCommand("copy");
 }
 </script>
 </body>
