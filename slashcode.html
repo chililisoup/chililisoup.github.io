@@ -120,6 +120,8 @@ function encode() {
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/x/gi, '//....,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/y/gi, '//-,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/z/gi, '//-.,');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/ /g, '<br>');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\n/g, '_');
 	} else {
 		document.getElementById("output").innerHTML = input;
 		var oldText = document.getElementById("output").innerHTML;
@@ -215,9 +217,6 @@ function encode() {
 		var newText = document.getElementById("output").innerHTML;
 		if (oldText !== newText) {
 			decodeAgain();	
-		} else {
-			document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/ /g, '<br>');
-			document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\n/g, '_');	
 		}
 	}
 }
@@ -315,9 +314,6 @@ function decodeAgain() {
 	var newText = document.getElementById("output").innerHTML;
 	if (oldText !== newText) {
 		decodeAgain();	
-	} else {
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/ /g, '<br>');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\n/g, '_');	
 	}
 }
 function modeChange(n) {
