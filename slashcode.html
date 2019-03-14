@@ -1,5 +1,6 @@
 <html>
 <title>Slash Code</title>
+	
 <style>
     body {
         background-color: rgb(100,100,100)
@@ -58,8 +59,8 @@
 	border: 5px solid rgb(150,150,150);
     }
 </style> 
-<body>
 	
+<body>
 <header>
     <br>
     <a href="https://rebot333.github.io/">Home</a>
@@ -75,18 +76,19 @@
         <th style="width: 150px; height: 50px;"><button onmousedown="modeChange(1)">Encoding Mode</button></th>
         <th style="width: 150px; height: 50px;"><button onmousedown="modeChange(0)">Decoding Mode</button></th>
 	<th style="width: 150px; height: 50px;"><button onmousedown="clearBoxes()">Clear Text Boxes</button></th>
-	<th style="width: 150px; height: 50px;"><button onmousedown="copyOutput()">Copy</button></th>
     </tr>
 </table>
 <h3 align="center">Output</h3>
 <p class="textBox" id="output"></p>
 </div>
+	
 <script>
 var mode = 1;
 document.addEventListener("keyup", keyUpHandler, false);
 function keyUpHandler() {
     encode();
 }
+	
 function encode() {
     var input = document.getElementById("input").value;
 	if (mode == 1) {
@@ -121,6 +123,7 @@ function encode() {
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/x/gi, '//....,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/y/gi, '//-,');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/z/gi, '//-.,');
+		
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/ /g, '<br>');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\n/g, '<br>');
 	} else {
@@ -324,11 +327,6 @@ function modeChange(n) {
 function clearBoxes() {
 	document.getElementById("input").value = "";
 	document.getElementById("output").innerHTML = "";
-}
-function copyOutput() {
-	var outputBox = document.getElementById("output");
-	outputBox.select();
-	document.execCommand("copy");
 }
 </script>
 </body>
