@@ -37,9 +37,10 @@
     p {
         background-color: rgb(200,200,200);
         border: 5px solid rgb(175,175,175);
-        margin: 10px;
+        margin: 20px;
         text-align: center;
-        height: 50vh;
+		font-size: 24px;
+        height: 90px;
         overflow: auto;
     }
 </style>
@@ -55,17 +56,302 @@
 </div>
 </body>
 <script>
-function quoteGen() {
-    var random10 = Math.floor(Math.random() * 10);
-    var partA = random10;
-    if (partA = 0) {
+function actionGen() {
+
+    var partA = Math.floor(Math.random() * 10);
+    var aPlural = true;
+	if (partA == 0) {
         partA = "A";
-    } else if (partA = 1) {
+		aPlural = false;
+    } else if (partA == 1) {
         partA = "Two";
-    } else if (partA = 2) {
+    } else if (partA == 2) {
         partA = "Three";
-    }
-    document.getElementById("output").innerHTML = "<br>This quote machine is a WIP and currently has no functionality.<br>Sorry.";
+    } else if (partA == 3) {
+		partA = "Four";
+	} else if (partA == 4) {
+		partA = "Five";
+	} else if (partA == 5) {
+		partA = "Many";
+	} else if (partA == 6) {
+		partA = "Lots of";
+	} else if (partA == 7) {
+		partA = "A few";
+	} else if (partA == 8) {
+		partA = "Tons of";
+	} else {
+		partA = "Some";
+	}
+	
+	var partB = Math.floor(Math.random() * 20);
+	if (partB == 0) {
+		partB = "red";
+	} else if (partB == 1) {
+		partB = "orange";
+		if (partA == "A") {
+			partA = "An";
+		}
+	} else if (partB == 2) {
+		partB = "yellow";
+	} else if (partB == 3) {
+		partB = "green";
+	} else if (partB == 4) {
+		partB = "blue";
+	} else if (partB == 5) {
+		partB = "purple";
+	} else if (partB == 6) {
+		partB = "ugly";
+	} else if (partB == 7) {
+		partB = "cool";
+	} else if (partB == 8) {
+		partB = "cute";
+	} else if (partB == 9) {
+		partB = "tiny";
+	} else if (partB == 10) {
+		partB = "large";
+	} else if (partB == 11) {
+		partB = "invisible";
+	} else if (partB == 12) {
+		partB = "flying";
+	} else if (partB == 13) {
+		partB = "falling";
+	} else if (partB == 14) {
+		partB = "tall";
+	} else if (partB == 15) {
+		partB = "short";
+	} else if (partB == 16) {
+		partB = "nice";
+	} else if (partB == 17) {
+		partB = "microscopic";
+	} else if (partB == 18) {
+		partB = "weird";
+	} else {
+		partB = "dancing";
+	}
+	
+	var partC = Math.floor(Math.random() * 10);
+	if (partC == 0) {
+		if (aPlural) {
+			partC = "men";
+		} else {
+			partC = "man";
+		}
+	} else if (partC == 1) {
+		if (aPlural) {
+			partC = "women";
+		} else {
+			partC = "woman";
+		}
+	} else if (partC == 2) {
+		if (aPlural) {
+			partC = "bassists";
+		} else {
+			partC = "bassist";
+		}
+	} else if (partC == 3) {
+		if (aPlural) {
+			partC = "dogs";
+		} else {
+			partC = "dog";
+		}
+	} else if (partC == 4) {
+		if (aPlural) {
+			partC = "burritos";
+		} else {
+			partC = "burrito";
+		}
+	} else if (partC == 5) {
+		if (aPlural) {
+			partC = "hams";
+		} else {
+			partC = "ham";
+		}
+	} else if (partC == 6) {
+		if (aPlural) {
+			partC = "teachers";
+		} else {
+			partC = "teacher";
+		}
+	} else if (partC == 7) {
+		if (aPlural) {
+			partC = "celebrities";
+		} else {
+			partC = "celebrity";
+		}
+	} else if (partC == 8) {
+		if (aPlural) {
+			partC = "Jeffs";
+		} else {
+			partC = "Jeff";
+		}
+	} else {
+		if (aPlural) {
+			partC = "notebooks";
+		} else {
+			partC = "notebook";
+		}
+	}
+	
+	partD = Math.floor(Math.random() * 10);
+	if (partD == 0) {
+		partD = "eating";
+	} else if (partD == 1) {
+		partD = "punching";
+	} else if (partD == 2) {
+		partD = "kissing";
+	} else if (partD == 3) {
+		partD = "singing with";
+	} else if (partD == 4) {
+		partD = "shopping with";
+	} else if (partD == 5) {
+		partD = "stealing from";
+	} else if (partD == 6) {
+		partD = "fighting for";
+	} else if (partD == 7) {
+		partD = "judging";
+	} else if (partD == 8) {
+		partD = "staring at";
+	} else {
+		partD = "talking with";
+	}
+	
+	 var partE = Math.floor(Math.random() * 10);
+    var ePlural = true;
+	if (partE == 0) {
+        partE = "a";
+		ePlural = false;
+    } else if (partE == 1) {
+        partE = "two";
+    } else if (partE == 2) {
+        partE = "three";
+    } else if (partE == 3) {
+		partE = "four";
+	} else if (partE == 4) {
+		partE = "five";
+	} else if (partE == 5) {
+		partE = "many";
+	} else if (partE == 6) {
+		partE = "lots of";
+	} else if (partE == 7) {
+		partE = "a few";
+	} else if (partE == 8) {
+		partE = "tons of";
+	} else {
+		partE = "some";
+	}
+	
+	var partF = Math.floor(Math.random() * 20);
+	if (partF == 0) {
+		partF = "red";
+	} else if (partF == 1) {
+		partF = "orange";
+		if (partE == "A") {
+			partE = "An";
+		}
+	} else if (partF == 2) {
+		partF = "yellow";
+	} else if (partF == 3) {
+		partF = "green";
+	} else if (partF == 4) {
+		partF = "blue";
+	} else if (partF == 5) {
+		partF = "purple";
+	} else if (partF == 6) {
+		partF = "ugly";
+	} else if (partF == 7) {
+		partF = "cool";
+	} else if (partF == 8) {
+		partF = "cute";
+	} else if (partF == 9) {
+		partF = "tiny";
+	} else if (partF == 10) {
+		partF = "large";
+	} else if (partF == 11) {
+		partF = "invisible";
+	} else if (partF == 12) {
+		partF = "flying";
+	} else if (partF == 13) {
+		partF = "falling";
+	} else if (partF == 14) {
+		partF = "tall";
+	} else if (partF == 15) {
+		partF = "short";
+	} else if (partF == 16) {
+		partF = "nice";
+	} else if (partF == 17) {
+		partF = "microscopic";
+	} else if (partF == 18) {
+		partF = "weird";
+	} else {
+		partF = "dancing";
+	}
+	
+	var partG = Math.floor(Math.random() * 10);
+	if (partG == 0) {
+		if (ePlural) {
+			partG = "men";
+		} else {
+			partG = "man";
+		}
+	} else if (partG == 1) {
+		if (ePlural) {
+			partG = "women";
+		} else {
+			partG = "woman";
+		}
+	} else if (partG == 2) {
+		if (ePlural) {
+			partG = "bassists";
+		} else {
+			partG = "bassist";
+		}
+	} else if (partG == 3) {
+		if (ePlural) {
+			partG = "dogs";
+		} else {
+			partG = "dog";
+		}
+	} else if (partG == 4) {
+		if (ePlural) {
+			partG = "burritos";
+		} else {
+			partG = "burrito";
+		}
+	} else if (partG == 5) {
+		if (ePlural) {
+			partG = "hams";
+		} else {
+			partG = "ham";
+		}
+	} else if (partG == 6) {
+		if (ePlural) {
+			partG = "teachers";
+		} else {
+			partG = "teacher";
+		}
+	} else if (partG == 7) {
+		if (ePlural) {
+			partG = "celebrities";
+		} else {
+			partG = "celebrity";
+		}
+	} else if (partG == 8) {
+		if (ePlural) {
+			partG = "Jeffs";
+		} else {
+			partG = "Jeff";
+		}
+	} else {
+		if (ePlural) {
+			partG = "notebooks";
+		} else {
+			partG = "notebook";
+		}
+	}
+	
+   var pBreak = "<br>"
+   var product = pBreak.concat(partA, " ", partB, " ", partC, " ", partD, " ", partE, " ", partF, " ", partG, ".");
+   document.getElementById("output").innerHTML = product;
 }
 </script>
 </html>
