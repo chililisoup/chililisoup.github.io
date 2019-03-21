@@ -5,3 +5,5 @@ Pong is just a simple pong game with adjustable paddle speeds. Simple collisions
 
 Slash code is an encrypting/decrypting application that converts letters into their Slash Code counterparts.
 There are some bugs to watch out for when using it.
+
+Action (Working name) is a random sentence generator that follows a set order.
