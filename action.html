@@ -47,7 +47,7 @@
 <div class="div0">
 <table align="center" class="buttonTable">
     <tr>
-        <th><button class="button0" onmousedown="quoteGen()">Generate a new quote!</button></th>
+        <th><button class="button0" onmousedown="actionGen()">Generate!</button></th>
         <th><a class="button0" href="index.html">Home</a></th>
     </tr>
 </table>
@@ -56,7 +56,16 @@
 </body>
 <script>
 function quoteGen() {
-    document.getElementById("output").innerHTML = "<br>This quote machine is a WIP and currently has no functionality.<br>Sorry."
+    var random10 = Math.floor(Math.random() * 10);
+    var partA = random10;
+    if (partA = 0) {
+        partA = "A";
+    } else if (partA = 1) {
+        partA = "Two";
+    } else if (partA = 2) {
+        partA = "Three";
+    }
+    document.getElementById("output").innerHTML = "<br>This quote machine is a WIP and currently has no functionality.<br>Sorry.";
 }
 </script>
 </html>
