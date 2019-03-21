@@ -335,7 +335,11 @@ function actionGen() {
 	} else if (partD == 13) {
 		partD = "shoplifting with";	   
 	} else if (partD == 14) {
-		partD = "taking a picture of";	   
+		if (aPlural) {
+			partD = "taking pictures of";		
+		} else {
+			partD = "taking a picture of";		
+		}
 	} else if (partD == 15) {
 		partD = "playing chess with";	   
 	} else if (partD == 16) {
