@@ -58,7 +58,7 @@
 <script>
 function actionGen() {
 
-    var partA = Math.floor(Math.random() * 20);
+    var partA = Math.floor(Math.random() * 22);
     var aPlural = true;
 	if (partA == 0) {
        		partA = "A";
@@ -105,11 +105,23 @@ function actionGen() {
 		partA = "A couple of";	   
 	} else if (partA == 18) {
 		partA = "A crap ton of";	   
-	} else {
+	} else if (partA == 19) {
 		partA = "Little bits of";	   
+	} else if (partA == 20) {
+		partA = "The";
+		var randPlural = Math.floor(Math.random() * 2);
+		if (randPlural == 0) {
+			aPlural = false;	
+		}
+	} else {
+		partA = "The";
+		var randPlural = Math.floor(Math.random() * 2);
+		if (randPlural == 0) {
+			aPlural = false;	
+		}
 	}
 	
-	var partB = Math.floor(Math.random() * 30);
+	var partB = Math.floor(Math.random() * 32);
 	if (partB == 0) {
 		partB = "red";
 	} else if (partB == 1) {
@@ -132,7 +144,7 @@ function actionGen() {
 	} else if (partB == 7) {
 		partB = "cool";
 	} else if (partB == 8) {
-		partB = "cute";
+		partB = "good-looking";
 	} else if (partB == 9) {
 		partB = "tiny";
 	} else if (partB == 10) {
@@ -161,7 +173,12 @@ function actionGen() {
 	} else if (partB == 19) {
 		partB = "dancing";
 	} else if (partB == 20) {
-		partB = "angry";	   
+		partB = "angry";
+		if (partA == "A") {
+			partA = "An";
+		} else if (partA == "Half of a") {
+			partA = "Half of an";	
+		}
 	} else if (partB == 21) {
 		partB = "rude";	   
 	} else if (partB == 22) {
@@ -178,8 +195,12 @@ function actionGen() {
 		partB = "determined";	   
 	} else if (partB == 28) {
 		partB = "rich";	   
-	} else {
+	} else if (partB == 29) {
 		partB = "poor";	   
+	} else if (partB == 30) {
+		partB = "thicc";
+	} else {
+		partB = "racist";	
 	}
 	
 	var partC = Math.floor(Math.random() * 20);
@@ -305,7 +326,7 @@ function actionGen() {
 		}
 	}
 	
-	partD = Math.floor(Math.random() * 20);
+	partD = Math.floor(Math.random() * 23);
 	if (partD == 0) {
 		partD = "eating";
 	} else if (partD == 1) {
@@ -348,11 +369,17 @@ function actionGen() {
 		partD = "being taught to read by";	   
 	} else if (partD == 18) {
 		partD = "going to jail because of";	   
-	} else {
+	} else if (partD == 19) {
 		partD = "crying after looking at";	   
+	} else if (partD == 20) {
+		partD = "cooking";
+	} else if (partD == 21) {
+		partD = "and";	
+	} else {
+		partD = "and";	
 	}
 	
-	 var partE = Math.floor(Math.random() * 20);
+	 var partE = Math.floor(Math.random() * 22);
     var ePlural = true;
 	if (partE == 0) {
         partE = "a";
@@ -399,11 +426,23 @@ function actionGen() {
 		partE = "a couple of";	   
 	} else if (partE == 18) {
 		partE = "a crap ton of";	   
-	} else {
+	} else if (partE == 19) {
 		partE = "little bits of";	   
+	} else if (partE == 20) {
+		partE = "the";
+		var randPlural = Math.floor(Math.random() * 2);
+		if (randPlural == 0) {
+			ePlural = false;	
+		}
+	} else {
+		partE = "the";
+		var randPlural = Math.floor(Math.random() * 2);
+		if (randPlural == 0) {
+			ePlural = false;	
+		}
 	}
 	
-	var partF = Math.floor(Math.random() * 30);
+	var partF = Math.floor(Math.random() * 32);
 	if (partF == 0) {
 		partF = "red";
 	} else if (partF == 1) {
@@ -426,7 +465,7 @@ function actionGen() {
 	} else if (partF == 7) {
 		partF = "cool";
 	} else if (partF == 8) {
-		partF = "cute";
+		partF = "good-looking";
 	} else if (partF == 9) {
 		partF = "tiny";
 	} else if (partF == 10) {
@@ -455,7 +494,12 @@ function actionGen() {
 	} else if (partF == 19) {
 		partF = "dancing";
 	} else if (partF == 20) {
-		partF = "angry";	   
+		partF = "angry";
+		if (partE == "a") {
+			partE = "an";
+		} else if (partE == "half of a") {
+			partE = "half of an";	
+		}
 	} else if (partF == 21) {
 		partF = "rude";	   
 	} else if (partF == 22) {
@@ -472,8 +516,12 @@ function actionGen() {
 		partF = "determined";	   
 	} else if (partF == 28) {
 		partF = "rich";	   
-	} else {
+	} else if (partF == 29) {
 		partF = "poor";	   
+	} else if (partF == 30) {
+		partF = "thicc";
+	} else {
+		partF = "racist";	
 	}
 	
 	var partG = Math.floor(Math.random() * 20);
