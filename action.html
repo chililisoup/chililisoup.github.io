@@ -216,7 +216,7 @@ function actionGen() {
 		partB = "brown";	   
 	}
 	
-	var partC = Math.floor(Math.random() * 20);
+	var partC = Math.floor(Math.random() * 21);
 	if (partC == 0) {
 		if (aPlural) {
 			partC = "men";
@@ -331,12 +331,18 @@ function actionGen() {
 		} else {
 			partC = "neighbor of yours";	
 		}
-	} else {
+	} else if (partC == 19) {
 		if (aPlural) {
 			partC = "genies";
 		} else {
 			partC = "genie";	
 		}
+	} else {
+		if (aPlural) {
+			partC = "people";
+		} else {
+			partC = "person";	
+		}		
 	}
 	
 	partD = Math.floor(Math.random() * 30);
@@ -564,7 +570,7 @@ function actionGen() {
 		partF = "brown";	   
 	}
 	
-	var partG = Math.floor(Math.random() * 20);
+	var partG = Math.floor(Math.random() * 21);
 	if (partG == 0) {
 		if (ePlural) {
 			partG = "men";
@@ -679,11 +685,17 @@ function actionGen() {
 		} else {
 			partG = "neighbor of yours";	
 		}
-	} else {
+	} else if (partG == 19) {
 		if (ePlural) {
 			partG = "genies";
 		} else {
 			partG = "genie";	
+		}
+	} else {
+		if (ePlural) {
+			partG = "people";
+		} else {
+			partG = "person";	
 		}
 	}
 	
