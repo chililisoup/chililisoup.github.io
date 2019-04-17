@@ -24,17 +24,14 @@
     
     //area.clear(); for reset
 	
-    var block;
-    var spacing = 1;
-    var gameSpeed = 1;
-    var colorVal = 0;
+    var squareBrush;
+    var runSpeed = 1;
     var canvasWidth = 1000;
     var canvasHeight = 700;
-    var blockWidth = 10;
-    var blockHeight = 10;
+    var brushSize = 20;
     
     function start() {
-        block = new component(blockWidth, blockHeight, "rgb(255,0,0)", Math.floor(canvasWidth * 0.5), Math.floor(canvasHeight * 0.5));
+        squareBrush = new component(brushSize, brushSize, "rgb(255,0,0)", Math.floor(canvasWidth * 0.5), Math.floor(canvasHeight * 0.5));
         area.start();
     }
 
@@ -45,7 +42,7 @@
             this.canvas.height = canvasHeight;
             this.context = this.canvas.getContext("2d");
             document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-            this.interval = setInterval(updateArea, gameSpeed);
+            this.interval = setInterval(updateArea, runSpeed);
         },
         clear : function() {
             this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -61,56 +58,18 @@
         this.y = y;    
         this.update = function() {
             ctx = area.context;
-            
-            if (colorVal == 0) {
-                ctx.fillStyle = "rgb(255,0,0)"
-            }
-            if (colorVal == 1) {
-                ctx.fillStyle = "rgb(255,125,0)"
-            }
-            if (colorVal == 2) {
-                ctx.fillStyle = "rgb(255,255,0)"
-            }
-            if (colorVal == 3) {
-                ctx.fillStyle = "rgb(0,255,50)"
-            }
-            if (colorVal == 4) {
-                ctx.fillStyle = "rgb(0,100,255)"
-            }
-            if (colorVal == 5) {
-                ctx.fillStyle = "rgb(200,0,255)"
-            }
+            ctx.fillStyle = "rgb(255,0,0)"
             ctx.fillRect(this.x, this.y, this.width, this.height);
     	}
     	this.updatePos = function() {
-        	this.x += this.speedX;
-        	this.y += this.speedY;
+        	this.x += 1;
+        	this.y += 1;
     	}    
 	}
     
 	function updateArea() {
-    	block.updatePos();    
-    	block.update();
-    	var random = Math.floor(Math.random() * 6)
-    
-    	if (block.y == canvasHeight - blockHeight) {
-        	block.speedY = -spacing;
-        	colorVal = random;
-    	}
-     
-    	if (block.y == 0) {
-        	block.speedY = spacing;
-        	colorVal = random;
-    	}
-    	if (block.x == canvasWidth - blockWidth) {
-        	block.speedX = -spacing;
-        	colorVal = random;
-    	}
-    	if (block.x == 0) {
-        	block.speedX = spacing;
-        	colorVal = random;
-    	}
-
+    	squareBrush.updatePos();    
+    	squareBrush.update();
 	}
     
 </script>
