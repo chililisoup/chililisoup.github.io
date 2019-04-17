@@ -10,7 +10,7 @@
     	position: absolute;
     	top: 1vw;
     	left: 3vw;
-	background-color: rgb(175,175,175);
+        background-color: rgb(175,175,175);
         border:5px solid rgb(150,150,150);
     }
     body {
@@ -52,8 +52,6 @@
     function component(width, height, color, x, y) {
         this.width = width;
         this.height = height;
-        this.speedX = spacing;
-        this.speedY = spacing;
         this.x = x;
         this.y = y;    
         this.update = function() {
@@ -62,15 +60,15 @@
             ctx.fillRect(this.x, this.y, this.width, this.height);
     	}
     	this.updatePos = function() {
-        	this.x += 1;
-        	this.y += 1;
+            this.x += 1;
+            this.y += 1;
     	}    
-	}
+    }
     
-	function updateArea() {
+    function updateArea() {
     	squareBrush.updatePos();    
     	squareBrush.update();
-	}
+    }
     
 </script>
     
