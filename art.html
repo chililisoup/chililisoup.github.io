@@ -1,5 +1,4 @@
 <html>
-//Change variable names on slider to fix
 <style>
     canvas {
         padding: 0;
@@ -10,6 +9,12 @@
     	left: 10px;
         background-color: rgb(255,255,255);
         border:5px solid rgb(150,150,150);
+    }
+	.slider {
+        width: 85%;
+	}
+    hr {
+        width: 90%;
     }
     .sidebar {
         position: absolute;
@@ -31,15 +36,30 @@
         cursor: pointer;
         display: inline-block;
     }
-    .red {background-color: rgb(255,0,0);}
-    .orange {background-color: rgb(255,150,0);}
-    .yellow {background-color: rgb(255,255,0);}
-    .green {background-color: rgb(0,175,25);}
-    .blue {background-color: rgb(0,0,255);}
-    .purple {background-color: rgb(125,0,175);}
-    .white {background-color: rgb(255,255,255);}
-    .gray {background-color: rgb(125,125,125);}
-    .black {background-color: rgb(0,0,0);}
+    .lred {background-color: rgb(255, 137, 145);}
+    .lorange {background-color: rgb(255, 207, 130);}
+    .lyellow {background-color: rgb(251, 255, 163);}
+    .lgreen {background-color: rgb(163, 255, 167);}
+    .lblue {background-color: rgb(165, 205, 255);}
+    .lpurple {background-color: rgb(244, 168, 255);}
+    .red {background-color: rgb(255, 0, 0);}
+    .orange {background-color: rgb(255, 191, 0);}
+    .yellow {background-color: rgb(247, 230, 0);}
+    .green {background-color: rgb(3, 234, 0);}
+    .blue {background-color: rgb(5, 125, 255);}
+    .purple {background-color: rgb(217, 94, 255);}
+    .dred {background-color: rgb(153, 0, 0);}
+    .dorange {background-color: rgb(114, 87, 0);}
+    .dyellow {background-color: rgb(113, 117, 8);}
+    .dgreen {background-color: rgb(1, 112, 12);}
+    .dblue {background-color: rgb(0, 7, 140);}
+    .dpurple {background-color: rgb(114, 0, 124);}
+    .white {background-color: rgb(255, 255, 255);}
+    .gray0 {background-color: rgb(204, 204, 204);}
+    .gray1 {background-color: rgb(153, 153, 153);}
+    .gray2 {background-color: rgb(102, 102, 102);}
+    .gray3 {background-color: rgb(51, 51, 51);}
+    .black {background-color: rgb(0, 0, 0);}
     
 </style>
 	
@@ -48,7 +68,75 @@
 </head>
     
 <body onload="start()" onmousemove="getCoords(event)">
+
+<div class="sidebar">
+
+    <table align="center" style="padding:5px 0px 0px;">
+        <tr>
+            <th colspan="6"><button onmousedown="area.clear()">Clear Canvas</button></th>
+        </tr>
+    </table>
+    <hr>
+    <table align="center">
+        <tr>
+            <th><button class="btn lred" onmousedown="colorSelect(0)"> </button></th>
+            <th><button class="btn lorange" onmousedown="colorSelect(1)"> </button></th>
+            <th><button class="btn lyellow" onmousedown="colorSelect(2)"> </button></th>
+            <th><button class="btn lgreen" onmousedown="colorSelect(3)"> </button></th>
+            <th><button class="btn lblue" onmousedown="colorSelect(4)"> </button></th>
+            <th><button class="btn lpurple" onmousedown="colorSelect(5)"> </button></th>
+        </tr>
+        <tr>
+            <th><button class="btn red" onmousedown="colorSelect(6)"> </button></th>
+            <th><button class="btn orange" onmousedown="colorSelect(7)"> </button></th>
+            <th><button class="btn yellow" onmousedown="colorSelect(8)"> </button></th>
+            <th><button class="btn green" onmousedown="colorSelect(9)"> </button></th>
+            <th><button class="btn blue" onmousedown="colorSelect(10)"> </button></th>
+            <th><button class="btn purple" onmousedown="colorSelect(11)"> </button></th>
+        </tr>
+        <tr>
+            <th><button class="btn dred" onmousedown="colorSelect(12)"> </button></th>
+            <th><button class="btn dorange" onmousedown="colorSelect(13)"> </button></th>
+            <th><button class="btn dyellow" onmousedown="colorSelect(14)"> </button></th>
+            <th><button class="btn dgreen" onmousedown="colorSelect(15)"> </button></th>
+            <th><button class="btn dblue" onmousedown="colorSelect(16)"> </button></th>
+            <th><button class="btn dpurple" onmousedown="colorSelect(17)"> </button></th>
+        </tr>
+        <tr>
+            <th><button class="btn white" onmousedown="colorSelect(18)"> </button></th>
+            <th><button class="btn gray0" onmousedown="colorSelect(19)"> </button></th>
+            <th><button class="btn gray1" onmousedown="colorSelect(20)"> </button></th>
+            <th><button class="btn gray2" onmousedown="colorSelect(21)"> </button></th>
+            <th><button class="btn gray3" onmousedown="colorSelect(22)"> </button></th>
+            <th><button class="btn black" onmousedown="colorSelect(23)"> </button></th>
+        </tr>
+    </table>
     
+	<hr>
+    
+	<table align="center">
+        <tr>
+            <th><label>Brush Size: <span id="sizeTxt"></span></label></th>
+        </tr>
+        <tr>
+            <th><input type="range" min="5" max="100" value="20" step="5" id="brushRange" class="slider"></th>
+        </tr>
+    </table>
+    
+    <hr>
+    
+    <table align="center" style="padding:0px 0px 5px;">
+        <tr>
+            <th colspan="2"><label>Brush Type</label></th>
+        </tr>
+        <tr>
+            <th><button onmousedown="brushChange(0)">&#11035;</button></th>
+            <th><button onmousedown="brushChange(1)">&#11044;</button></th>
+        </tr>
+    </table>
+    
+</div>
+
 <script>
 	
     var squareBrush;
@@ -59,10 +147,9 @@
     var canvasWidth = 960;
     var canvasHeight = 540;
     var brushSize = 20;
-    var brushColor = 8;
-    var brushSlider = document.getElementById("brushRange");
-    var brushSliderOutput = document.getElementById("brushSliderOutputText");
-    
+    var brushColor = 23;
+    var brushType = 1;
+
     window.addEventListener('mousedown', function() {
         draw = true;
     });
@@ -75,7 +162,6 @@
         squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
         area.start();
     }
-
     var area = {
         canvas : document.createElement("canvas"),
         start : function() {
@@ -98,25 +184,61 @@
         this.update = function() {
             ctx = area.context;
             if (brushColor == 0) {
-                ctx.fillStyle = "rgb(255,0,0)"
+                ctx.fillStyle = "rgb(255, 137, 145)"
             } else if (brushColor == 1) {
-                ctx.fillStyle = "rgb(255,150,0)"
+                ctx.fillStyle = "rgb(255, 207, 130)"
             } else if (brushColor == 2) {
-                ctx.fillStyle = "rgb(255,255,0)"           
+                ctx.fillStyle = "rgb(251, 255, 163)"
             } else if (brushColor == 3) {
-                ctx.fillStyle = "rgb(0,175,25)"           
+                ctx.fillStyle = "rgb(163, 255, 167)"
             } else if (brushColor == 4) {
-                ctx.fillStyle = "rgb(0,0,255)"           
+                ctx.fillStyle = "rgb(165, 205, 255)"
             } else if (brushColor == 5) {
-                ctx.fillStyle = "rgb(125,0,175)"           
+                ctx.fillStyle = "rgb(244, 168, 255)"
             } else if (brushColor == 6) {
-                ctx.fillStyle = "rgb(255,255,255)"           
+                ctx.fillStyle = "rgb(255, 0, 0)"
             } else if (brushColor == 7) {
-                ctx.fillStyle = "rgb(125,125,125)"           
+                ctx.fillStyle = "rgb(255, 191, 0)"
             } else if (brushColor == 8) {
-                ctx.fillStyle = "rgb(0,0,0)"           
+                ctx.fillStyle = "rgb(247, 230, 0)"
+            } else if (brushColor == 9) {
+                ctx.fillStyle = "rgb(3, 234, 0)"
+            } else if (brushColor == 10) {
+                ctx.fillStyle = "rgb(5, 125, 255)"
+            } else if (brushColor == 11) {
+                ctx.fillStyle = "rgb(217, 94, 255)"
+            } else if (brushColor == 12) {
+                ctx.fillStyle = "rgb(153, 0, 0)"
+            } else if (brushColor == 13) {
+                ctx.fillStyle = "rgb(114, 87, 0)"
+            } else if (brushColor == 14) {
+                ctx.fillStyle = "rgb(113, 117, 8)"
+            } else if (brushColor == 15) {
+                ctx.fillStyle = "rgb(1, 112, 12)"
+            } else if (brushColor == 16) {
+                ctx.fillStyle = "rgb(0, 7, 140)"
+            } else if (brushColor == 17) {
+                ctx.fillStyle = "rgb(114, 0, 124)"
+            } else if (brushColor == 18) {
+                ctx.fillStyle = "rgb(255, 255, 255)"
+            } else if (brushColor == 19) {
+                ctx.fillStyle = "rgb(204, 204, 204)"
+            } else if (brushColor == 20) {
+                ctx.fillStyle = "rgb(153, 153, 153)"
+            } else if (brushColor == 21) {
+                ctx.fillStyle = "rgb(102, 102, 102)"
+            } else if (brushColor == 22) {
+                ctx.fillStyle = "rgb(51, 51, 51)"
+            } else {
+                ctx.fillStyle = "rgb(0, 0, 0)"
             }
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+            if (brushType == 0) {
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            } else {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, (this.width * 0.5), 0, 2 * Math.PI);
+                ctx.fill();
+            }
     	}
     	this.updatePos = function() {
             if (draw) {
@@ -132,47 +254,35 @@
     }
 	
     function getCoords(event) {
-        mouseX = event.clientX - 15 - (brushSize * 0.5);
-        mouseY = event.clientY - 15 - (brushSize * 0.5);
+        if (brushType == 0) {
+            mouseX = event.clientX - 15 - (brushSize * 0.5);
+            mouseY = event.clientY - 15 - (brushSize * 0.5);
+        } else {
+            mouseX = event.clientX - 15;
+            mouseY = event.clientY - 15;
+        }
     }
     
     function colorSelect(n) {
         brushColor = n;
     }
     
-    brushSlider.oninput = function() {
-        brushSize = this.value;
-        squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
+    function brushChange(n) {
+        brushType = n;
     }
-    
+	
+    var sizeSlider = document.getElementById("brushRange");
+    var sizeIndicator = document.getElementById("sizeTxt");
+    sizeIndicator.innerHTML = sizeSlider.value;
+
+    sizeSlider.oninput = function() {
+        sizeIndicator.innerHTML = this.value;
+		brushSize = this.value;
+        squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
+    }
+        
 </script>
 
-<div class="sidebar">
-    <button onmousedown="area.clear()">Reset</button>
-    <br>
-    <p>Brush Size: <span id="brushSliderOutputText">20</span></p>
-    <br>
-    <input type="range" min="5" max="100" step="5" value="20" id="brushRange">
-
-    <table class="colorPalette">
-        <tr>
-            <th><button class="btn red" onmousedown="colorSelect(0)"> </button></th>
-            <th><button class="btn orange" onmousedown="colorSelect(1)"> </button></th>
-            <th><button class="btn yellow" onmousedown="colorSelect(2)"> </button></th>
-        </tr>
-        <tr>
-            <th><button class="btn green" onmousedown="colorSelect(3)"> </button></th>
-            <th><button class="btn blue" onmousedown="colorSelect(4)"> </button></th>
-            <th><button class="btn purple" onmousedown="colorSelect(5)"> </button></th>
-        </tr>
-        <tr>
-            <th><button class="btn white" onmousedown="colorSelect(6)"> </button></th>
-            <th><button class="btn gray" onmousedown="colorSelect(7)"> </button></th>
-            <th><button class="btn black" onmousedown="colorSelect(8)"> </button></th>
-        </tr>
-    </table>
-    
-</div>
 </body>
 
 </html>
