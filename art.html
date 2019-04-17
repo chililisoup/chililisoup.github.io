@@ -23,6 +23,20 @@
     body {
         background-color: rgb(100,100,100)
     }
+    .btn {
+        border: none;
+        padding: 2px;
+        width: 10px;
+        height: 7px;
+        cursor: pointer;
+        display: inline-block;
+    }
+    .red {
+        background-color: rgb(255,0,0);
+    }
+    .orange {
+        background-color: rgb(255,160,0);
+    }
 </style>
 	
 <head>
@@ -41,7 +55,8 @@
     var canvasWidth = 960;
     var canvasHeight = 540;
     var brushSize = 20;
-	
+	var brushColor = 0;
+    
     window.addEventListener('mousedown', function() {
         draw = true;
     });
@@ -76,7 +91,11 @@
         this.y = y;    
         this.update = function() {
             ctx = area.context;
-            ctx.fillStyle = "rgb(255,0,0)"
+            if (brushColor == 0) {
+                ctx.fillStyle = "rgb(255,0,0)"
+            } else if (brushColor == 1) {
+                ctx.fillStyle = "rgb(255,160,0)"
+            }
             ctx.fillRect(this.x, this.y, this.width, this.height);
     	}
     	this.updatePos = function() {
@@ -97,10 +116,22 @@
         mouseY = event.clientY - 15 - (brushSize * 0.5);
     }
     
+    function colorSelect(n) {
+        brushColor = n;
+    }
+    
 </script>
 
 <div class="sidebar">
     <button onmousedown="area.clear()">Reset</button>
+
+    <table class="colorPalette">
+        <tr>
+            <th><button class="btn red" onmousedown="colorSelect(0)"> </button>
+            <th><button class="btn orange" onmousedown="colorSelect(1)"> </button>
+        </tr>
+    </table
+    
 </div>
 </body>
 
