@@ -29,6 +29,8 @@
     //area.clear(); for reset
 	
     var squareBrush;
+    var mouseX;
+    var mouseY;
     var runSpeed = 1;
     var canvasWidth = 1000;
     var canvasHeight = 700;
@@ -64,14 +66,20 @@
             ctx.fillRect(this.x, this.y, this.width, this.height);
     	}
     	this.updatePos = function() {
-            this.x += 0;
-            this.y += 0;
+            this.x = mouseX;
+            this.y = mouseY;
     	}    
     }
     
     function updateArea() {
     	squareBrush.updatePos();    
     	squareBrush.update();
+        getCoords(event);
+    }
+	
+    function getCoords(event) {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
     }
     
 </script>
