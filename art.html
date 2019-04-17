@@ -59,7 +59,7 @@
     var canvasWidth = 960;
     var canvasHeight = 540;
     var brushSize = 20;
-	var brushColor = 0;
+    var brushColor = 8;
     
     window.addEventListener('mousedown', function() {
         draw = true;
@@ -70,7 +70,7 @@
     });
     
     function start() {
-        squareBrush = new component(brushSize, brushSize, "rgb(255,0,0)", -brushSize, -brushSize);
+        squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
         area.start();
     }
 
@@ -138,10 +138,16 @@
         brushColor = n;
     }
     
+    function sizeChange(n) {
+        brushSize = n;
+    }
+    
 </script>
 
 <div class="sidebar">
     <button onmousedown="area.clear()">Reset</button>
+    <button onmousedown="sizeChange(10)">10</button>
+    <button onmousedown="sizeChange(20)">20</button>
 
     <table class="colorPalette">
         <tr>
@@ -159,7 +165,7 @@
             <th><button class="btn gray" onmousedown="colorSelect(7)"> </button></th>
             <th><button class="btn black" onmousedown="colorSelect(8)"> </button></th>
         </tr>
-    </table
+    </table>
     
 </div>
 </body>
