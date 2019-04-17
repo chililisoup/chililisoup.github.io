@@ -60,9 +60,8 @@
     var canvasHeight = 540;
     var brushSize = 20;
     var brushColor = 8;
-    //var brushSlider = document.getElementById("brushRange");
-    //var brushSliderOutput = document.getElementById("brushSliderOutputText");
-    //brushSliderOutput.innerHTML = brushSlider.value;
+    var brushSlider = document.getElementById("brushRange");
+    var brushSliderOutput = document.getElementById("brushSliderOutputText");
     
     window.addEventListener('mousedown', function() {
         draw = true;
@@ -142,8 +141,8 @@
     }
     
     brushSlider.oninput = function() {
-        //brushSize = this.value;
-        //squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
+        brushSize = this.value;
+        squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
     }
     
 </script>
@@ -151,7 +150,7 @@
 <div class="sidebar">
     <button onmousedown="area.clear()">Reset</button>
     <br>
-    <p>Brush Size: <span id="brushSliderOutputText"></span></p>
+    <p>Brush Size: <span id="brushSliderOutputText">20</span></p>
     <br>
     <input type="range" min="5" max="100" step="5" value="20" id="brushRange">
 
