@@ -73,8 +73,10 @@
             ctx.fillRect(this.x, this.y, this.width, this.height);
     	}
     	this.updatePos = function() {
-            this.x = mouseX;
-            this.y = mouseY;
+            if (draw) {
+                this.x = mouseX;
+                this.y = mouseY;
+            }
     	}    
     }
     
@@ -84,10 +86,8 @@
     }
 	
     function getCoords(event) {
-        if (draw) {
-            mouseX = event.clientX - 15 - (brushSize * 0.5);
-            mouseY = event.clientY - 15 - (brushSize * 0.5);
-        }
+        mouseX = event.clientX - 15 - (brushSize * 0.5);
+        mouseY = event.clientY - 15 - (brushSize * 0.5);
     }
     
 </script>
