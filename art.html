@@ -27,12 +27,21 @@
     //area.clear(); for reset
 	
     var squareBrush;
+    var draw = false;
     var mouseX;
     var mouseY;
     var runSpeed = 1;
     var canvasWidth = 1000;
     var canvasHeight = 700;
     var brushSize = 20;
+	
+    window.addEventListener('mousedown', function() {
+        draw = true;
+    });
+    
+    window.addEventListener('mouseup', function() {
+        draw = false;
+    });
     
     function start() {
         squareBrush = new component(brushSize, brushSize, "rgb(255,0,0)", Math.floor(canvasWidth * 0.5), Math.floor(canvasHeight * 0.5));
@@ -75,8 +84,10 @@
     }
 	
     function getCoords(event) {
-        mouseX = event.clientX - 15 - (brushSize * 0.5);
-        mouseY = event.clientY - 15 - (brushSize * 0.5);
+        if (draw) {
+            mouseX = event.clientX - 15 - (brushSize * 0.5);
+            mouseY = event.clientY - 15 - (brushSize * 0.5);
+        }
     }
     
 </script>
