@@ -26,9 +26,10 @@
     var canvasWidth = 1000;
     var canvasHeight = 700;
     var brushSize = 20;
+    var resetSpeed = 1;
     
     function start() {
-        squareBrush = new component(brushSize, brushSize, "rgb(255,0,0)", -brushSize, -brushSize);
+        squareBrush = new component(brushSize, brushSize, "rgb(255,0,0)", 0, 0);
         area.start();
     }
     
@@ -39,10 +40,29 @@
             this.canvas.height = canvasHeight;
             this.context = this.canvas.getContext("2d");
             document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-            this.interval = setInterval(updateArea, 1);
+            this.interval = setInterval(updateArea, resetSpeed);
         },
         clear : function() {
             this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+    }
+	
+	function component(width, height, color, x, y, type) {
+        this.type = type;
+        this.width = width;
+        this.height = height;
+        this.speedX = spacing;
+        this.speedY = spacing;
+        this.x = x;
+        this.y = y;    
+        this.update = function() {
+            ctx = area.context;
+            ctx.fillStyle = "rgb(255,0,0)"
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+        this.updatePos = function() {
+            this.x = 0;
+            this.y = 0;
         }
     }
     
