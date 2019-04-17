@@ -26,17 +26,21 @@
     .btn {
         border: none;
         padding: 2px;
-        width: 10px;
-        height: 7px;
+        width: 15px;
+        height: 10px;
         cursor: pointer;
         display: inline-block;
     }
-    .red {
-        background-color: rgb(255,0,0);
-    }
-    .orange {
-        background-color: rgb(255,160,0);
-    }
+    .red {background-color: rgb(255,0,0);}
+    .orange {background-color: rgb(255,160,0);}
+    .yellow {background-color: rgb(255,255,0);}
+    .green {background-color: rgb(0,175,25);}
+    .blue {background-color: rgb(0,0,255);}
+    .purple {background-color: rgb(125,0,175);}
+    .white {background-color: rgb(255,255,255);}
+    .gray {background-color: rgb(125,125,125);}
+    .black {background-color: rgb(0,0,0);}
+    
 </style>
 	
 <head>
@@ -95,6 +99,20 @@
                 ctx.fillStyle = "rgb(255,0,0)"
             } else if (brushColor == 1) {
                 ctx.fillStyle = "rgb(255,160,0)"
+            } else if (brushColor == 2) {
+                ctx.fillStyle = "rgb(255,255,0)"           
+            } else if (brushColor == 3) {
+                ctx.fillStyle = "rgb(0,175,25)"           
+            } else if (brushColor == 4) {
+                ctx.fillStyle = "rgb(0,0,255)"           
+            } else if (brushColor == 5) {
+                ctx.fillStyle = "rgb(125,0,175)"           
+            } else if (brushColor == 6) {
+                ctx.fillStyle = "rgb(255,255,255)"           
+            } else if (brushColor == 7) {
+                ctx.fillStyle = "rgb(125,125,125)"           
+            } else if (brushColor == 8) {
+                ctx.fillStyle = "rgb(0,0,0)"           
             }
             ctx.fillRect(this.x, this.y, this.width, this.height);
     	}
@@ -127,8 +145,19 @@
 
     <table class="colorPalette">
         <tr>
-            <th><button class="btn red" onmousedown="colorSelect(0)"> </button>
-            <th><button class="btn orange" onmousedown="colorSelect(1)"> </button>
+            <th><button class="btn red" onmousedown="colorSelect(0)"> </button></th>
+            <th><button class="btn orange" onmousedown="colorSelect(1)"> </button></th>
+            <th><button class="btn yellow" onmousedown="colorSelect(2)"> </button></th>
+        </tr>
+        <tr>
+            <th><button class="btn green" onmousedown="colorSelect(3)"> </button></th>
+            <th><button class="btn blue" onmousedown="colorSelect(4)"> </button></th>
+            <th><button class="btn purple" onmousedown="colorSelect(5)"> </button></th>
+        </tr>
+        <tr>
+            <th><button class="btn white" onmousedown="colorSelect(6)"> </button></th>
+            <th><button class="btn gray" onmousedown="colorSelect(7)"> </button></th>
+            <th><button class="btn black" onmousedown="colorSelect(8)"> </button></th>
         </tr>
     </table
     
