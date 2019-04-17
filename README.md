@@ -7,5 +7,18 @@ Pong is just a simple pong game with adjustable paddle speeds. Simple collisions
 Slash code is an encrypting/decrypting application that converts letters into their Slash Code counterparts.
 100% complete.
 
-Action (Working name) is a random sentence generator that follows a set order.
+Action is a random sentence generator that follows a set order.
 Pretty much complete. Just adding more words/phrases.
+
+Art is just a simple drawing program I am making to get better at using the canvas element.
+Planned features:
+   + More brushes
+   + More colors (maybe an rgb picker)
+   + Save/load pictures
+   + More resolutions (maybe custom ones)
+   + Mobile support
+   + Transparency
+   + Fill tool
+   + Layers (maybe)
+   + Eraser
+   + The "checkered transparency background" with transparency
