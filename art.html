@@ -60,6 +60,9 @@
     var canvasHeight = 540;
     var brushSize = 20;
     var brushColor = 8;
+    var brushSlider = document.getElementById("brushRange");
+    var brushSliderOutput = document.getElementById("brushSliderOutputText");
+    brushSliderOutput.innerHTML = brushSlider.value;
     
     window.addEventListener('mousedown', function() {
         draw = true;
@@ -138,17 +141,19 @@
         brushColor = n;
     }
     
-    function sizeChange(n) {
-        brushSize = n;
-	squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
+    brushSlider.oninput = function() {
+        brushSize = this.value;
+        squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
     }
     
 </script>
 
 <div class="sidebar">
     <button onmousedown="area.clear()">Reset</button>
-    <button onmousedown="sizeChange(10)">10</button>
-    <button onmousedown="sizeChange(20)">20</button>
+    <br>
+    <p>Brush Size: <span id="brushSliderOutputText"></span></p>
+    <br>
+    <input type="range" min="5" max="100" step="5" value="20" id="brushRange">
 
     <table class="colorPalette">
         <tr>
