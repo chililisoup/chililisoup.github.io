@@ -89,8 +89,8 @@
     }
     
     function component(width, height, color, x, y) {
-        this.width = brushSize;
-        this.height = brushSize;
+        this.width = width;
+        this.height = height;
         this.x = x;
         this.y = y;    
         this.update = function() {
@@ -140,6 +140,7 @@
     
     function sizeChange(n) {
         brushSize = n;
+	squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
     }
     
 </script>
