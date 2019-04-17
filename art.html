@@ -23,8 +23,6 @@
 <body onload="start()" onmousemove="getCoords(event)">
     
 <script>
-    
-    //area.clear(); for reset
 	
     var squareBrush;
     var draw = false;
@@ -90,7 +88,13 @@
         mouseY = event.clientY - 15 - (brushSize * 0.5);
     }
     
+    function resetCanvas() {
+        area.clear();
+    }
+    
 </script>
+    
+<button onmousedown="resetCanvas()">Reset</button>
     
 </body>
 
