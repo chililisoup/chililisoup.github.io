@@ -266,10 +266,10 @@
     function getCoords(event) {
         if (brushType == 0) {
             mouseX = event.clientX - 35 - (brushSize * 0.5);
-            mouseY = event.clientY - 35 - (brushSize * 0.5);
+            mouseY = event.clientY - 15 - (brushSize * 0.5);
         } else {
             mouseX = event.clientX - 35;
-            mouseY = event.clientY - 35;
+            mouseY = event.clientY - 15;
         }
     }
     
