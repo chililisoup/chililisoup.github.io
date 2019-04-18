@@ -1,12 +1,14 @@
 <html>
+
 <style>
+
     canvas {
         padding: 0;
         margin: auto;
     	position: absolute;
     	top: 10px;
     	left: 100px;
-        background-image: url("transparency.png");
+        background-image: url("art_icons/transparency.png");
         background-repeat: round;
         border:5px solid rgb(150,150,150);
     }
@@ -28,13 +30,26 @@
     body {
         background-color: rgb(100,100,100)
     }
-    .btn {
-        border: none;
-        padding: 2px;
-        width: 15px;
-        height: 10px;
+    button {
+        border: 3px solid #afafaf;
         cursor: pointer;
-        display: inline-block;
+    }
+    
+    .brAll {
+        width: 38px;
+        height: 38px;
+    }
+    .br0 {
+        background-image: url("art_icons/square.png");
+    }
+    .br1 {
+        background-image: url("art_icons/circle.png");
+    }
+    .br2 {
+        background-image: url("art_icons/e_square.png");
+    }
+    .br3 {
+        background-image: url("art_icons/e_circle.png");
     }
     
 </style>
@@ -80,9 +95,12 @@
             <th colspan="2"><label>Brush Type</label></th>
         </tr>
         <tr>
-            <th><button onmousedown="brushChange(0)">&#11035;</button></th>
-            <th><button onmousedown="brushChange(1)">&#11044;</button></th>
-            <th><button onmousedown="brushChange(2)">Del</button></th>
+            <th><button onmousedown="brushChange(0)" id="br0" class="brAll br0"></button></th>
+            <th><button onmousedown="brushChange(1)" id="br1" class="brAll br1"></button></th>
+        </tr>
+        <tr>
+            <th><button onmousedown="brushChange(2)" id="br2" class="brAll br2"></button></th>
+            <th><button onmousedown="brushChange(3)" id="br3" class="brAll br3"></button></th>
         </tr>
     </table>
 
@@ -111,7 +129,6 @@
     var brushColor = 23;
     var brushType = 1;
     var brushColor = "rgb(0, 0, 0)";
-
     window.addEventListener('mousedown', function() {
         draw = true;
     });
@@ -123,6 +140,8 @@
     function start() {
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
         area.start();
+        document.getElementById("br1").style.border = "3px solid #42a9f7";
+        document.getElementById("br1").style.cursor = "default";
     }
     var area = {
         canvas : document.createElement("canvas"),
@@ -153,8 +172,14 @@
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, (this.width * 0.5), 0, 2 * Math.PI);
                 ctx.fill();
-            } else {
+            } else if (brushType == 2) {
                 ctx.clearRect(this.x, this.y, this.width, this.height)   
+            } else {
+                ctx.globalCompositeOperation = 'destination-out'
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, (this.width * 0.5), 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over'
             }
     	}
     	this.updatePos = function() {
@@ -177,9 +202,12 @@
         } else if (brushType == 1) {
             mouseX = event.clientX - 105;
             mouseY = event.clientY - 15;
-        } else {
+        } else if (brushType == 2) {
             mouseX = event.clientX - 105 - (brushSize * 0.5);
             mouseY = event.clientY - 15 - (brushSize * 0.5);
+        } else {
+            mouseX = event.clientX - 105;
+            mouseY = event.clientY - 15;
         }
     }
     
@@ -189,22 +217,60 @@
     
     function brushChange(n) {
         brushType = n;
+        if (n == 0) {
+            document.getElementById("br0").style.border = "3px solid #42a9f7";
+            document.getElementById("br0").style.cursor = "default";
+            
+            document.getElementById("br1").style.border = "";
+            document.getElementById("br2").style.border = "";
+            document.getElementById("br3").style.border = "";
+            document.getElementById("br1").style.cursor = "";
+            document.getElementById("br2").style.cursor = "";
+            document.getElementById("br3").style.cursor = "";
+        } else if (n == 1) {
+            document.getElementById("br1").style.border = "3px solid #42a9f7";
+            document.getElementById("br1").style.cursor = "default";
+            
+            document.getElementById("br0").style.border = "";
+            document.getElementById("br2").style.border = "";
+            document.getElementById("br3").style.border = "";
+            document.getElementById("br0").style.cursor = "";
+            document.getElementById("br2").style.cursor = "";
+            document.getElementById("br3").style.cursor = "";
+        } else if (n == 2) {
+            document.getElementById("br2").style.border = "3px solid #42a9f7";
+            document.getElementById("br2").style.cursor = "default";
+            
+            document.getElementById("br0").style.border = "";
+            document.getElementById("br1").style.border = "";
+            document.getElementById("br3").style.border = "";
+            document.getElementById("br0").style.cursor = "";
+            document.getElementById("br1").style.cursor = "";
+            document.getElementById("br3").style.cursor = "";
+        } else {
+            document.getElementById("br3").style.border = "3px solid #42a9f7";
+            document.getElementById("br3").style.cursor = "default";
+            
+            document.getElementById("br0").style.border = "";
+            document.getElementById("br1").style.border = "";
+            document.getElementById("br2").style.border = "";
+            document.getElementById("br0").style.cursor = "";
+            document.getElementById("br1").style.cursor = "";
+            document.getElementById("br2").style.cursor = "";
+        }
     }
     
     function clearCanvas() {
         var check = confirm("Are you sure?");
         if (check) {
             area.clear();
-            draw = false;
-        } else {
-            draw = false;
+            brushChange(3);
         }
     }
 	
     var sizeSlider = document.getElementById("brushRange");
     var sizeIndicator = document.getElementById("sizeTxt");
     sizeIndicator.innerHTML = sizeSlider.value;
-
     sizeSlider.oninput = function() {
         sizeIndicator.innerHTML = this.value;
         brushSize = this.value;
