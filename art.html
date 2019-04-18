@@ -5,7 +5,7 @@
         margin: auto;
     	position: absolute;
     	top: 10px;
-    	left: 30px;
+    	left: 100px;
         background-image: url("transparent.png");
         background-repeat: round;
         border:5px solid rgb(150,150,150);
@@ -265,10 +265,10 @@
 	
     function getCoords(event) {
         if (brushType == 0) {
-            mouseX = event.clientX - 35 - (brushSize * 0.5);
+            mouseX = event.clientX - 105 - (brushSize * 0.5);
             mouseY = event.clientY - 15 - (brushSize * 0.5);
         } else {
-            mouseX = event.clientX - 35;
+            mouseX = event.clientX - 105;
             mouseY = event.clientY - 15;
         }
     }
