@@ -112,9 +112,9 @@
         </tr>
     </table>
     
-	<hr>
+    <hr>
     
-	<table align="center">
+    <table align="center">
         <tr>
             <th><label>Brush Size: <span id="sizeTxt"></span></label></th>
         </tr>
@@ -125,13 +125,21 @@
     
     <hr>
     
-    <table align="center" style="padding:0px 0px 5px;">
+    <table align="center">
         <tr>
             <th colspan="2"><label>Brush Type</label></th>
         </tr>
         <tr>
             <th><button onmousedown="brushChange(0)">&#11035;</button></th>
             <th><button onmousedown="brushChange(1)">&#11044;</button></th>
+        </tr>
+    </table>
+
+    <hr>
+    
+    <table align="center" style="padding:0px 0px 5px;">
+        <tr>
+            <th>You can save by right clicking the canvas and pressing "save as"</th>
         </tr>
     </table>
     
@@ -280,14 +288,6 @@
         brushSize = this.value;
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
     }
-	
-    var link = document.createElement('a');
-    link.innerHTML = 'download image';
-    link.addEventListener('click', function(ev) {
-        link.href = canvas.toDataURL();
-        link.download = "mypainting.png";
-    }, false);
-    document.body.appendChild(link);
         
 </script>
 
