@@ -139,7 +139,7 @@
     
     <table align="center" style="padding:0px 0px 5px;">
         <tr>
-            <th>You can save by right clicking the canvas and pressing "save as"</th>
+		<th><button>Save Image</button></th>
         </tr>
     </table>
     
@@ -288,6 +288,14 @@
         brushSize = this.value;
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
     }
+	
+    var link = document.createElement('a');
+    link.innerHTML = 'download image';
+    link.addEventListener('click', function(ev) {
+        link.href = area.toDataURL();
+        link.download = "mypainting.png";
+    }, false);
+    document.body.appendChild(link);
         
 </script>
 
