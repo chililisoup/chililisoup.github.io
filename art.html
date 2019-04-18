@@ -2,12 +2,10 @@
 <style>
     canvas {
         padding: 0;
-        margin-left: auto;
-        margin-right: auto;
-    	display: block;
+        margin: auto;
     	position: absolute;
     	top: 10px;
-    	left: 10px;
+    	left: 15vw;
         background-image: url("transparent.png");
         border:5px solid rgb(150,150,150);
     }
@@ -266,11 +264,11 @@
 	
     function getCoords(event) {
         if (brushType == 0) {
-            mouseX = event.clientX - 15 - (brushSize * 0.5);
-            mouseY = event.clientY - 15 - (brushSize * 0.5);
+            mouseX = event.clientX - 5px - 15vw - (brushSize * 0.5);
+            mouseY = event.clientY - 5px - 15vw - (brushSize * 0.5);
         } else {
-            mouseX = event.clientX - 15;
-            mouseY = event.clientY - 15;
+            mouseX = event.clientX - 5px - 15vw;
+            mouseY = event.clientY - 5px - 15vw;
         }
     }
     
