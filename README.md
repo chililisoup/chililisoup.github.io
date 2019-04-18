@@ -21,12 +21,9 @@ Pretty much complete. Just adding more words/phrases.
 Art is just a simple drawing program I am making to get better at using the canvas element.
 Planned features:
    + More brushes
-   + More colors (maybe an rgb picker)
    + Save/load pictures
    + More resolutions (maybe custom ones)
    + Mobile support
    + Transparency
    + Fill tool
    + Layers (maybe)
-   + Eraser
-   + The "checkered transparency background" with transparency
