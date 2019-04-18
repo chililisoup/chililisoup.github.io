@@ -36,30 +36,6 @@
         cursor: pointer;
         display: inline-block;
     }
-    .lred {background-color: rgb(255, 137, 145);}
-    .lorange {background-color: rgb(255, 207, 130);}
-    .lyellow {background-color: rgb(251, 255, 163);}
-    .lgreen {background-color: rgb(163, 255, 167);}
-    .lblue {background-color: rgb(165, 205, 255);}
-    .lpurple {background-color: rgb(244, 168, 255);}
-    .red {background-color: rgb(255, 0, 0);}
-    .orange {background-color: rgb(255, 191, 0);}
-    .yellow {background-color: rgb(247, 230, 0);}
-    .green {background-color: rgb(3, 234, 0);}
-    .blue {background-color: rgb(5, 125, 255);}
-    .purple {background-color: rgb(217, 94, 255);}
-    .dred {background-color: rgb(153, 0, 0);}
-    .dorange {background-color: rgb(114, 87, 0);}
-    .dyellow {background-color: rgb(113, 117, 8);}
-    .dgreen {background-color: rgb(1, 112, 12);}
-    .dblue {background-color: rgb(0, 7, 140);}
-    .dpurple {background-color: rgb(114, 0, 124);}
-    .white {background-color: rgb(255, 255, 255);}
-    .gray0 {background-color: rgb(204, 204, 204);}
-    .gray1 {background-color: rgb(153, 153, 153);}
-    .gray2 {background-color: rgb(102, 102, 102);}
-    .gray3 {background-color: rgb(51, 51, 51);}
-    .black {background-color: rgb(0, 0, 0);}
     
 </style>
 	
@@ -79,36 +55,8 @@
     <hr>
     <table align="center">
         <tr>
-            <th><button class="btn lred" onmousedown="colorSelect(0)"> </button></th>
-            <th><button class="btn lorange" onmousedown="colorSelect(1)"> </button></th>
-            <th><button class="btn lyellow" onmousedown="colorSelect(2)"> </button></th>
-            <th><button class="btn lgreen" onmousedown="colorSelect(3)"> </button></th>
-            <th><button class="btn lblue" onmousedown="colorSelect(4)"> </button></th>
-            <th><button class="btn lpurple" onmousedown="colorSelect(5)"> </button></th>
-        </tr>
-        <tr>
-            <th><button class="btn red" onmousedown="colorSelect(6)"> </button></th>
-            <th><button class="btn orange" onmousedown="colorSelect(7)"> </button></th>
-            <th><button class="btn yellow" onmousedown="colorSelect(8)"> </button></th>
-            <th><button class="btn green" onmousedown="colorSelect(9)"> </button></th>
-            <th><button class="btn blue" onmousedown="colorSelect(10)"> </button></th>
-            <th><button class="btn purple" onmousedown="colorSelect(11)"> </button></th>
-        </tr>
-        <tr>
-            <th><button class="btn dred" onmousedown="colorSelect(12)"> </button></th>
-            <th><button class="btn dorange" onmousedown="colorSelect(13)"> </button></th>
-            <th><button class="btn dyellow" onmousedown="colorSelect(14)"> </button></th>
-            <th><button class="btn dgreen" onmousedown="colorSelect(15)"> </button></th>
-            <th><button class="btn dblue" onmousedown="colorSelect(16)"> </button></th>
-            <th><button class="btn dpurple" onmousedown="colorSelect(17)"> </button></th>
-        </tr>
-        <tr>
-            <th><button class="btn white" onmousedown="colorSelect(18)"> </button></th>
-            <th><button class="btn gray0" onmousedown="colorSelect(19)"> </button></th>
-            <th><button class="btn gray1" onmousedown="colorSelect(20)"> </button></th>
-            <th><button class="btn gray2" onmousedown="colorSelect(21)"> </button></th>
-            <th><button class="btn gray3" onmousedown="colorSelect(22)"> </button></th>
-            <th><button class="btn black" onmousedown="colorSelect(23)"> </button></th>
+            <th><label>Brush Color</label></th>
+            <th><input type="color" id="colorSelect"></th>
         </tr>
     </table>
     
@@ -159,7 +107,7 @@
     var brushSize = 20;
     var brushColor = 23;
     var brushType = 1;
-    var brushColor = "rgb(0, 0, 0)";
+    var brushColor = "rgb(0, 255, 0)";
 
     window.addEventListener('mousedown', function() {
         draw = true;
@@ -243,6 +191,13 @@
         sizeIndicator.innerHTML = this.value;
         brushSize = this.value;
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
+    }
+    
+    
+    var colorPicker = document.getElementById("colorSelect");
+    
+    sizeSlider.oninput = function() {
+        brushColor = this.value;
     }
         
 </script>
