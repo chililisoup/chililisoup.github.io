@@ -159,6 +159,7 @@
     var brushSize = 20;
     var brushColor = 23;
     var brushType = 1;
+    var brushColor = "rgb(0, 0, 0)";
 
     window.addEventListener('mousedown', function() {
         draw = true;
@@ -193,55 +194,8 @@
         this.y = y;    
         this.update = function() {
             ctx = area.context;
-            if (brushColor == 0) {
-                ctx.fillStyle = "rgb(255, 137, 145)"
-            } else if (brushColor == 1) {
-                ctx.fillStyle = "rgb(255, 207, 130)"
-            } else if (brushColor == 2) {
-                ctx.fillStyle = "rgb(251, 255, 163)"
-            } else if (brushColor == 3) {
-                ctx.fillStyle = "rgb(163, 255, 167)"
-            } else if (brushColor == 4) {
-                ctx.fillStyle = "rgb(165, 205, 255)"
-            } else if (brushColor == 5) {
-                ctx.fillStyle = "rgb(244, 168, 255)"
-            } else if (brushColor == 6) {
-                ctx.fillStyle = "rgb(255, 0, 0)"
-            } else if (brushColor == 7) {
-                ctx.fillStyle = "rgb(255, 191, 0)"
-            } else if (brushColor == 8) {
-                ctx.fillStyle = "rgb(247, 230, 0)"
-            } else if (brushColor == 9) {
-                ctx.fillStyle = "rgb(3, 234, 0)"
-            } else if (brushColor == 10) {
-                ctx.fillStyle = "rgb(5, 125, 255)"
-            } else if (brushColor == 11) {
-                ctx.fillStyle = "rgb(217, 94, 255)"
-            } else if (brushColor == 12) {
-                ctx.fillStyle = "rgb(153, 0, 0)"
-            } else if (brushColor == 13) {
-                ctx.fillStyle = "rgb(114, 87, 0)"
-            } else if (brushColor == 14) {
-                ctx.fillStyle = "rgb(113, 117, 8)"
-            } else if (brushColor == 15) {
-                ctx.fillStyle = "rgb(1, 112, 12)"
-            } else if (brushColor == 16) {
-                ctx.fillStyle = "rgb(0, 7, 140)"
-            } else if (brushColor == 17) {
-                ctx.fillStyle = "rgb(114, 0, 124)"
-            } else if (brushColor == 18) {
-                ctx.fillStyle = "rgb(255, 255, 255)"
-            } else if (brushColor == 19) {
-                ctx.fillStyle = "rgb(204, 204, 204)"
-            } else if (brushColor == 20) {
-                ctx.fillStyle = "rgb(153, 153, 153)"
-            } else if (brushColor == 21) {
-                ctx.fillStyle = "rgb(102, 102, 102)"
-            } else if (brushColor == 22) {
-                ctx.fillStyle = "rgb(51, 51, 51)"
-            } else {
-                ctx.fillStyle = "rgb(0, 0, 0)"
-            }
+            ctx.fillStyle = brushColor;
+            
             if (brushType == 0) {
                 ctx.fillRect(this.x, this.y, this.width, this.height);
             } else {
