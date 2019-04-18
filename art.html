@@ -139,8 +139,10 @@
     
     <table align="center" style="padding:0px 0px 5px;">
         <tr>
-		<th><button>Save Image</button></th>
+            <th><button>Save Image</button></th>
         </tr>
+        <tr>
+            <th><p style="font-size: 8px;"><i>(Doesn't work yet)</i></p></th>
     </table>
     
 </div>
@@ -288,14 +290,6 @@
         brushSize = this.value;
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
     }
-	
-    var link = document.createElement('a');
-    link.innerHTML = 'download image';
-    link.addEventListener('click', function(ev) {
-        link.href = area.toDataURL();
-        link.download = "mypainting.png";
-    }, false);
-    document.body.appendChild(link);
         
 </script>
 
