@@ -139,7 +139,7 @@
 
 <script>
 	
-    var squareBrush;
+    var brush;
     var draw = false;
     var mouseX;
     var mouseY;
@@ -159,7 +159,7 @@
     });
     
     function start() {
-        squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
+        brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
         area.start();
     }
     var area = {
@@ -249,8 +249,8 @@
     }
     
     function updateArea() {
-    	squareBrush.updatePos();    
-    	squareBrush.update();
+    	brush.updatePos();    
+    	brush.update();
     }
 	
     function getCoords(event) {
@@ -278,7 +278,7 @@
     sizeSlider.oninput = function() {
         sizeIndicator.innerHTML = this.value;
 		brushSize = this.value;
-        squareBrush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
+        brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
     }
         
 </script>
