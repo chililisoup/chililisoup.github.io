@@ -277,9 +277,17 @@
 
     sizeSlider.oninput = function() {
         sizeIndicator.innerHTML = this.value;
-		brushSize = this.value;
+        brushSize = this.value;
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
     }
+	
+    var link = document.createElement('a');
+    link.innerHTML = 'download image';
+    link.addEventListener('click', function(ev) {
+        link.href = canvas.toDataURL();
+        link.download = "mypainting.png";
+    }, false);
+    document.body.appendChild(link);
         
 </script>
 
