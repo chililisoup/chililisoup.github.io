@@ -56,6 +56,8 @@
     <table align="center">
         <tr>
             <th><label>Brush Color</label></th>
+        </tr>
+        <tr>
             <th><input type="color" id="colorSelect"></th>
         </tr>
     </table>
@@ -107,7 +109,7 @@
     var brushSize = 20;
     var brushColor = 23;
     var brushType = 1;
-    var brushColor = "rgb(0, 255, 0)";
+    var brushColor = "rgb(0, 0, 0)";
 
     window.addEventListener('mousedown', function() {
         draw = true;
@@ -196,7 +198,7 @@
     
     var colorPicker = document.getElementById("colorSelect");
     
-    sizeSlider.oninput = function() {
+    colorPicker.oninput = function() {
         brushColor = this.value;
     }
         
