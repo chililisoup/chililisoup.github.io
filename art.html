@@ -12,6 +12,12 @@
         background-repeat: round;
         border:5px solid rgb(150,150,150);
     }
+    .cset {
+        top: 30px;
+        left: 30px;
+        width: auto;
+        height: auto;
+    }
     .slider {
         width: 85%;
     }
@@ -31,11 +37,11 @@
         background-color: rgb(100,100,100)
     }
     button {
-        border: 3px solid #afafaf;
         cursor: pointer;
     }    
     .brAll {
         background-color: rgb(150,150,150); 
+        border: 3px solid #afafaf;
         width: 38px;
         height: 38px;
     }
@@ -58,8 +64,18 @@
     <title>Art</title>
 </head>
     
-<body onload="start()" onmousemove="getCoords(event)">
+<body onmousemove="getCoords(event)">
 
+<div class="cset">
+    <label>Width:</label>
+    <input type="number" step="1" value="960" id="setWidth">
+    <br>
+    <label>Height:</label>
+    <input type="number" step="1" value="540" id="setHeight">
+    <br>
+    <button onmousedown="start()">Ready!</button>
+</div>
+    
 <div class="sidebar">
 
     <table align="center" style="padding:5px 0px 0px;">
@@ -138,24 +154,26 @@
     });
     
     function start() {
+        
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
         area.start();
         document.getElementById("br1").style.border = "3px solid #42a9f7";
         document.getElementById("br1").style.cursor = "default";
-    }
-    var area = {
-        canvas : document.createElement("canvas"),
-        start : function() {
-            this.canvas.width = canvasWidth;
-            this.canvas.height = canvasHeight;
-            this.context = this.canvas.getContext("2d");
-            document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-            this.interval = setInterval(updateArea, runSpeed);
+        var area = {
+            canvas : document.createElement("canvas"),
+            start : function() {
+                this.canvas.width = canvasWidth;
+                this.canvas.height = canvasHeight;
+                this.context = this.canvas.getContext("2d");
+                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                this.interval = setInterval(updateArea, runSpeed);
         },
-        clear : function() {
-            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            clear : function() {
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            }
         }
     }
+    
     
     function component(width, height, color, x, y) {
         this.width = width;
@@ -279,9 +297,17 @@
     
     
     var colorPicker = document.getElementById("colorSelect");
-    
     colorPicker.oninput = function() {
         brushColor = this.value;
+    }
+    
+    var wSet = document.getElementById("setWidth");
+    var hSet = document.getElementById("setHeight");
+    wSet.oninput = function() {
+        canvasWidth = this.value;
+    }
+    hSet.oninput = function() {
+        canvasHeight = this.value;
     }
         
 </script>
