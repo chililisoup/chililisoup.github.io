@@ -13,13 +13,24 @@
         border:5px solid rgb(150,150,150);
     }
     .cset {
-	position: absolute;
-        top: 30px;
-        left: 30px;
+        position: absolute;
+        bottom: 30px;
+        right: 10px;
         width: auto;
         height: auto;
-	background-color: rgb(175,175,175);
+        background-color: rgb(175,175,175);
         border: 5px solid rgb(150,150,150);
+    }
+    .rForm {
+        left: 0px;
+        padding: 3px;
+    }
+    .rLabel {
+        padding: 3px;
+    }
+    .rButton {
+        padding: 7px;
+        width: 100%;
     }
     .slider {
         width: 85%;
@@ -70,13 +81,13 @@
 <body onmousemove="getCoords(event)">
 
 <div class="cset">
-    <label>Width:</label>
-    <input type="number" step="1" value="960" id="setWidth">
+    <label class="rLabel">Width:</label>
+    <input type="number" step="1" value="960" id="setWidth" class="rForm">
     <br>
-    <label>Height:</label>
-    <input type="number" step="1" value="540" id="setHeight">
+    <label class="rLabel">Height:</label>
+    <input type="number" step="1" value="540" id="setHeight" class="rForm">
     <br>
-    <button onmousedown="start()">Ready!</button>
+    <button onmousedown="start()" class="rButton">Ready!</button>
 </div>
     
 <div class="sidebar">
