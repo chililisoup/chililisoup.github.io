@@ -21,17 +21,6 @@
         background-color: rgb(175,175,175);
         border: 5px solid rgb(150,150,150);
     }
-    .rForm {
-        left: 0px;
-        padding: 3px;
-    }
-    .rLabel {
-        padding: 3px;
-    }
-    .rButton {
-        padding: 7px;
-        width: 100%;
-    }
     .slider {
         width: 85%;
     }
@@ -81,23 +70,23 @@
 <body onmousemove="getCoords(event)">
 
 <div class="cset">
-    <label class="rLabel">Width:</label>
-    <input type="number" step="1" value="960" id="setWidth" class="rForm">
-    <br>
-    <label class="rLabel">Height:</label>
-    <input type="number" step="1" value="540" id="setHeight" class="rForm">
-    <br>
-    <button onmousedown="start()" class="rButton">Ready!</button>
+    <table align="center">
+    <tr>
+        <th><label>Width:</label></th>
+        <th colspan="2"><input type="number" step="1" value="960" id="setWidth"></th>
+    </tr>
+    <tr>
+        <th><label>Height:</label></th>
+        <th colspan="2"><input type="number" step="1" value="540" id="setHeight"></th>
+    </tr>
+    <tr>
+        <th colspan="3"><button onmousedown="start()" id="resButton">Ready!</button></th>
+    </tr>
+    </table>
 </div>
     
 <div class="sidebar">
 
-    <table align="center" style="padding:5px 0px 0px;">
-        <tr>
-            <th colspan="6"><button onmousedown="clearCanvas()">Clear Canvas</button></th>
-        </tr>
-    </table>
-    <hr>
     <table align="center">
         <tr>
             <th><label>Brush Color</label></th>
@@ -159,6 +148,7 @@
     var brushColor = 23;
     var brushType = 1;
     var brushColor = "rgb(0, 0, 0)";
+    var later = false;
     window.addEventListener('mousedown', function() {
         draw = true;
     });
@@ -168,6 +158,16 @@
     });
     
     function start() {
+        if (later) {
+            var check = confirm("Are you sure?");
+            if (check) {
+                area.clear();
+                brushChange(3);
+            }
+        }
+        later = true;
+        document.getElementById("resButton").innerHTML = "Reset Canvas";
+        
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
         area.start();
         document.getElementById("br1").style.border = "3px solid #42a9f7";
@@ -288,14 +288,6 @@
             document.getElementById("br0").style.cursor = "";
             document.getElementById("br1").style.cursor = "";
             document.getElementById("br2").style.cursor = "";
-        }
-    }
-    
-    function clearCanvas() {
-        var check = confirm("Are you sure?");
-        if (check) {
-            area.clear();
-            brushChange(3);
         }
     }
 	
