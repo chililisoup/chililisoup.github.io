@@ -7,7 +7,7 @@
         margin: auto;
     	position: absolute;
     	top: 10px;
-    	left: 100px;
+    	left: 10px;
         background-image: url("art_icons/transparency.png");
         background-repeat: round;
         border:5px solid rgb(150,150,150);
@@ -229,16 +229,16 @@
 	
     function getCoords(event) {
         if (brushType == 0) {
-            mouseX = event.clientX - 105 - (brushSize * 0.5);
+            mouseX = event.clientX - 15 - (brushSize * 0.5);
             mouseY = event.clientY - 15 - (brushSize * 0.5);
         } else if (brushType == 1) {
-            mouseX = event.clientX - 105;
+            mouseX = event.clientX - 15;
             mouseY = event.clientY - 15;
         } else if (brushType == 2) {
-            mouseX = event.clientX - 105 - (brushSize * 0.5);
+            mouseX = event.clientX - 15 - (brushSize * 0.5);
             mouseY = event.clientY - 15 - (brushSize * 0.5);
         } else {
-            mouseX = event.clientX - 105;
+            mouseX = event.clientX - 15;
             mouseY = event.clientY - 15;
         }
     }
