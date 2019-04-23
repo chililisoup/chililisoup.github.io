@@ -13,10 +13,13 @@
         border:5px solid rgb(150,150,150);
     }
     .cset {
+	position: absolute;
         top: 30px;
         left: 30px;
         width: auto;
         height: auto;
+	background-color: rgb(175,175,175);
+        border: 5px solid rgb(150,150,150);
     }
     .slider {
         width: 85%;
@@ -154,26 +157,25 @@
     });
     
     function start() {
-        
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
         area.start();
         document.getElementById("br1").style.border = "3px solid #42a9f7";
         document.getElementById("br1").style.cursor = "default";
-        var area = {
-            canvas : document.createElement("canvas"),
-            start : function() {
-                this.canvas.width = canvasWidth;
-                this.canvas.height = canvasHeight;
-                this.context = this.canvas.getContext("2d");
-                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-                this.interval = setInterval(updateArea, runSpeed);
+    }
+	
+    var area = {
+        canvas : document.createElement("canvas"),
+        start : function() {
+            this.canvas.width = canvasWidth;
+            this.canvas.height = canvasHeight;
+            this.context = this.canvas.getContext("2d");
+            document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+            this.interval = setInterval(updateArea, runSpeed);
         },
-            clear : function() {
-                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            }
+        clear : function() {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
     }
-    
     
     function component(width, height, color, x, y) {
         this.width = width;
