@@ -164,14 +164,15 @@
                 area.clear();
                 brushChange(3);
             }
+        } else {
+            document.getElementById("br1").style.border = "3px solid #42a9f7";
+            document.getElementById("br1").style.cursor = "default";
         }
         later = true;
         document.getElementById("resButton").innerHTML = "Reset Canvas";
         
         brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
         area.start();
-        document.getElementById("br1").style.border = "3px solid #42a9f7";
-        document.getElementById("br1").style.cursor = "default";
     }
 	
     var area = {
