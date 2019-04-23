@@ -108,6 +108,17 @@
     </table>
     
     <hr>
+	
+    <table align="center">
+        <tr>
+            <th><label>Transparency: <span id="alphaTxt"></span></label></th>
+        </tr>
+        <tr>
+            <th><input type="range" min="0" max="1" value="1" step=".01" id="brushAlpha" class="slider"></th>
+        </tr>
+    </table>
+    
+    <hr>
     
     <table align="center">
         <tr>
@@ -149,6 +160,7 @@
     var brushType = 1;
     var brushColor = "rgb(0, 0, 0)";
     var later = false;
+    var brushAlpha = 1;
     window.addEventListener('mousedown', function() {
         draw = true;
     });
@@ -197,6 +209,7 @@
         this.update = function() {
             ctx = area.context;
             ctx.fillStyle = brushColor;
+            ctx.globalAlpha = brushAlpha;
             
             if (brushType == 0) {
                 ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -298,7 +311,15 @@
     sizeSlider.oninput = function() {
         sizeIndicator.innerHTML = this.value;
         brushSize = this.value;
-        brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize)
+        brush = new component(brushSize, brushSize, "rgb(0,0,0)", -brushSize, -brushSize);
+    }
+    
+    var alphaSlider = document.getElementById("brushAlpha");
+    var alphaIndicator = document.getElementById("alphaTxt");
+    alphaIndicator.innerHTML = alphaSlider.value;
+    alphaSlider.oninput = function() {
+        alphaIndicator.innerHTML = this.value;
+        brushAlpha = this.value;
     }
     
     
