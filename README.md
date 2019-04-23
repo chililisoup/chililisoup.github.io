@@ -23,9 +23,9 @@ Planned features:
    + More brushes
    + Save/load pictures
    + Mobile support
-   + Transparency (reminder to me to use globalAlpha) Should be easy
    + Fill tool
    + Layers (maybe)
    + Zoom in/out
    + Shape tool
    + Text tool
+   + Connect dots & stop from overfilling same spot (make the drawing experience a lot better)
