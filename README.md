@@ -22,7 +22,6 @@ Art is just a simple drawing program I am making to get better at using the canv
 Planned features:
    + More brushes
    + Save/load pictures
-   + More resolutions (maybe custom ones)
    + Mobile support
    + Transparency
    + Fill tool
