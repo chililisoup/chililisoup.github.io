@@ -174,7 +174,7 @@
     var canvasWidth = 960;
     var canvasHeight = 540;
     var brushSize = 20;
-    var brushColor = 23;
+    var brushColor;
     var brushType = 1;
     var brushColor = "rgb(0, 0, 0)";
     var later = false;
@@ -276,6 +276,9 @@
                 mouseX = event.clientX - 15;
                 mouseY = event.clientY - 15;
             }
+        } else {
+	        mouseX = -500;
+            mouseY = -500;
         }
     }
     
