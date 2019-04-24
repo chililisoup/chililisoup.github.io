@@ -186,8 +186,6 @@
     
     window.addEventListener('mouseup', function() {
         draw = false;
-        mouseX = -500;
-        mouseY = -500;
     });
     
     function start() {
@@ -262,24 +260,10 @@
     }
 	
     function getCoords(event) {
-        if (draw) {
-            if (brushType == 0) {
-                mouseX = event.clientX - 15 - (brushSize * 0.5);
-                mouseY = event.clientY - 15 - (brushSize * 0.5);
-            } else if (brushType == 1) {
-                mouseX = event.clientX - 15;
-                mouseY = event.clientY - 15;
-            } else if (brushType == 2) {
-                mouseX = event.clientX - 15 - (brushSize * 0.5);
-                mouseY = event.clientY - 15 - (brushSize * 0.5);
-            } else {
-                mouseX = event.clientX - 15;
-                mouseY = event.clientY - 15;
-            }
-        } else {
-	        mouseX = -500;
-            mouseY = -500;
-        }
+        oldX = mouseX;
+        oldY = mouseY;
+        mouseX = event.clientX - 15 - (brushSize * 0.5);
+        mouseY = event.clientY - 15 - (brushSize * 0.5);
     }
     
     function colorSelect(n) {
