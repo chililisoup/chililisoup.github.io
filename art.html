@@ -181,6 +181,7 @@
     var brushAlpha = 1;
     window.addEventListener('mousedown', function() {
         draw = true;
+        getCoords(event);
     });
     
     window.addEventListener('mouseup', function() {
