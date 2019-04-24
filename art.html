@@ -151,6 +151,21 @@
 
 <script>
 	
+    //General canvas reference
+    //https://www.w3schools.com/tags/ref_canvas.asp
+    //----
+    //Select area to draw
+    //https://www.w3schools.com/code/tryit.asp?filename=G3ECBL9TW86S
+    //----
+    //Better circle/square brush (won't work for custom shape brushes)
+    //https://www.w3schools.com/code/tryit.asp?filename=G3ECCXZMBM0A
+    //----
+    //Change canvas 0,0 (useful when brush gets offset
+    //https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_canvas_translate
+    //----
+    //Custom brush!
+    //https://www.w3schools.com/code/tryit.asp?filename=G3ECJMPPRT15
+	
     var brush;
     var draw = false;
     var mouseX;
@@ -170,6 +185,8 @@
     
     window.addEventListener('mouseup', function() {
         draw = false;
+        mouseX = -500;
+        mouseY = -500;
     });
     
     function start() {
@@ -244,18 +261,20 @@
     }
 	
     function getCoords(event) {
-        if (brushType == 0) {
-            mouseX = event.clientX - 15 - (brushSize * 0.5);
-            mouseY = event.clientY - 15 - (brushSize * 0.5);
-        } else if (brushType == 1) {
-            mouseX = event.clientX - 15;
-            mouseY = event.clientY - 15;
-        } else if (brushType == 2) {
-            mouseX = event.clientX - 15 - (brushSize * 0.5);
-            mouseY = event.clientY - 15 - (brushSize * 0.5);
-        } else {
-            mouseX = event.clientX - 15;
-            mouseY = event.clientY - 15;
+        if (draw) {
+            if (brushType == 0) {
+                mouseX = event.clientX - 15 - (brushSize * 0.5);
+                mouseY = event.clientY - 15 - (brushSize * 0.5);
+            } else if (brushType == 1) {
+                mouseX = event.clientX - 15;
+                mouseY = event.clientY - 15;
+            } else if (brushType == 2) {
+                mouseX = event.clientX - 15 - (brushSize * 0.5);
+                mouseY = event.clientY - 15 - (brushSize * 0.5);
+            } else {
+                mouseX = event.clientX - 15;
+                mouseY = event.clientY - 15;
+            }
         }
     }
     
