@@ -246,23 +246,17 @@
             } else {
                 ctx.globalCompositeOperation = 'destination-out';
             }
-		
-            ctx.moveTo(oldX,oldY);
-            ctx.lineTo(this.x,this.y);
-            
-            ctx.stroke();
-            
-    	}
-    	this.updatePos = function() {
             if (draw) {
-                this.x = mouseX;
-                this.y = mouseY;
+                ctx.moveTo(oldX,oldY);
+                ctx.lineTo(mouseX,mouseY);
+            
+                ctx.stroke();
             }
-    	}    
+            
+    	}   
     }
     
-    function updateArea() {
-    	brush.updatePos();    
+    function updateArea() {   
     	brush.update();
     }
 	
