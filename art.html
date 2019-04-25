@@ -129,6 +129,7 @@
         </tr>
         <tr>
             <th><button onmousedown="brushChange(0)" id="br0" class="brAll br0"></button></th>
+            <!--Add separate buttons for shape and mode (make better pls)-->
             <th><button onmousedown="brushChange(1)" id="br1" class="brAll br1"></button></th>
         </tr>
         <tr>
@@ -175,7 +176,8 @@
     var canvasHeight = 540;
     var brushSize = 20;
     var brushColor;
-    var brushType = 1;
+    var brushType = 0;
+    var brushShape = 1;
     var brushColor = "rgb(0, 0, 0)";
     var later = false;
     var brushAlpha = 1;
@@ -229,22 +231,24 @@
             ctx = area.context;
             ctx.fillStyle = brushColor;
             ctx.globalAlpha = brushAlpha;
+            ctx.lineWidth = brushSize;
+            
+            if (brushShape == 0) {
+                ctx.lineJoin = "miter";
+                ctx.lineCap = "square";
+            } else if (brushShape == 1) {
+                ctx.lineJoin = "round";
+                ctx.lineCap = "round";
+            }
             
             if (brushType == 0) {
-                ctx.fillRect(this.x, this.y, this.width, this.height);
-            } else if (brushType == 1) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, (this.width * 0.5), 0, 2 * Math.PI);
-                ctx.fill();
-            } else if (brushType == 2) {
-                ctx.clearRect(this.x, this.y, this.width, this.height)   
+                ctx.globalCompositeOperation = 'source-over';
             } else {
-                ctx.globalCompositeOperation = 'destination-out'
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, (this.width * 0.5), 0, 2 * Math.PI);
-                ctx.fill();
-                ctx.globalCompositeOperation = 'source-over'
+                ctx.globalCompositeOperation = 'destination-out';
             }
+            
+            ctx.stroke();
+            
     	}
     	this.updatePos = function() {
             if (draw) {
@@ -271,7 +275,20 @@
     }
     
     function brushChange(n) {
-        brushType = n;
+        if (n == 0) { //Make better buttons then fix this
+            brushType = 0;
+            brushShape = 0;
+        } else if (n == 1) {
+            brushType = 0;
+            brushShape = 1;
+        } else if (n == 2) {
+            brushType = 1;
+            brushShape = 0;
+        } else {
+            brushType = 1;
+            brushShape = 1;
+        }
+        
         if (n == 0) {
             document.getElementById("br0").style.border = "3px solid #42a9f7";
             document.getElementById("br0").style.cursor = "default";
