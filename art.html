@@ -246,6 +246,9 @@
             } else {
                 ctx.globalCompositeOperation = 'destination-out';
             }
+		
+            ctx.moveTo(oldX,oldY);
+            ctx.lineTo(this.x,this.y);
             
             ctx.stroke();
             
