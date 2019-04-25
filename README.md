@@ -28,4 +28,4 @@ Planned features:
    + Zoom in/out
    + Shape tool
    + Text tool
-   + Connect dots & stop from overfilling same spot (make the drawing experience a lot better)
+   + Undo button
