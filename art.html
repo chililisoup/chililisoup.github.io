@@ -247,6 +247,8 @@
                 ctx.globalCompositeOperation = 'destination-out';
             }
             if (draw) {
+                ctx.beginPath();
+                
                 ctx.moveTo(oldX,oldY);
                 ctx.lineTo(mouseX,mouseY);
             
