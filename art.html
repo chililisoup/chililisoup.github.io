@@ -68,6 +68,7 @@
 	
 <head>
     <title>Art</title>
+    <script src="canvas-toBlob.js"></script>
 </head>
     
 <body onmousemove="getCoords(event)">
@@ -142,7 +143,7 @@
     
     <table align="center" style="padding:0px 0px 5px;">
         <tr>
-            <th><a href="#" id="saveImage" onclick="downloadImage()" download="image.png">Save Image</a></th>
+            <th><button onmousedown="downloadImage()">Save Image</button></th>
         </tr>
     </table>
     
@@ -370,8 +371,9 @@
     }
 	
     function downloadImage() {
-        document.getElementById("saveImage").download = "image.png";
-        document.getElementById("saveImage").href = area.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+        area.toBlob(function(blob) {
+            saveAs(blob, "image.png");
+        });
     }
         
 </script>
