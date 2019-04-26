@@ -181,6 +181,7 @@
     var brushColor = "rgb(0, 0, 0)";
     var later = false;
     var brushAlpha = 1;
+    var newStroke = true;
     window.addEventListener('mousedown', function() {
         draw = true;
         getCoords(event);
@@ -188,6 +189,7 @@
     
     window.addEventListener('mouseup', function() {
         draw = false;
+        newStroke = true;
     });
     
     function start() {
@@ -247,9 +249,13 @@
                 ctx.globalCompositeOperation = 'destination-out';
             }
             if (draw) {
-                ctx.beginPath();
+                if (newStroke) {
+                    ctx.beginPath();
+                    ctx.moveTo(oldX,oldY);
+                }
                 
-                ctx.moveTo(oldX,oldY);
+                newStroke = false;
+                
                 ctx.lineTo(mouseX,mouseY);
             
                 ctx.stroke();
