@@ -142,10 +142,8 @@
     
     <table align="center" style="padding:0px 0px 5px;">
         <tr>
-            <th><button>Save Image</button></th>
+            <th><a id="saveImage" onclick="downloadImage()" download="image.png">Save Image</a></th>
         </tr>
-        <tr>
-            <th><p style="font-size: 12px;"><i>(Doesn't work yet)</i></p></th>
     </table>
     
 </div>
@@ -369,6 +367,11 @@
     }
     hSet.oninput = function() {
         canvasHeight = this.value;
+    }
+	
+    function downloadImage() {
+        document.getElementById("saveImage").download = "image.png";
+        document.getElementById("saveImage").href = area.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
     }
         
 </script>
