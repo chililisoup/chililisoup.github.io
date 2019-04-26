@@ -29,3 +29,4 @@ Planned features:
    + Shape tool
    + Text tool
    + Undo button
+   + Select tool
