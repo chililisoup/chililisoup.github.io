@@ -174,10 +174,9 @@
     var canvasWidth = 960;
     var canvasHeight = 540;
     var brushSize = 20;
-    var brushColor;
     var brushType = 0;
     var brushShape = 1;
-    var brushColor = "rgb(0, 0, 0)";
+    var brushColor = "rgb(0, 255, 0)";
     var later = false;
     var brushAlpha = 1;
     var newStroke = true;
@@ -274,10 +273,6 @@
         oldY = mouseY;
         mouseX = event.clientX - 15;
         mouseY = event.clientY - 15;
-    }
-    
-    function colorSelect(n) {
-        brushColor = n;
     }
     
     function brushChange(n) {
