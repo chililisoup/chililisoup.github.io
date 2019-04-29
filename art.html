@@ -176,7 +176,7 @@
     var brushSize = 20;
     var brushType = 0;
     var brushShape = 1;
-    var brushColor = "rgb(0, 255, 0)";
+    var brushColor;
     var later = false;
     var brushAlpha = 1;
     var newStroke = true;
@@ -231,7 +231,7 @@
         this.y = y;    
         this.update = function() {
             ctx = area.context;
-            ctx.fillStyle = brushColor;
+            ctx.strokeStyle = brushColor;
             ctx.globalAlpha = brushAlpha;
             ctx.lineWidth = brushSize;
             
