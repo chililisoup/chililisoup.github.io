@@ -143,7 +143,7 @@
     
     <table align="center" style="padding:0px 0px 5px;">
         <tr>
-            <th><button>Save Image</button></th>
+            <th><button onmousedown="undoStroke()">Undo</button></th>
         </tr>
     </table>
     
@@ -180,6 +180,8 @@
     var later = false;
     var brushAlpha = 1;
     var newStroke = true;
+    var lastImage;
+    var undoLast = false;
     window.addEventListener('mousedown', function() {
         draw = true;
         getCoords(event);
@@ -250,6 +252,7 @@
             }
             if (draw) {
                 if (newStroke) {
+                    lastImage = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
                     ctx.beginPath();
                     ctx.moveTo(oldX,oldY);
                 }
@@ -259,6 +262,10 @@
                 ctx.lineTo(mouseX,mouseY);
             
                 ctx.stroke();
+            }
+            if (undoLast) {
+                ctx.putImageData(lastImage, 0, 0);
+                undoLast = false;
             }
             
     	}   
@@ -363,6 +370,10 @@
     }
     hSet.oninput = function() {
         canvasHeight = this.value;
+    }
+    
+    function undoStroke() {
+        undoLast = true;
     }
         
 </script>
