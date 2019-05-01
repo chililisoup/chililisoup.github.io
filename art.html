@@ -107,7 +107,7 @@
             <th colspan="3"><input type="range" min="0" max="255" value="0" step="1" id="blueSelect colorSelect" class="slider"></th>
         </tr>
         <tr>
-            <th colspan="4" style="background:black;" id="colorShow"></th>
+            <th colspan="4" style="background:black;" id="colorShow"><p id="testPara"></p></th>
         </tr>
     </table>
     
@@ -377,7 +377,8 @@
     var bluePicker = document.getElementById("blueSelect");
     colorPicker.oninput = function() {
         brushColor = "rgb(" + redPicker.value + "," + greenPicker.value + "," + bluePicker.value + ")";
-        colorDisplay.style.background = brushColor;
+        document.getElementById("testPara").innerHTML = brushColor;
+        //colorDisplay.style.background = brushColor;
     }
     
     var wSet = document.getElementById("setWidth");
