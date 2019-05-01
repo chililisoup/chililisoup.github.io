@@ -1,7 +1,6 @@
 <html>
 
 <style>
-
     canvas {
         padding: 0;
         margin: auto;
@@ -14,7 +13,7 @@
     }
     .cset {
         position: absolute;
-        bottom: 10px;
+        bottom: 150px;
         right: 10px;
         width: auto;
         height: auto;
@@ -92,22 +91,10 @@
 
     <table align="center">
         <tr>
-            <th colspan="4"><label>Brush Color</label></th>
+            <th><label>Brush Color</label></th>
         </tr>
         <tr>
-            <th>R:</th>
-            <th colspan="3"><input type="range" min="0" max="255" value="0" step="1" id="redSelect colorSelect" class="slider"></th>
-        </tr>
-        <tr>
-            <th>G:</th>
-            <th colspan="3"><input type="range" min="0" max="255" value="0" step="1" id="greenSelect colorSelect" class="slider"></th>
-        </tr>
-        <tr>
-            <th>B:</th>
-            <th colspan="3"><input type="range" min="0" max="255" value="0" step="1" id="blueSelect colorSelect" class="slider"></th>
-        </tr>
-        <tr>
-            <th colspan="4" style="background:white;" id="colorShow"><p id="testPara"></p></th>
+            <th><input type="color" id="colorSelect"></th>
         </tr>
     </table>
     
@@ -371,14 +358,8 @@
     
     
     var colorPicker = document.getElementById("colorSelect");
-    var colorDisplay = document.getElementById("colorShow");
-    var redPicker = document.getElementById("redSelect");
-    var greenPicker = document.getElementById("greenSelect");
-    var bluePicker = document.getElementById("blueSelect");
     colorPicker.oninput = function() {
-        //brushColor = "rgb(" + this.value + "," + this.value + "," + this.value + ")";
-        document.getElementById("testPara").innerHTML = "wtf";
-        //colorDisplay.style.background = brushColor;
+        brushColor = this.value;
     }
     
     var wSet = document.getElementById("setWidth");
