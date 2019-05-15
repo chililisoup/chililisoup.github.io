@@ -1,0 +1,42 @@
+body {
+        background-color: rgb(100,100,100)
+    }
+    .button0 {
+        background-color: rgb(200,200,200);
+        border: 5px solid rgb(175,175,175);
+        color: black;
+        padding: 15px 15px;
+        width: 100%;
+        margin: auto;
+        text-align: center;
+        text-decoration: none;
+        font-family: verdana;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .button0:hover {
+        background-color: rgb(225,225,225);
+        border: 5px solid rgb(200,200,200);
+    }
+    .button0:active {
+        background-color: rgb(250,250,250);
+        border: 5px solid rgb(225,225,225);
+    }
+    .buttonTable {
+        margin-top: 2.5%;
+    }
+    .div0 {
+        background-color: rgb(150,150,150);
+        border: 5px solid rgb(125,125,125);
+        height: 90vh;
+        margin-top: 2.5%;
+    }
+    p {
+        background-color: rgb(200,200,200);
+        border: 5px solid rgb(175,175,175);
+        margin: 20px;
+        text-align: center;
+		font-size: 24px;
+        height: 90px;
+        overflow: auto;
+    }
