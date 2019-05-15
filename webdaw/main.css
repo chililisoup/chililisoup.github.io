@@ -1,0 +1,16 @@
+.boxes {
+  border: 2px solid black;
+  width: 100px;
+}
+.noteVal {
+  border: 6px solid black;
+  width: 50px;
+}
+table, td, th {
+  border-collapse: collapse;
+}
+.measureCell {
+  border: solid black;
+  border-width: 2px;
+  border-left-width: 4px;
+}
