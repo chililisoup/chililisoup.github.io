@@ -1,1 +1,108 @@
+<html>
 
+<head>
+  <link rel="stylesheet" href="pong.css">
+	<title>Pong</title>
+</head>
+	
+<body onload="start()">
+
+    <header>
+        <br><a href="https://rebot333.github.io/">Home</a>
+    </header>
+    
+<script src="pong.js"></script>
+<br>
+<div class="sidebar">
+<hr>
+<table>
+    <tr>
+        <th colspan="4", style="width: 16vw;">Bot Speed (Default: 0.875)</th>
+    </tr>
+    <tr>
+        <th><button onmousedown="enemySpeed(0.5)">0.5</button></th>
+        <th><button onmousedown="enemySpeed(0.75)">0.75</button></th>
+	<th><button onmousedown="enemySpeed(0.825)">0.825</button></th>
+	<th><button onmousedown="enemySpeed(0.85)">0.85</button></th>
+    </tr>
+    <tr>
+	<th><button onmousedown="enemySpeed(0.875)">0.875</button></th>
+        <th><button onmousedown="enemySpeed(0.9)">0.9</button></th>
+	<th><button onmousedown="enemySpeed(1)">1</button></th>
+        <th><button onmousedown="enemySpeed(2)">2</button></th>
+    </tr>
+    <tr>
+	<th><button onmousedown="enemySpeed(3)">3</button></th>
+	<th><button onmousedown="enemySpeed(5)">5</button></th>
+	<th><button onmousedown="enemySpeed(10)">10</button></th>
+        <th><button onmousedown="enemySpeed(20)">20</button></th>
+    </tr>
+</table>
+<hr>
+<table>
+    <tr>
+        <th colspan="4", style="width: 16vw;">Player Speed (Default: 0.75)</th>
+    </tr>
+    <tr>
+        <th><button onmousedown="speed(0.5)">0.5</button></th>
+        <th><button onmousedown="speed(0.75)">0.75</button></th>
+        <th><button onmousedown="speed(0.825)">0.825</button></th>
+	<th><button onmousedown="speed(0.85)">0.85</button></th>
+    </tr>
+    <tr>
+        <th><button onmousedown="speed(0.875)">0.875</button></th>
+        <th><button onmousedown="speed(0.9)">0.9</button></th>
+	<th><button onmousedown="speed(1)">1</button></th>
+        <th><button onmousedown="speed(2)">2</button></th>
+    </tr>
+    <tr>
+	<th><button onmousedown="speed(3)">3</button></th>
+	<th><button onmousedown="speed(5)">5</button></th>
+	<th><button onmousedown="speed(10)">10</button></th>
+        <th><button onmousedown="speed(20)">20</button></th>
+    </tr>
+</table>
+<hr>
+    <table>
+        <tr>
+            <th colspan="2" style="width: 16vw;">Game Mode</th>
+        </tr>
+        <tr>
+            <th style="width:5vw;"><button onmousedown="modeChange(0)">Bot</button></th>
+            <th style="width:5vw;"><button onmousedown="modeChange(1)">Player</button></th>
+        </tr>
+    </table>
+<hr>
+<table style="width:10vw; border: 0px solid black;">
+    <tr>
+        <th style="width:16vw; border: 0px solid black;">
+            <button onmousedown="resetBoard()" style="font-size: 0.8vw; width: 14vw; height: 2vw; margin: auto;">Reset</button>
+        </th>
+    </tr>
+</table>
+<hr>
+<table>
+    <tr>
+	<th>
+	    <button onmousedown="player1Controller(1)" style="width: 10vw; height: 3vw;">/\</button>
+	</th>
+    </tr>
+    <tr>
+	<th>
+	    <button onmousedown="player1Controller(0)" style="width: 10vw; height: 3vw;">--</button>
+	</th>
+    </tr>
+    <tr>
+	<th>
+	    <button onmousedown="player1Controller(2)" style="width: 10vw; height: 3vw;">\/</button>
+	</th>
+    </tr>
+</table>
+<hr>
+<p>
+Use arrow keys and W/S for keyboard movement. Arrow buttons for mobile.
+</p>
+<hr>
+</div>
+</body>  
+</html>
