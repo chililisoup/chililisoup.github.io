@@ -10,6 +10,16 @@
 </html>
 <div id="noteArea">
 </div>
-<input type="number" step="1" min="1" max="16" value="4" id="timeSet">
-<input type="number" step="1" min="1" max="32" value="4" id="measureSet">
-<button onmousedown="setupMidiEditor()">Create</button>
+<table>
+    <tr>
+        <th><input type="number" step="1" min="1" max="16" value="4" id="timeSet"></th>
+        <th><input type="number" step="1" min="1" max="32" value="4" id="measureSet"></th>
+    </tr>
+    <tr>
+        <th>4</th>
+        <th> </th>
+    </tr>
+    <tr>
+        <th colspan="2"><button onmousedown="setupMidiEditor()">Create</button></th>
+    </tr>
+</table>
