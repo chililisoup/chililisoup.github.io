@@ -15,5 +15,8 @@ table, td, th {
   border-left-width: 4px;
 }
 #noteArea {
-  overflow: scroll;
+  overflow-x: scroll;
+}
+.noteTable {
+  width: 100%;
 }
