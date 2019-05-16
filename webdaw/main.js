@@ -43,5 +43,8 @@ function zoom(n) {
   if (boxWidth == 260) {
     boxWidth = 250;
   }
-  document.getElementsByClassName('boxes').style.width = boxWidth + "px";
+  var x = document.getElementsByClassName('boxes');
+  for(var i=0; i< x.length;i++){
+    x[i].style.width = boxWidth + "px";
+  }
 }
