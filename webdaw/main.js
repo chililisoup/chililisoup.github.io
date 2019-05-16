@@ -1,5 +1,5 @@
 var endBoxHTML = "</table>";
-var notes = 24;
+var notes = 88;
 var noteColor = "rgb(135, 232, 111)";
 var inputTimeSet = document.getElementById("timeSet");
 var inputMeasureSet = document.getElementById("measureSet");
