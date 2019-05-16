@@ -1,14 +1,15 @@
 var endBoxHTML = "</table>";
 var notes = 88;
-var noteColor = "rgb(135, 232, 111)";
 var inputTimeSet = document.getElementById("timeSet");
 var inputMeasureSet = document.getElementById("measureSet");
+var inputNoteColor = document.getElementById("noteColor");
 var boxWidth = 100;
 
 function setupMidiEditor() {
   var boxHTML = "<table class='noteTable'>";
   var measures = inputMeasureSet.value;
   var time = inputTimeSet.value;
+  var noteColor = inputNoteColor.value;
   
   for (var i = 0; i < notes; i++) {
     boxHTML += "<tr><th class='noteVal'>" + (i + 1) + "</th>";
