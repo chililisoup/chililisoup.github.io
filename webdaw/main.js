@@ -3,6 +3,7 @@ var notes = 24;
 var noteColor = "rgb(135, 232, 111)";
 var inputTimeSet = document.getElementById("timeSet");
 var inputMeasureSet = document.getElementById("measureSet");
+var boxWidth = 100;
 
 function setupMidiEditor() {
   var boxHTML = "<table class='noteTable'>";
@@ -32,4 +33,15 @@ function switchCell(a, b) {
   } else {
     document.getElementById(cellID).style.background = noteColor;
   }
+}
+
+function zoom(n) {
+  boxWidth += n;
+  if (boxWidth == 0) {
+    boxWidth = 10;
+  }
+  if (boxWidth == 260) {
+    boxWidth = 250;
+  }
+  document.getElementsByClassName('boxes').style.width = boxWidth + "px";
 }
