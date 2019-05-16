@@ -23,6 +23,7 @@ function setupMidiEditor() {
   }
   boxHTML += endBoxHTML;
   document.getElementById("noteArea").innerHTML = boxHTML;
+  boxWidth = 100;
 }
 
 
