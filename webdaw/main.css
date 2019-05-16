@@ -19,4 +19,5 @@ table, td, th {
 }
 .noteTable {
   width: 100%;
+  table-layout: fixed;
 }
