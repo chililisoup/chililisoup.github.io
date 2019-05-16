@@ -5,7 +5,7 @@ var inputTimeSet = document.getElementById("timeSet");
 var inputMeasureSet = document.getElementById("measureSet");
 
 function setupMidiEditor() {
-  var boxHTML = "<table>";
+  var boxHTML = "<table class='noteTable'>";
   var measures = inputMeasureSet.value;
   var time = inputTimeSet.value;
   
