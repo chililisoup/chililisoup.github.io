@@ -25,6 +25,7 @@ function setupMidiEditor() {
   }
   boxHTML += endBoxHTML;
   document.getElementById("noteArea").innerHTML = boxHTML;
+  document.getElementById("noteArea").style.height = "750px";
   boxWidth = 100;
 }
 
