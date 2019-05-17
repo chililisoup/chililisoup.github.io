@@ -15,15 +15,30 @@ function setupMidiEditor() {
   
   for (var i = 0; i < notes; i++) {
     var noteName;
+    
+    var n = i;
     if (i > 11) {
-      getNote();
-    }
-    function getNote() {
       n = i - 12;
-      if (n > 11) {
-        getNote();
-      }
     }
+    if (i > 23) {
+      n = i - 24;
+    }
+    if (i > 35) {
+      n = i - 36;
+    }
+    if (i > 47) {
+      n = i - 48;
+    }
+    if (i > 59) {
+      n = i - 60;
+    }
+    if (i > 71) {
+      n = i - 72;
+    }
+    if (i > 83) {
+      n = i - 84;
+    }
+    
     if (n == 0) {
       noteName = "A";
     } else if (n == 1) {
