@@ -16,9 +16,9 @@ function setupMidiEditor() {
     boxHTML += "<tr><th class='noteVal'>" + (i + 1) + "</th>";
     for (var l = 0; l < time*measures; l++) {
       if (l % time === 0) {
-        boxHTML += "<th class='boxes measureCell' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
+        boxHTML += "<th class='boxes measureCell' style='background: white;' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
       } else {
-        boxHTML += "<th class='boxes' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
+        boxHTML += "<th class='boxes' style='background: white;' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
       }
     }
     boxHTML += "</tr>";
