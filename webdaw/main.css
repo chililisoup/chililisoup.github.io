@@ -16,8 +16,9 @@ table, td, th {
   border-left-width: 4px;
 }
 #noteArea {
-  overflow: scroll;
-  height: 750px
+  height: 750px;
+  overflow: auto;
+  resize: both;
 }
 .noteTable {
   width: 100%;
