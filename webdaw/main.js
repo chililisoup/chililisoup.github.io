@@ -42,30 +42,30 @@ function setupMidiEditor() {
     }
     
     if (n == 0) {
-      noteName = "A♭";
-    } else if (n == 1) {
-      noteName = "G";         
-    } else if (n == 2) {
-      noteName = "F♯";        
-    } else if (n == 3) {
-      noteName = "F";
-    } else if (n == 4) {
-      noteName = "E";         
-    } else if (n == 5) {
-      noteName = "E♭";         
-    } else if (n == 6) {
-      noteName = "D";         
-    } else if (n == 7) {
-      noteName = "C♯";         
-    } else if (n == 8) {
-      noteName = "C";         
-    } else if (n == 9) {
       noteName = "B";         
-    } else if (n == 10) {
+    } else if (n == 1) {
       noteName = "B♭";         
-    } else {
+    } else if (n == 2){
       noteName = "A";
-    }
+    } else if (n == 3) {
+      noteName = "A♭";
+    } else if (n == 4) {
+      noteName = "G";         
+    } else if (n == 5) {
+      noteName = "F♯";        
+    } else if (n == 6) {
+      noteName = "F";
+    } else if (n == 7) {
+      noteName = "E";         
+    } else if (n == 8) {
+      noteName = "E♭";         
+    } else if (n == 9) {
+      noteName = "D";         
+    } else if (n == 10) {
+      noteName = "C♯";         
+    } else {
+      noteName = "C";         
+    
     
     boxHTML += "<tr><th class='noteVal'>" + noteName + "</th>";
     for (var l = 0; l < time*measures; l++) {
