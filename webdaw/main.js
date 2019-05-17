@@ -12,8 +12,45 @@ function setupMidiEditor() {
   var time = inputTimeSet.value;
   noteColor = inputNoteColor.value;
   
+  
   for (var i = 0; i < notes; i++) {
-    boxHTML += "<tr><th class='noteVal'>" + (i + 1) + "</th>";
+    var noteName;
+    if (i > 11) {
+      getNote();
+    }
+    function getNote() {
+      n = i - 12;
+      if (n > 11) {
+        getNote();
+      }
+    }
+    if (n == 0) {
+      noteName = "A";
+    } else if (n == 1) {
+      noteName = "B♭";         
+    } else if (n == 2) {
+      noteName = "B";        
+    } else if (n == 3) {
+      noteName = "C";
+    } else if (n == 4) {
+      noteName = "C♯";         
+    } else if (n == 5) {
+      noteName = "D";         
+    } else if (n == 6) {
+      noteName = "E♭";         
+    } else if (n == 7) {
+      noteName = "E";         
+    } else if (n == 8) {
+      noteName = "F";         
+    } else if (n == 9) {
+      noteName = "F♯";         
+    } else if (n == 10) {
+      noteName = "G";         
+    } else {
+      noteName = "A♭";
+    }
+    
+    boxHTML += "<tr><th class='noteVal'>" + noteName + "</th>";
     for (var l = 0; l < time*measures; l++) {
       if (l % time === 0) {
         boxHTML += "<th class='boxes measureCell' style='background: white;' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
