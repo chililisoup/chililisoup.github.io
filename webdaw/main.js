@@ -16,6 +16,8 @@ function setupMidiEditor() {
   for (var i = 0; i < notes; i++) {
     var noteName;
     
+    //Add octave names, don't forget it goes A0, Bb0, B0, C1, etc
+    
     var n = i;
     if (i > 11) {
       n = i - 12;
@@ -40,29 +42,29 @@ function setupMidiEditor() {
     }
     
     if (n == 0) {
-      noteName = "A";
-    } else if (n == 1) {
-      noteName = "B♭";         
-    } else if (n == 2) {
-      noteName = "B";        
-    } else if (n == 3) {
-      noteName = "C";
-    } else if (n == 4) {
-      noteName = "C♯";         
-    } else if (n == 5) {
-      noteName = "D";         
-    } else if (n == 6) {
-      noteName = "E♭";         
-    } else if (n == 7) {
-      noteName = "E";         
-    } else if (n == 8) {
-      noteName = "F";         
-    } else if (n == 9) {
-      noteName = "F♯";         
-    } else if (n == 10) {
-      noteName = "G";         
-    } else {
       noteName = "A♭";
+    } else if (n == 1) {
+      noteName = "G";         
+    } else if (n == 2) {
+      noteName = "F♯";        
+    } else if (n == 3) {
+      noteName = "F";
+    } else if (n == 4) {
+      noteName = "E";         
+    } else if (n == 5) {
+      noteName = "E♭";         
+    } else if (n == 6) {
+      noteName = "D";         
+    } else if (n == 7) {
+      noteName = "C♯";         
+    } else if (n == 8) {
+      noteName = "C";         
+    } else if (n == 9) {
+      noteName = "B";         
+    } else if (n == 10) {
+      noteName = "B♭";         
+    } else {
+      noteName = "A";
     }
     
     boxHTML += "<tr><th class='noteVal'>" + noteName + "</th>";
