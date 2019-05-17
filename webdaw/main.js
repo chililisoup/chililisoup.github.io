@@ -31,7 +31,7 @@ function setupMidiEditor() {
 
 function switchCell(a, b) {
   var cellID = "cell_" + (a + 1) + "_" + (b + 1);
-  if (document.getElementById(cellID).style.background == noteColor) {
+  if (document.getElementById(cellID).style.background !== "white") {
     document.getElementById(cellID).style.background = "white";
   } else {
     document.getElementById(cellID).style.background = noteColor;
