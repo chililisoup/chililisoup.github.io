@@ -16,7 +16,6 @@ table, td, th {
   border-left-width: 4px;
 }
 #noteArea {
-  height: 750px;
   overflow: auto;
   resize: both;
 }
