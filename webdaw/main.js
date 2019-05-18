@@ -1,16 +1,13 @@
 var endBoxHTML = "</table>";
-var notes = 88;
+var notes = 87;
 var inputTimeSet = document.getElementById("timeSet");
 var inputMeasureSet = document.getElementById("measureSet");
-var inputNoteColor = document.getElementById("noteColor");
 var boxWidth = 100;
-var noteColor = "#87e86f";
 
 function setupMidiEditor() {
   var boxHTML = "<table class='noteTable'>";
   var measures = inputMeasureSet.value;
   var time = inputTimeSet.value;
-  noteColor = inputNoteColor.value;
   
   
   for (var i = 0; i < notes; i++) {
@@ -41,38 +38,58 @@ function setupMidiEditor() {
       n = i - 84;
     }
     
+    
+    var noteAccidental = 0;
     if (n == 0) {
       noteName = "B";         
     } else if (n == 1) {
-      noteName = "B♭";         
+      noteName = "B";     
+      noteAccidental = -1;      
     } else if (n == 2){
       noteName = "A";
     } else if (n == 3) {
-      noteName = "A♭";
+      noteName = "A";
+      noteAccidental = -1;   
     } else if (n == 4) {
       noteName = "G";         
     } else if (n == 5) {
-      noteName = "F♯";        
+      noteName = "F"; 
+      noteAccidental = 1;
     } else if (n == 6) {
       noteName = "F";
     } else if (n == 7) {
       noteName = "E";         
     } else if (n == 8) {
-      noteName = "E♭";         
+      noteName = "E";
+      noteAccidental = -1;   
     } else if (n == 9) {
       noteName = "D";         
     } else if (n == 10) {
-      noteName = "C♯";         
+      noteName = "C"; 
+      noteAccidental = 1;   
     } else {
-      noteName = "C";         
+      noteName = "C";     
+    }   
     
     
-    boxHTML += "<tr><th class='noteVal'>" + noteName + "</th>";
+    var cellColor = "white";
+    if (noteAccidental == -1) {
+      noteAccidental = "&#9837;"
+      cellColor = "silver";
+    } else if (noteAccidental == 1) {
+      noteAccidental = "&#9839;"
+      cellColor = "silver";
+    } else {
+      noteAccidental = "";
+    }
+    
+    
+    boxHTML += "<tr><th class='noteVal' style='background: " + cellColor + ";'>" + noteName + noteAccidental + "</th>";
     for (var l = 0; l < time*measures; l++) {
       if (l % time === 0) {
-        boxHTML += "<th class='boxes measureCell' style='background: white;' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
+        boxHTML += "<th class='boxes measureCell' style='background: " + cellColor + ";' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
       } else {
-        boxHTML += "<th class='boxes' style='background: white;' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
+        boxHTML += "<th class='boxes' style='background: " + cellColor + ";' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
       }
     }
     boxHTML += "</tr>";
@@ -86,10 +103,14 @@ function setupMidiEditor() {
 
 function switchCell(a, b) {
   var cellID = "cell_" + (a + 1) + "_" + (b + 1);
-  if (document.getElementById(cellID).style.background !== "white") {
-    document.getElementById(cellID).style.background = "white";
+  if (document.getElementById(cellID).style.background == "white") {
+    document.getElementById(cellID).style.background = "limegreen";
+  } else if (document.getElementById(cellID).style.background == "silver") {
+    document.getElementById(cellID).style.background = "green";
+  } else if (document.getElementById(cellID).style.background == "green") {
+    document.getElementById(cellID).style.background = "silver";
   } else {
-    document.getElementById(cellID).style.background = noteColor;
+    document.getElementById(cellID).style.background = "white";
   }
 }
 
