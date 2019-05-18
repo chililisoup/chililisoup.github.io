@@ -1,5 +1,5 @@
 var endBoxHTML = "</table>";
-var notes = 87;
+var notes = 88;
 var inputTimeSet = document.getElementById("timeSet");
 var inputMeasureSet = document.getElementById("measureSet");
 var boxWidth = 100;
@@ -38,38 +38,67 @@ function setupMidiEditor() {
       n = i - 84;
     }
     
+    var octave;
+    if (i < 13) {
+      octave = "7";
+    }
+    if (i == 0) {
+      octave = "8";
+    }
+    if (i > 12) {
+      octave = "6";
+    }
+    if (i > 24) {
+      octave = "5";
+    }
+    if (i > 36) {
+      octave = "4";
+    }
+    if (i > 48) {
+      octave = "3";
+    }
+    if (i > 60) {
+      octave = "2";
+    }
+    if (i > 72) {
+      octave = "1";
+    }
+    if (i > 84) {
+      octave = "0";
+    }
+    
     
     var noteAccidental = 0;
     if (n == 0) {
-      noteName = "B";         
+      noteName = "C"; 
     } else if (n == 1) {
+      noteName = "B";         
+    } else if (n == 2) {
       noteName = "B";     
       noteAccidental = -1;      
-    } else if (n == 2){
+    } else if (n == 3){
       noteName = "A";
-    } else if (n == 3) {
+    } else if (n == 4) {
       noteName = "A";
       noteAccidental = -1;   
-    } else if (n == 4) {
-      noteName = "G";         
     } else if (n == 5) {
+      noteName = "G";         
+    } else if (n == 6) {
       noteName = "F"; 
       noteAccidental = 1;
-    } else if (n == 6) {
-      noteName = "F";
     } else if (n == 7) {
-      noteName = "E";         
+      noteName = "F";
     } else if (n == 8) {
+      noteName = "E";         
+    } else if (n == 9) {
       noteName = "E";
       noteAccidental = -1;   
-    } else if (n == 9) {
-      noteName = "D";         
     } else if (n == 10) {
+      noteName = "D";         
+    } else {
       noteName = "C"; 
       noteAccidental = 1;   
-    } else {
-      noteName = "C";     
-    }   
+    }  
     
     
     var cellColor = "white";
@@ -84,7 +113,7 @@ function setupMidiEditor() {
     }
     
     
-    boxHTML += "<tr><th class='noteVal' style='background: " + cellColor + ";'>" + noteName + noteAccidental + "</th>";
+    boxHTML += "<tr><th class='noteVal' style='background: " + cellColor + ";'>" + noteName + octave + noteAccidental + "</th>";
     for (var l = 0; l < time*measures; l++) {
       if (l % time === 0) {
         boxHTML += "<th class='boxes measureCell' style='background: " + cellColor + ";' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
