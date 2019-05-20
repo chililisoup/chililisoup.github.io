@@ -133,11 +133,11 @@ function setupMidiEditor() {
 function switchCell(a, b) {
   var cellID = "cell_" + (a + 1) + "_" + (b + 1);
   if (document.getElementById(cellID).style.background == "white") {
-    document.getElementById(cellID).style.background = "limegreen";
-  } else if (document.getElementById(cellID).style.background == "silver") {
-    document.getElementById(cellID).style.background = "green";
-  } else if (document.getElementById(cellID).style.background == "green") {
-    document.getElementById(cellID).style.background = "silver";
+    document.getElementById(cellID).style.background = "deepskyblue";
+  } else if (document.getElementById(cellID).style.background == "gainsboro") {
+    document.getElementById(cellID).style.background = "dodgerblue";
+  } else if (document.getElementById(cellID).style.background == "dodgerblue") {
+    document.getElementById(cellID).style.background = "gainsboro";
   } else {
     document.getElementById(cellID).style.background = "white";
   }
