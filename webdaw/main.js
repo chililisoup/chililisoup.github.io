@@ -104,10 +104,10 @@ function setupMidiEditor() {
     var cellColor = "white";
     if (noteAccidental == -1) {
       noteAccidental = "&#9837;";
-      cellColor = "silver";
+      cellColor = "gainsboro";
     } else if (noteAccidental == 1) {
       noteAccidental = "&#9839;";
-      cellColor = "silver";
+      cellColor = "gainsboro";
     } else {
       noteAccidental = "";
     }
