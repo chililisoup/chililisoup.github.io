@@ -116,9 +116,9 @@ function setupMidiEditor() {
     boxHTML += "<tr><th class='noteVal' style='background: " + cellColor + ";'>" + noteName + octave + noteAccidental + "</th>";
     for (var l = 0; l < time*measures; l++) {
       if (l % time === 0) {
-        boxHTML += "<th class='boxes measureCell' colspan='1' style='background: " + cellColor + ";' ondblclick='extendCell(" + i + ", " + l + ") onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
+        boxHTML += "<th class='boxes measureCell' colspan='1' style='background: " + cellColor + ";' ondblclick='extendCell(" + i + ", " + l + ")' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
       } else {
-        boxHTML += "<th class='boxes' colspan='1' style='background: " + cellColor + ";' ondblclick='extendCell(" + i + ", " + l + ") onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
+        boxHTML += "<th class='boxes' colspan='1' style='background: " + cellColor + ";' ondblclick='extendCell(" + i + ", " + l + ")' onmousedown='switchCell(" + i + ", " + l + ")' id='cell_" + (i + 1) + "_" + (l + 1) + "'></th>";
       }
     }
     boxHTML += "</tr>";
