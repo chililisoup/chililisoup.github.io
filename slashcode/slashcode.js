@@ -40,10 +40,11 @@ function encode() {
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/z/gi, '//-.,');
 		
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/ /g, '<br>');
-		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\n/g, '<br>');
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\n/g, '<br><br>');
 	} else {
 		document.getElementById("output").innerHTML = input;
 		var oldText = document.getElementById("output").innerHTML;
+		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace(/\n\n/g, '<br>');
 		document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//-.,', 'z');
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//-,', 'y');
         	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replace('//....,', 'x');
