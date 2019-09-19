@@ -22,6 +22,8 @@ var render = Render.create({
     element: document.body,
     engine: engine
 });
+    
+Matter.MouseConstraint.create(engine, options)
 
 // create two boxes and a ground
 var boxA = Bodies.rectangle(400, 200, 80, 80);
