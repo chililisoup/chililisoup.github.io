@@ -72,7 +72,8 @@ function spawnHex() {
 }
 
 function clear() {
-    Matter.Engine.clear(engine)
+    World.clear(engine.world, true);
+	Engine.clear(engine);
     World.add(engine.world, [ground, wallA, wallB]);
 }
 
