@@ -1,1 +1,9 @@
-
+.sidebar {
+    position: absolute;
+    top: 40vh;
+    right: 10px;
+    height: auto;
+    width: auto;
+    background-color: rgb(175,175,175);
+    border: 5px solid rgb(150,150,150);
+}
