@@ -78,4 +78,12 @@ Engine.run(engine);
 Render.run(render);
   
   
+var world = engine.world;
+var Mouse= Matter.Mouse;
+var MouseConstraint=Matter.MouseConstraint;
+var mouse = Mouse.create(render.canvas);
+var mouseConstraint = MouseConstraint.create(engine, {mouse: mouse});
+World.add(world, mouseConstraint);
+
+
   
