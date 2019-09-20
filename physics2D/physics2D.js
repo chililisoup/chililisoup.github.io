@@ -71,11 +71,6 @@ function spawnHex() {
     World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), 6, 50)]);
 }
 
-function clear() {
-    Matter.World.clear(world, keepStatic);
-    World.add(engine.world, [ground, wallA, wallB]);
-}
-
 // run the engine
 Engine.run(engine);
 
