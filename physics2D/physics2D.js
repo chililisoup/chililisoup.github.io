@@ -75,69 +75,22 @@ function spawnHex() {
 var wireToggled = 1;
 function toggleWire() {
     if (wireToggled == 1) {
-        var render = Render.create({
-    element: document.body,
-    engine: engine,
-    options: {
-        width: canWidth,
-        height: canHeight,
-        pixelRatio: 1,
-        background: '#cccccc',
-        wireframes: true,
-        wireframeBackground: '#222',
-        hasBounds: false,
-        enabled: true,
-        showSleeping: true,
-        showDebug: false,
-        showBroadphase: false,
-        showBounds: false,
-        showVelocity: false,
-        showCollisions: false,
-        showSeparations: false,
-        showAxes: false,
-        showPositions: false,
-        showAngleIndicator: true,
-        showIds: false,
-        showShadows: false,
-        showVertexNumbers: false,
-        showConvexHulls: false,
-        showInternalEdges: false,
-        showMousePosition: false
-    }
-});
+        render.options.wireframes = true;
         wireToggled = 0;
     } else {
-        var render = Render.create({
-    element: document.body,
-    engine: engine,
-    options: {
-        width: canWidth,
-        height: canHeight,
-        pixelRatio: 1,
-        background: '#cccccc',
-        wireframes: false,
-        wireframeBackground: '#222',
-        hasBounds: false,
-        enabled: true,
-        showSleeping: true,
-        showDebug: false,
-        showBroadphase: false,
-        showBounds: false,
-        showVelocity: false,
-        showCollisions: false,
-        showSeparations: false,
-        showAxes: false,
-        showPositions: false,
-        showAngleIndicator: true,
-        showIds: false,
-        showShadows: false,
-        showVertexNumbers: false,
-        showConvexHulls: false,
-        showInternalEdges: false,
-        showMousePosition: false
-    }
-});
+        render.options.wireframes = false;
         wireToggled = 1;
+    }
+}
+
+var angleToggled = 0;
+function toggleAngle() {
+    if (angleToggled == 1) {
+        render.options.showAngleIndicator = true;
+        angleToggled = 0;
+    } else {
+        render.options.showAngleIndicator = false;
+        angleToggled = 1;
     }
 }
 
