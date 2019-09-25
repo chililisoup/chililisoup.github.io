@@ -95,6 +95,7 @@ function toggleAngle() {
 function clearWorld() {
     Matter.Composite.clear(world);
     World.add(engine.world, [ground, wallA, wallB, roof]);
+    World.add(world, mouseConstraint);
 }
 
 var sideSlider = document.getElementById("sideSlider");
