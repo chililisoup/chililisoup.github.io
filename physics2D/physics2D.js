@@ -10,8 +10,9 @@ var engine = Engine.create();
 var canWidth = 1000,
     canHeight = 600;
 var objectSides = 0;
-var objectRestitution = 0.4
-var objectColor = "#ff8000"
+var objectRestitution = 0.4;
+var objectColor = "#ff8000";
+var objectSize = 50;
 
 // create a renderer
 var render = Render.create({
@@ -56,7 +57,17 @@ var ground = Bodies.rectangle((canWidth * 0.5), (canHeight + 10), (canWidth + 10
 World.add(engine.world, [ground, wallA, wallB, roof]);
   
 function spawnObject() {
-    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), objectSides, 50, { restitution: objectRestitution, render: { fillStyle: objectColor } })]);
+    World.add(engine.world, [Bodies.polygon(
+        (canWidth * 0.5),
+        (canHeight * 0.5),
+        objectSides,
+        objectSize, {
+            restitution: objectRestitution,
+            render: {
+                fillStyle: objectColor
+            }
+        }
+    )]);
 }
 
 var wireToggled = 1;
@@ -81,6 +92,11 @@ function toggleAngle() {
     }
 }
 
+function clearWorld() {
+    Matter.Composite.clear(world);
+    World.add(engine.world, [ground, wallA, wallB, roof]);
+}
+
 var sideSlider = document.getElementById("sideSlider");
 var sideIndicator = document.getElementById("sideTxt");
 sideSlider.oninput = function() {
@@ -99,6 +115,13 @@ var bounceIndicator = document.getElementById("bounceTxt");
 bounceSlider.oninput = function() {
     objectRestitution = this.value;
     bounceIndicator.innerHTML = ("Restitution: " + objectRestitution);
+}
+
+var sizeSlider = document.getElementById("sizeSlider");
+var sizeIndicator = document.getElementById("sizeTxt");
+sizeSlider.oninput = function() {
+    objectSize = this.value;
+    sizeIndicator.innerHTML = ("Size: " + objectSize);
 }
 
 var colorInput = document.getElementById("colorInput");

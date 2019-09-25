@@ -16,6 +16,12 @@
             <th><input type="range" min="0" max="8" value="0" step="1" id="sideSlider"></th>
         </tr>
         <tr>
+            <th><label id="sizeTxt">Size: 50</label></th>
+        </tr>
+        <tr>
+            <th><input type="range" min="5" max="150" value="50" step="5" id="sizeSlider"></th>
+        </tr>
+        <tr>
             <th><label id="bounceTxt">Restitution: 0.4</label></th>
         </tr>
         <tr>
@@ -24,6 +30,9 @@
         <tr>
             <th><label>Color: </label><input type="color" value="#ff8000" id="colorInput"></th>
         </tr>
+        
+        <tr><th><br></th></tr>
+        
         <tr>
             <th><button onclick="spawnObject()">Summon Object</button></th>
         </tr>
@@ -37,6 +46,14 @@
         </tr>
         <tr>
             <th><button onclick="toggleAngle()">Toggle Angle Indicators</button></th>
+        </tr>
+    </table>
+    
+    <hr>
+    
+    <table align="center">
+        <tr>
+            <th><button onclick="clearWorld()">Clear</button></th>
         </tr>
     </table>
         
