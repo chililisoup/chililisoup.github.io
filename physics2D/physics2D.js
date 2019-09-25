@@ -81,7 +81,6 @@ function toggleAngle() {
 
 var sideSlider = document.getElementById("sideSlider");
 var sideIndicator = document.getElementById("sideTxt");
-sideIndicator.innerHTML = "Circle";
 sideSlider.oninput = function() {
     if (this.value == 0) {
         objectSides = this.value;
