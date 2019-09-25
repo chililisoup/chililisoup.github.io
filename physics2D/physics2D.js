@@ -11,7 +11,7 @@ var canWidth = 1000,
     canHeight = 600;
 var objectSides = 0;
 var objectRestitution = 0.4
-var objectColor = "rgb(0,0,0)"
+var objectColor = "#ff8000"
 
 // create a renderer
 var render = Render.create({
