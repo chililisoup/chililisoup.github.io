@@ -30,3 +30,7 @@ Planned features:
    + Text tool
    + Undo button
    + Select tool
+
+
+
+Physics 2D is a simple physics simulation ran using Matter JS (http://brm.io/matter-js/)
