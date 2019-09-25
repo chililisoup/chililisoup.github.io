@@ -86,8 +86,9 @@ sideSlider.oninput = function() {
         objectSides = this.value;
         sideIndicator.innerHTML = "Circle";
     } else {
-        objectSides = (this.value + 2);
-        sideIndicator.innerHTML = (this.value + " Sides");
+        objectSides = parseInt(this.value);
+        objectSides += 2;
+        sideIndicator.innerHTML = (objectSides + " Sides");
     }
 }
 
