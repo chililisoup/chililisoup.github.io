@@ -9,6 +9,7 @@ var engine = Engine.create();
 
 var canWidth = 1000,
     canHeight = 600;
+var objectSides = 0;
 
 // create a renderer
 var render = Render.create({
@@ -52,24 +53,8 @@ var ground = Bodies.rectangle((canWidth * 0.5), (canHeight + 10), (canWidth + 10
 // add all of the bodies to the world
 World.add(engine.world, [ground, wallA, wallB, roof]);
   
-function spawnCircle() {
-    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), 0, 50, { restitution: 0.4 })]);
-}
-
-function spawnTri() {
-    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), 3, 50, { restitution: 0.4, angle: 1.564 })]);
-}
-
-function spawnQuad() {
-    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), 4, 50, { restitution: 0.4 })]);
-}
-
-function spawnPent() {
-    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), 5, 50, { restitution: 0.4, angle: 1.568 })]);
-}
-
-function spawnHex() {
-    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), 6, 50, { restitution: 0.4 })]);
+function spawnObject() {
+    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), objectSides, 50, { restitution: 0.4 })]);
 }
 
 var wireToggled = 1;
@@ -91,6 +76,19 @@ function toggleAngle() {
     } else {
         render.options.showAngleIndicator = false;
         angleToggled = 1;
+    }
+}
+
+var sideSlider = document.getElementById("sideSlider");
+var sideIndicator = document.getElementById("sideTxt");
+sideIndicator.innerHTML = "Circle";
+sideSlider.oninput = function() {
+    if (this.value == 0) {
+        objectSides = this.value;
+        sideIndicator.innerHTML = "Circle";
+    } else {
+        objectSides = (this.value + 2);
+        sideIndicator.innerHTML = (this.value + " Sides");
     }
 }
 
