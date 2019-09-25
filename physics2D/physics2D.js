@@ -10,6 +10,8 @@ var engine = Engine.create();
 var canWidth = 1000,
     canHeight = 600;
 var objectSides = 0;
+var objectRestitution = 0.4
+var objectColor = "rgb(0,0,0)"
 
 // create a renderer
 var render = Render.create({
@@ -54,7 +56,7 @@ var ground = Bodies.rectangle((canWidth * 0.5), (canHeight + 10), (canWidth + 10
 World.add(engine.world, [ground, wallA, wallB, roof]);
   
 function spawnObject() {
-    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), objectSides, 50, { restitution: 0.4 })]);
+    World.add(engine.world, [Bodies.polygon((canWidth * 0.5), (canHeight * 0.5), objectSides, 50, { restitution: objectRestitution, render: { fillStyle: objectColor } })]);
 }
 
 var wireToggled = 1;
@@ -90,6 +92,18 @@ sideSlider.oninput = function() {
         objectSides += 2;
         sideIndicator.innerHTML = (objectSides + " Sides");
     }
+}
+
+var bounceSlider = document.getElementById("bounceSlider");
+var bounceIndicator = document.getElementById("bounceTxt");
+bounceSlider.oninput = function() {
+    objectRestitution = this.value;
+    bounceIndicator.innerHTML = ("Restitution: " + objectRestitution);
+}
+
+var colorInput = document.getElementById("colorInput");
+colorInput.oninput = function() {
+    objectColor = this.value;
 }
 
 // run the engine
