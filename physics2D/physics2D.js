@@ -48,7 +48,7 @@ var render = Render.create({
  
 
 // create ground & walls
-var ground = Bodies.rectangle((canWidth * 0.5), (canHeight + 10), (canWidth + 10), 60, { isStatic: true }),
+var ground = Bodies.rectangle((canWidth * 0.5), canHeight, (canWidth + 10), 60, { isStatic: true }),
     wallA = Bodies.rectangle(0, ((canHeight * 0.5) + 5), 60, (canHeight + 10), { isStatic: true }),
     wallB = Bodies.rectangle(canWidth, (canHeight * 0.5), 60, (canHeight + 10), { isStatic: true }),
     roof = Bodies.rectangle((canWidth * 0.5), 0, (canWidth + 10), 60, { isStatic: true });
