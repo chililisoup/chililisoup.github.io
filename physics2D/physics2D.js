@@ -174,8 +174,13 @@ var world = engine.world;
 var Mouse = Matter.Mouse;
 var MouseConstraint = Matter.MouseConstraint;
 var mouse = Mouse.create(render.canvas);
-var mouseConstraint = MouseConstraint.create(engine, {mouse: mouse});
-World.add(world, mouseConstraint);
-
-
-  
+var mouseConstraint = MouseConstraint.create(engine, {
+    mouse: mouse,
+    constraint: {
+        stiffness: 0.2,
+        render: {
+            type: "line",
+            strokeStyle: "rgba(0,0,0,0.5)"
+        }
+    }});
+World.add(world, mouseConstraint);  
