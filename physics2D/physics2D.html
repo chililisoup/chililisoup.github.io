@@ -1,6 +1,6 @@
 <html>
   
-<p>Physics program using matter.js</p>
+<p id="test">Physics program using matter.js</p>
 
 <link rel="stylesheet" href="physics2D.css">
 <script src="matter.js" type="text/javascript"></script>
@@ -29,6 +29,27 @@
         </tr>
         <tr>
             <th><label>Color: </label><input type="color" value="#ff8000" id="colorInput"></th>
+        </tr>
+        
+        <tr><th><br></th></tr>
+        
+        <tr>
+            <th><label id="opacityTxt">Opacity: 100%</label></th>
+        </tr>
+        <tr>
+            <th><input type="range" min="0" max="1" value="1" step=".01" id="opacitySlider"></th>
+        </tr>
+        
+        <tr><th><br></th></tr>
+        
+        <tr>
+            <th><label id="sizeOutlineTxt">Outline Width: 0</label></th>
+        </tr>
+        <tr>
+            <th><input type="range" min="0" max="50" value="0" step="1" id="sizeOutlineSlider"></th>
+        </tr>
+        <tr>
+            <th><label>Outline Color: </label><input type="color" value="#000000" id="colorOutlineInput"></th>
         </tr>
         
         <tr><th><br></th></tr>

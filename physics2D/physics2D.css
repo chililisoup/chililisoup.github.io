@@ -1,6 +1,6 @@
 .sidebar {
     position: absolute;
-    top: 30vh;
+    top: 42px;
     right: 10px;
     height: auto;
     width: auto;
@@ -10,4 +10,8 @@
 
 body {
     background-color: rgb(125,125,125);
+}
+
+label {
+    font-size: 90%;
 }

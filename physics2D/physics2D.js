@@ -12,7 +12,11 @@ var canWidth = 1000,
 var objectSides = 0;
 var objectRestitution = 0.4;
 var objectColor = "#ff8000";
+var objectOpacity = 1;
 var objectSize = 50;
+
+var objectOutlineWidth = 0;
+var objectOutlineColor = "#000000";
 
 // create a renderer
 var render = Render.create({
@@ -45,7 +49,6 @@ var render = Render.create({
         showMousePosition: false
     }
 });
- 
 
 // create ground & walls
 var ground = Bodies.rectangle((canWidth * 0.5), canHeight, (canWidth + 10), 60, { isStatic: true }),
@@ -64,7 +67,10 @@ function spawnObject() {
         objectSize, {
             restitution: objectRestitution,
             render: {
-                fillStyle: objectColor
+                fillStyle: objectColor,
+                opacity: objectOpacity,
+                lineWidth: objectOutlineWidth,
+                strokeStyle: objectOutlineColor
             }
         }
     )]);
@@ -111,13 +117,6 @@ sideSlider.oninput = function() {
     }
 }
 
-var bounceSlider = document.getElementById("bounceSlider");
-var bounceIndicator = document.getElementById("bounceTxt");
-bounceSlider.oninput = function() {
-    objectRestitution = this.value;
-    bounceIndicator.innerHTML = ("Restitution: " + objectRestitution);
-}
-
 var sizeSlider = document.getElementById("sizeSlider");
 var sizeIndicator = document.getElementById("sizeTxt");
 sizeSlider.oninput = function() {
@@ -125,9 +124,43 @@ sizeSlider.oninput = function() {
     sizeIndicator.innerHTML = ("Size: " + objectSize);
 }
 
+var bounceSlider = document.getElementById("bounceSlider");
+var bounceIndicator = document.getElementById("bounceTxt");
+bounceSlider.oninput = function() {
+    objectRestitution = this.value;
+    bounceIndicator.innerHTML = ("Restitution: " + objectRestitution);
+}
+
 var colorInput = document.getElementById("colorInput");
 colorInput.oninput = function() {
     objectColor = this.value;
+}
+
+var opacitySlider = document.getElementById("opacitySlider");
+var opacityIndicator = document.getElementById("opacityTxt");
+opacitySlider.oninput = function() {
+    objectOpacity = this.value;
+    opacityIndicator.innerHTML = ("Opacity: " + (objectOpacity * 100) + "%");
+}
+
+
+
+var colorOutlineInput = document.getElementById("colorOutlineInput");
+
+var sizeOutlineSlider = document.getElementById("sizeOutlineSlider");
+var sizeOutlineIndicator = document.getElementById("sizeOutlineTxt");
+sizeOutlineSlider.oninput = function() {
+    objectOutlineWidth = this.value;
+    if (this.value == 0) {
+        objectOutlineColor = "rgba(0,0,0,0)";
+    } else {
+        objectOutlineColor = colorOutlineInput.value;
+    }
+    sizeOutlineIndicator.innerHTML = ("Outline Width: " + objectOutlineWidth);
+}
+
+colorOutlineInput.oninput = function() {
+    objectOutlineColor = this.value;
 }
 
 // run the engine
@@ -138,8 +171,8 @@ Render.run(render);
   
   
 var world = engine.world;
-var Mouse= Matter.Mouse;
-var MouseConstraint=Matter.MouseConstraint;
+var Mouse = Matter.Mouse;
+var MouseConstraint = Matter.MouseConstraint;
 var mouse = Mouse.create(render.canvas);
 var mouseConstraint = MouseConstraint.create(engine, {mouse: mouse});
 World.add(world, mouseConstraint);
