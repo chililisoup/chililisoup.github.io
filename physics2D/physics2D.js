@@ -180,7 +180,7 @@ var mouseConstraint = MouseConstraint.create(engine, {
         stiffness: 0.2,
         render: {
             type: "line",
-            strokeStyle: "rgba(0,0,0,0.5)"
+            strokeStyle: "rgba(0,0,0,0.2)"
         }
     }});
 World.add(world, mouseConstraint);  
