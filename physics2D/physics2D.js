@@ -140,7 +140,7 @@ var opacitySlider = document.getElementById("opacitySlider");
 var opacityIndicator = document.getElementById("opacityTxt");
 opacitySlider.oninput = function() {
     objectOpacity = this.value;
-    opacityIndicator.innerHTML = ("Opacity: " + (objectOpacity * 100) + "%");
+    opacityIndicator.innerHTML = ("Opacity: " + Math.floor(objectOpacity * 100) + "%");
 }
 
 
@@ -180,7 +180,7 @@ var mouseConstraint = MouseConstraint.create(engine, {
         stiffness: 0.2,
         render: {
             type: "line",
-            strokeStyle: "rgba(0,0,0,0.2)"
+            strokeStyle: "rgba(0,0,0,0.25)"
         }
     }});
 World.add(world, mouseConstraint);  
