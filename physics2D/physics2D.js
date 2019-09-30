@@ -2,23 +2,24 @@
 var Engine = Matter.Engine,
     Render = Matter.Render,
     World = Matter.World,
-    Bodies = Matter.Bodies;
+    Bodies = Matter.Bodies,
+    Events = Matter.Events;
 
 // create an engine
 var engine = Engine.create();
 
 var canWidth = 1000,
     canHeight = 600;
-var objectSides = 0;
-var objectSize = 50;
-var objectDensity = 0.001;
-var objectRestitution = 0.4;
-var objectFriction = 0.1;
-var objectColor = "#ff8000";
-var objectOpacity = 1;
-
-var objectOutlineWidth = 0;
-var objectOutlineColor = "#000000";
+var objectSides = 0,
+    objectSize = 50,
+    objectDensity = 0.001,
+    objectRestitution = 0.4,
+    objectFriction = 0.1,
+    objectColor = "#ff8000",
+    objectOpacity = 1,
+    objectOutlineWidth = 0,
+    objectOutlineColor = "#000000";
+var tool = 0;
 
 // create a renderer
 var render = Render.create({
@@ -61,10 +62,10 @@ var ground = Bodies.rectangle((canWidth * 0.5), canHeight, (canWidth + 10), 60, 
 // add all of the bodies to the world
 World.add(engine.world, [ground, wallA, wallB, roof]);
   
-function spawnObject() {
+function spawnObject(x,y) {
     World.add(engine.world, [Bodies.polygon(
-        (canWidth * 0.5),
-        (canHeight * 0.5),
+        x,
+        y,
         objectSides,
         objectSize, {
             restitution: objectRestitution,
@@ -103,9 +104,9 @@ function toggleAngle() {
 }
 
 function clearWorld() {
-    Matter.Composite.clear(world);
+    Matter.Composite.clear(engine.world);
     World.add(engine.world, [ground, wallA, wallB, roof]);
-    World.add(world, mouseConstraint);
+    World.add(engine.world, mouseConstraint);
 }
 
 var sideSlider = document.getElementById("sideSlider");
@@ -188,12 +189,12 @@ Engine.run(engine);
 // run the renderer
 Render.run(render);
   
-  
-var world = engine.world;
-var Mouse = Matter.Mouse;
-var MouseConstraint = Matter.MouseConstraint;
-var mouse = Mouse.create(render.canvas);
-var mouseConstraint = MouseConstraint.create(engine, {
+function setTool(n) {
+    tool = n;
+}
+
+var mouse = Matter.Mouse.create(render.canvas);
+var mouseConstraint = Matter.MouseConstraint.create(engine, {
     mouse: mouse,
     constraint: {
         stiffness: 0.2,
@@ -202,8 +203,22 @@ var mouseConstraint = MouseConstraint.create(engine, {
             strokeStyle: "rgba(0,0,0,0.25)"
         }
     }});
-World.add(world, mouseConstraint);
+World.add(engine.world, mouseConstraint);
 
+
+
+Events.on(mouseConstraint, 'mousedown', function(event) {
+    var mousePosition = event.mouse.position;
+    if (tool == 0) {
+        spawnObject(mousePosition.x,mousePosition.y);
+    }
+});
+
+Events.on(mouseConstraint, 'startdrag', function(event) {
+    if (tool == 2) {
+        Matter.Composite.remove(engine.world, event.body);
+    }
+});
 
 
 
