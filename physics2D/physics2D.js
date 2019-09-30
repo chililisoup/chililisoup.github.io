@@ -10,11 +10,12 @@ var engine = Engine.create();
 var canWidth = 1000,
     canHeight = 600;
 var objectSides = 0;
+var objectSize = 50;
+var objectDensity = 0.001;
 var objectRestitution = 0.4;
 var objectFriction = 0.1;
 var objectColor = "#ff8000";
 var objectOpacity = 1;
-var objectSize = 50;
 
 var objectOutlineWidth = 0;
 var objectOutlineColor = "#000000";
@@ -68,6 +69,7 @@ function spawnObject() {
         objectSize, {
             restitution: objectRestitution,
             friction: objectFriction,
+            density: objectDensity,
             render: {
                 fillStyle: objectColor,
                 opacity: objectOpacity,
@@ -124,6 +126,13 @@ var sizeIndicator = document.getElementById("sizeTxt");
 sizeSlider.oninput = function() {
     objectSize = this.value;
     sizeIndicator.innerHTML = ("Size: " + objectSize);
+}
+
+var densitySlider = document.getElementById("densitySlider");
+var densityIndicator = document.getElementById("densityTxt");
+densitySlider.oninput = function() {
+    objectDensity = this.value;
+    densityIndicator.innerHTML = ("Density: " + Math.floor(objectDensity * 10000));
 }
 
 var bounceSlider = document.getElementById("bounceSlider");
