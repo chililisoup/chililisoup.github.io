@@ -11,6 +11,7 @@ var canWidth = 1000,
     canHeight = 600;
 var objectSides = 0;
 var objectRestitution = 0.4;
+var objectFriction = 0.1;
 var objectColor = "#ff8000";
 var objectOpacity = 1;
 var objectSize = 50;
@@ -66,6 +67,7 @@ function spawnObject() {
         objectSides,
         objectSize, {
             restitution: objectRestitution,
+            friction: objectFriction,
             render: {
                 fillStyle: objectColor,
                 opacity: objectOpacity,
@@ -128,7 +130,14 @@ var bounceSlider = document.getElementById("bounceSlider");
 var bounceIndicator = document.getElementById("bounceTxt");
 bounceSlider.oninput = function() {
     objectRestitution = this.value;
-    bounceIndicator.innerHTML = ("Restitution: " + objectRestitution);
+    bounceIndicator.innerHTML = ("Restitution: " + Math.floor(objectRestitution * 100) + "%");
+}
+
+var frictionSlider = document.getElementById("frictionSlider");
+var frictionIndicator = document.getElementById("frictionTxt");
+frictionSlider.oninput = function() {
+    objectFriction = this.value;
+    frictionIndicator.innerHTML = ("Friction: " + Math.floor(objectFriction * 100) + "%");
 }
 
 var colorInput = document.getElementById("colorInput");
@@ -163,6 +172,7 @@ colorOutlineInput.oninput = function() {
     objectOutlineColor = this.value;
 }
 
+
 // run the engine
 Engine.run(engine);
 
@@ -183,4 +193,12 @@ var mouseConstraint = MouseConstraint.create(engine, {
             strokeStyle: "rgba(0,0,0,0.25)"
         }
     }});
-World.add(world, mouseConstraint);  
+World.add(world, mouseConstraint);
+
+
+
+
+
+
+
+
