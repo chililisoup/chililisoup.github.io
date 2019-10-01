@@ -7,7 +7,11 @@
 <script src="physics2D.js" type="text/javascript" defer></script>    
     
 <div class="sidebar">
-
+    <table align="center"><tr><th>
+        
+    <button class="dropdown-btn">Object Options</button>
+    <div class="dropdown-container">
+        
     <table align="center">
         <tr>
             <th><label id="sideTxt">Circle</label></th>
@@ -65,12 +69,13 @@
         </tr>
     </table>
         
-        <hr>
+    </div>
+        
+    </th></tr><tr><th>    
+    <button class="dropdown-btn">Tools</button>
+    <div class="dropdown-container">
         
     <table align="center">
-        <tr>
-            <th>Tools</th>
-        </tr>
         <tr>
             <th><input type="radio" name="tool" onclick="setTool(0)" checked>Create</th>
         </tr>
@@ -82,7 +87,11 @@
         </tr>
     </table>
     
-    <hr>
+    </div>
+        
+    </th></tr><tr><th>
+    <button class="dropdown-btn">Render Options</button>
+    <div class="dropdown-container">
   
     <table align="center">
         <tr>
@@ -93,13 +102,15 @@
         </tr>
     </table>
     
-    <hr>
+    </div>
     
     <table align="center">
         <tr>
             <th><button onclick="clearWorld()">Reset</button></th>
         </tr>
     </table>
+    
+    </th></tr></table>
         
 </div>    
 
