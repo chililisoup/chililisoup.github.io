@@ -239,12 +239,30 @@ Events.on(mouseConstraint, 'mousedown', function(event) {
 Events.on(mouseConstraint, 'startdrag', function(event) {
     if (tool == 2) {
         Matter.Composite.remove(engine.world, event.body);
+    } else if (tool == 3) {
+        event.body.restitution = objectRestitution;
+        event.body.friction = objectFriction;
+        event.body.density = objectDensity;
+        event.body.render.fillStyle = objectColor;
+        event.body.render.opacity = objectOpacity;
+        event.body.render.lineWidth = objectOutlineWidth;
+        event.body.render.strokeStyle = objectOutlineColor;
+    } else if (tool == 4) {
+        Matter.Body.setStatic(event.body, true);
     }
 });
 
 
+Events.on(mouseConstraint, 'enddrag', function(event) {
+    if (tool == 4) {
+        Matter.Body.setStatic(event.body, false);
+    }
+});
 
-
-
-
-
+Events.on(mouseConstraint, 'mousemove', function(event) {
+    if (tool == 4) {
+        var mLength = mouseConstraint.constraint.length,
+            mObject = mouseConstraint.body;
+        Matter.Body.scale(mObject, (mLength * 100), (mLength * 100));
+    }
+});
