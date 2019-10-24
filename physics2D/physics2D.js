@@ -1,16 +1,20 @@
+'use strict';
+
+
+
 var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
 
 for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function() {
-  this.classList.toggle("active");
-  var dropdownContent = this.nextElementSibling;
-  if (dropdownContent.style.display === "block") {
-  dropdownContent.style.display = "none";
-  } else {
-  dropdownContent.style.display = "block";
-  }
-  });
+    dropdown[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+        } else {
+            dropdownContent.style.display = "block";
+        }
+    });
 }
 
 
@@ -84,12 +88,13 @@ var ground = Bodies.rectangle((canWidth * 0.5), canHeight, (canWidth + 10), 60, 
 // add all of the bodies to the world
 World.add(engine.world, [ground, wallA, wallB, roof]);
   
-function spawnObject(x,y) {
+function spawnObject(x, y) {
     World.add(engine.world, [Bodies.polygon(
         x,
         y,
         objectSides,
-        objectSize, {
+        objectSize,
+        {
             restitution: objectRestitution,
             friction: objectFriction,
             density: objectDensity,
@@ -105,7 +110,7 @@ function spawnObject(x,y) {
 
 var wireToggled = 1;
 function toggleWire() {
-    if (wireToggled == 1) {
+    if (wireToggled === 1) {
         render.options.wireframes = true;
         wireToggled = 0;
     } else {
@@ -116,7 +121,7 @@ function toggleWire() {
 
 var angleToggled = 0;
 function toggleAngle() {
-    if (angleToggled == 1) {
+    if (angleToggled === 1) {
         render.options.showAngleIndicator = true;
         angleToggled = 0;
     } else {
@@ -125,16 +130,10 @@ function toggleAngle() {
     }
 }
 
-function clearWorld() {
-    Matter.Composite.clear(engine.world);
-    World.add(engine.world, [ground, wallA, wallB, roof]);
-    World.add(engine.world, mouseConstraint);
-}
-
 var sideSlider = document.getElementById("sideSlider");
 var sideIndicator = document.getElementById("sideTxt");
-sideSlider.oninput = function() {
-    if (this.value == 0) {
+sideSlider.oninput = function () {
+    if (this.value === 0) {
         objectSides = this.value;
         sideIndicator.innerHTML = "Circle";
     } else {
@@ -142,47 +141,47 @@ sideSlider.oninput = function() {
         objectSides += 2;
         sideIndicator.innerHTML = (objectSides + " Sides");
     }
-}
+};
 
 var sizeSlider = document.getElementById("sizeSlider");
 var sizeIndicator = document.getElementById("sizeTxt");
-sizeSlider.oninput = function() {
+sizeSlider.oninput = function () {
     objectSize = this.value;
     sizeIndicator.innerHTML = ("Size: " + objectSize);
-}
+};
 
 var densitySlider = document.getElementById("densitySlider");
 var densityIndicator = document.getElementById("densityTxt");
-densitySlider.oninput = function() {
+densitySlider.oninput = function () {
     objectDensity = this.value;
     densityIndicator.innerHTML = ("Density: " + Math.floor(objectDensity * 10000));
-}
+};
 
 var bounceSlider = document.getElementById("bounceSlider");
 var bounceIndicator = document.getElementById("bounceTxt");
-bounceSlider.oninput = function() {
+bounceSlider.oninput = function () {
     objectRestitution = this.value;
     bounceIndicator.innerHTML = ("Restitution: " + Math.floor(objectRestitution * 100) + "%");
-}
+};
 
 var frictionSlider = document.getElementById("frictionSlider");
 var frictionIndicator = document.getElementById("frictionTxt");
-frictionSlider.oninput = function() {
+frictionSlider.oninput = function () {
     objectFriction = this.value;
     frictionIndicator.innerHTML = ("Friction: " + Math.floor(objectFriction * 100) + "%");
-}
+};
 
 var colorInput = document.getElementById("colorInput");
-colorInput.oninput = function() {
+colorInput.oninput = function () {
     objectColor = this.value;
-}
+};
 
 var opacitySlider = document.getElementById("opacitySlider");
 var opacityIndicator = document.getElementById("opacityTxt");
-opacitySlider.oninput = function() {
+opacitySlider.oninput = function () {
     objectOpacity = this.value;
     opacityIndicator.innerHTML = ("Opacity: " + Math.floor(objectOpacity * 100) + "%");
-}
+};
 
 
 
@@ -190,19 +189,19 @@ var colorOutlineInput = document.getElementById("colorOutlineInput");
 
 var sizeOutlineSlider = document.getElementById("sizeOutlineSlider");
 var sizeOutlineIndicator = document.getElementById("sizeOutlineTxt");
-sizeOutlineSlider.oninput = function() {
+sizeOutlineSlider.oninput = function () {
     objectOutlineWidth = this.value;
-    if (this.value == 0) {
+    if (this.value === 0) {
         objectOutlineColor = "rgba(0,0,0,0)";
     } else {
         objectOutlineColor = colorOutlineInput.value;
     }
     sizeOutlineIndicator.innerHTML = ("Outline Width: " + objectOutlineWidth);
-}
+};
 
-colorOutlineInput.oninput = function() {
+colorOutlineInput.oninput = function () {
     objectOutlineColor = this.value;
-}
+};
 
 
 // run the engine
@@ -224,22 +223,31 @@ var mouseConstraint = Matter.MouseConstraint.create(engine, {
             type: "line",
             strokeStyle: "rgba(0,0,0,0.25)"
         }
-    }});
+    }
+});
 World.add(engine.world, mouseConstraint);
 
+function clearWorld() {
+    Matter.Composite.clear(engine.world);
+    var ground = Bodies.rectangle((canWidth * 0.5), canHeight, (canWidth + 10), 60, { isStatic: true }),
+        wallA = Bodies.rectangle(0, ((canHeight * 0.5) + 5), 60, (canHeight + 10), { isStatic: true }),
+        wallB = Bodies.rectangle(canWidth, (canHeight * 0.5), 60, (canHeight + 10), { isStatic: true }),
+        roof = Bodies.rectangle((canWidth * 0.5), 0, (canWidth + 10), 60, { isStatic: true });
+    World.add(engine.world, [ground, wallA, wallB, roof]);
+    World.add(engine.world, mouseConstraint);
+}
 
-
-Events.on(mouseConstraint, 'mousedown', function(event) {
+Events.on(mouseConstraint, 'mousedown', function (event) {
     var mousePosition = event.mouse.position;
-    if (tool == 0) {
-        spawnObject(mousePosition.x,mousePosition.y);
+    if (tool === 0) {
+        spawnObject(mousePosition.x, mousePosition.y);
     }
 });
 
-Events.on(mouseConstraint, 'startdrag', function(event) {
-    if (tool == 2) {
+Events.on(mouseConstraint, 'startdrag', function (event) {
+    if (tool === 2) {
         Matter.Composite.remove(engine.world, event.body);
-    } else if (tool == 3) {
+    } else if (tool === 3) {
         event.body.restitution = objectRestitution;
         event.body.friction = objectFriction;
         event.body.density = objectDensity;
@@ -247,22 +255,52 @@ Events.on(mouseConstraint, 'startdrag', function(event) {
         event.body.render.opacity = objectOpacity;
         event.body.render.lineWidth = objectOutlineWidth;
         event.body.render.strokeStyle = objectOutlineColor;
-    } else if (tool == 4) {
+    } else if (tool === 4) {
         Matter.Body.setStatic(event.body, true);
     }
 });
 
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+var upPressed = false;
+var downPressed = false;
 
-Events.on(mouseConstraint, 'enddrag', function(event) {
-    if (tool == 4) {
-        Matter.Body.setStatic(event.body, false);
+
+window.addEventListener("keydown", function(e) {
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
     }
-});
+}, false);
+    
+function keyDownHandler(e) {
+    if(e.key == "Up" || e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
+        upPressed = true;
+    }
+    else if(e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
+        downPressed = true;
+    }
+    
+    if (tool === 4) {
+        var mObject = mouseConstraint.body;
+        if (upPressed) {
+            Matter.Body.scale(mObject, 1.05, 1.05);
+        } else if (downPressed) {
+            Matter.Body.scale(mObject, 0.95, 0.95);
+        }
+    }
+}
 
-Events.on(mouseConstraint, 'mousemove', function(event) {
-    if (tool == 4) {
-        var mLength = mouseConstraint.constraint.length,
-            mObject = mouseConstraint.body;
-        Matter.Body.scale(mObject, (mLength * 100), (mLength * 100));
+function keyUpHandler(e) {
+    if(e.key == "Up" || e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
+        upPressed = false;
+    }
+    else if(e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
+        downPressed = false;
+    }
+}
+
+Events.on(mouseConstraint, 'enddrag', function (event) {
+    if (tool === 4) {
+        Matter.Body.setStatic(event.body, false);
     }
 });

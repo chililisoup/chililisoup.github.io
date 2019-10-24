@@ -77,19 +77,34 @@
         
     <table align="center">
         <tr>
-            <th><input type="radio" name="tool" onclick="setTool(0)" checked>Create</th>
+            <th>
+                <input type="radio" name="tool" id="tool0" onclick="setTool(0)" checked>
+                <label for="tool0">Create</label>
+            </th>
         </tr>
         <tr>
-            <th><input type="radio" name="tool" onclick="setTool(1)">Move</th>
+            <th>
+                <input type="radio" name="tool" id="tool1" onclick="setTool(1)">
+                <label for="tool1">Move</label>
+            </th>
         </tr>
         <tr>
-            <th><input type="radio" name="tool" onclick="setTool(2)">Erase</th>
+            <th>
+                <input type="radio" name="tool" id="tool2" onclick="setTool(2)">
+                <label for="tool2">Erase</label>
+            </th>
         </tr>
         <tr>
-            <th><input type="radio" name="tool" onclick="setTool(3)">Modify Object Properties</th>
+            <th>
+                <input type="radio" name="tool" id="tool3" onclick="setTool(3)">
+                <label for="tool3">Modify Object</label>
+            </th>
         </tr>
         <tr>
-            <th><input type="radio" name="tool" onclick="setTool(4)">Scale</th>
+            <th>
+                <input type="radio" name="tool" id="tool4" onclick="setTool(4)">
+                <label for="tool4">Scale (Use KB)</label>
+            </th>
         </tr>
     </table>
     
@@ -106,6 +121,7 @@
         <tr>
             <th><button onclick="toggleAngle()">Toggle Angle Indicators</button></th>
         </tr>
+        <tr><th><br></th></tr>
     </table>
     
     </div>
