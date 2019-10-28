@@ -46,6 +46,7 @@ var objectSides = 0,
     objectOutlineWidth = 0,
     objectOutlineColor = "#000000";
 var tool = 0;
+var running = true;
 
 // create a renderer
 var render = Render.create({
@@ -257,50 +258,90 @@ Events.on(mouseConstraint, 'startdrag', function (event) {
         event.body.render.strokeStyle = objectOutlineColor;
     } else if (tool === 4) {
         Matter.Body.setStatic(event.body, true);
+    } else if (tool === 5) {
+        if (event.body.isStatic) {
+            Matter.Body.setStatic(event.body, false);
+        } else {
+            Matter.Body.setStatic(event.body, true);
+        }
     }
 });
 
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
-var upPressed = false;
-var downPressed = false;
+var upPressed = false,
+    downPressed = false,
+    upPressed2 = false,
+    downPressed2 = false;
 
 
-window.addEventListener("keydown", function(e) {
-    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+window.addEventListener("keydown", function (e) {
+    if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
     }
 }, false);
     
 function keyDownHandler(e) {
-    if(e.key == "Up" || e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
+    if (e.key == "Up" || e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
         upPressed = true;
     }
-    else if(e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
+    if (e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
         downPressed = true;
+    }
+    
+    if (e.key == "Right" || e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
+        upPressed2 = true;
+    }
+    if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
+        downPressed2 = true;
     }
     
     if (tool === 4) {
         var mObject = mouseConstraint.body;
         if (upPressed) {
-            Matter.Body.scale(mObject, 1.05, 1.05);
+            Matter.Body.scale(mObject, 1, 1.05);
         } else if (downPressed) {
-            Matter.Body.scale(mObject, 0.95, 0.95);
+            Matter.Body.scale(mObject, 1, 0.95);
+        }
+        if (upPressed2) {
+            Matter.Body.scale(mObject, 1.05, 1);
+        } else if (downPressed2) {
+            Matter.Body.scale(mObject, 0.95, 1);
         }
     }
 }
 
 function keyUpHandler(e) {
-    if(e.key == "Up" || e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
+    if (e.key == "Up" || e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
         upPressed = false;
     }
-    else if(e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
+    if (e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
         downPressed = false;
     }
+    if (e.key == "Right" || e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
+        upPressed2 = false;
+    }
+    if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
+        downPressed2 = false;
+    }
 }
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
 
 Events.on(mouseConstraint, 'enddrag', function (event) {
     if (tool === 4) {
         Matter.Body.setStatic(event.body, false);
     }
 });
+
+
+function pauseSim() {
+    if (running) {
+        engine.timing.timeScale = 0.0001;
+        document.getElementById("pauseButton").innerHTML = "Play";
+        running = false;
+    } else {
+        engine.timing.timeScale = 1;
+        document.getElementById("pauseButton").innerHTML = "Pause";
+        running = true;
+    }
+}

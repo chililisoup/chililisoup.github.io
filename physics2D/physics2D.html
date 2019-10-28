@@ -106,6 +106,12 @@
                 <label for="tool4">Scale (Use KB)</label>
             </th>
         </tr>
+        <tr>
+            <th>
+                <input type="radio" name="tool" id="tool5" onclick="setTool(5)">
+                <label for="tool5">Freeze</label>
+            </th>
+        </tr>
     </table>
     
     </div>
@@ -129,6 +135,7 @@
     <table align="center">
         <tr>
             <th><button onclick="clearWorld()">Reset</button></th>
+            <th><button onclick="pauseSim()" id="pauseButton">Pause</button></th>
         </tr>
     </table>
     
