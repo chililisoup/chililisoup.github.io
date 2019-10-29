@@ -192,7 +192,7 @@ var sizeOutlineSlider = document.getElementById("sizeOutlineSlider");
 var sizeOutlineIndicator = document.getElementById("sizeOutlineTxt");
 sizeOutlineSlider.oninput = function () {
     objectOutlineWidth = this.value;
-    if (this.value === 0) {
+    if (this.value == 0) {
         objectOutlineColor = "rgba(0,0,0,0)";
     } else {
         objectOutlineColor = colorOutlineInput.value;
