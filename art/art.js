@@ -13,6 +13,7 @@
     //----
     //Custom brush!
     //https://www.w3schools.com/code/tryit.asp?filename=G3ECJMPPRT15
+
 	
     var brush;
     var draw = false;
@@ -30,9 +31,14 @@
     var newStroke = true;
     var lastImage;
     var undoLast = false;
+    var justReset = false;
     window.addEventListener('mousedown', function() {
-        draw = true;
-        getCoords(event);
+        if (justReset) {
+            justReset = false;
+        } else {
+            draw = true;
+            getCoords(event);   
+        }
     });
     
     window.addEventListener('mouseup', function() {
@@ -48,6 +54,7 @@
                 brushChange(3);
                 draw = false;
                 newStroke = true;
+                justReset = true;
             }
         } else {
             document.getElementById("br1").style.border = "3px solid #42a9f7";
