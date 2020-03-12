@@ -2,21 +2,25 @@
 
 /*
 To-do (kind of in order):
- - Projectile & tower rotation
+ - Better waves:
+    ∙ Spawning method
+    ∙ More waves
+ - Projectile rotation
  - Add tower upgrades
- - More maps
- - Custom maps?
+ - Cooler towers
  - Lots of balancing (Needs to be tweaked often, won't be done for a while/ever)
 */
 
 // Define global variables
-var canvas = document.getElementById("jj"); // HTML canvas object
-var ctx = canvas.getContext("2d");          // Canvas context
+let canvas = document.getElementById("jj"); // HTML canvas object
+let ctx = canvas.getContext("2d");          // Canvas context
 ctx.canvas.width  = 1920;                   // Working space width (not visual size)
 ctx.canvas.height = 1080;                   // Working space height (not visual size)
-var place = null,                           // Position to place tower or null for nowhere
+let place = null,                           // Position to place tower or null for nowhere
+    built = false,                          // True if path has been built
     cash = 500,                             // Player money
     lives = 100,                            // Player lives
+    oldLives,                               // Lives at start of round to compare to end
     wave = 0,                               // Current wave
     play = false,                           // Is a wave running? true/false
     waveEnd = false,                        // True for a frame to trigger end of wave events
@@ -31,6 +35,8 @@ var place = null,                           // Position to place tower or null f
     twr,                                    // Defines individual towers
     prj,                                    // Defines individual projectiles
     pth,                                    // Defines individual paths
+    newPth = {},                            // Defines a path that may be built
+    pop,                                    // Defines individual particles
     nme,                                    // Defines individual enemies
     dist,                                   // Defines a distance
     s,                                      // Defines a speed
@@ -38,9 +44,9 @@ var place = null,                           // Position to place tower or null f
     del = false,                            // Delete mode true/false
     sel = null;                             // Selected tower
 
-var bull = new Image();
+let bull = new Image();
     bull.src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/tractor_1f69c.png";
-var no = new Image();
+let no = new Image();
     no.src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/no-entry-sign_1f6ab.png";
 
 /* List of paths
@@ -49,20 +55,10 @@ x:  position X
 y:  position Y
 w:  width
 h:  height
-d:  path direction
+d:  path direction (0:R, 1:U, 2:L, 3:D, 4:END)
 */
-var paths = [
-    {c:"rgb(235,191,115)", x:0, y:100, w:300, h:50, d:0},
-    {c:"rgb(235,191,115)", x:300, y:100, w:50, h:500, d:3},
-    {c:"rgb(235,191,115)", x:300, y:600, w:800, h:50, d:0},
-    {c:"rgb(235,191,115)", x:1050, y:650, w:50, h:100, d:3},
-    {c:"rgb(235,191,115)", x:300, y:750, w:800, h:50, d:2},
-    {c:"rgb(235,191,115)", x:300, y:800, w:50, h:100, d:3},
-    {c:"rgb(235,191,115)", x:300, y:900, w:900, h:50, d:0},
-    {c:"rgb(235,191,115)", x:1200, y:450, w:50, h:500, d:1},
-    {c:"rgb(235,191,115)", x:500, y:450, w:700, h:50, d:2},
-    {c:"rgb(235,191,115)", x:450, y:0, w:50, h:500, d:1},
-    {c:"rgb(0,0,0)", x:400, y:-50, w:150, h:50, d:4}
+let paths = [
+    {c:"rgb(235,191,115)", x:0, y:100, w:100, h:50, d:0}
     ];
 
 
@@ -75,7 +71,7 @@ r:  rotation
 u:  upgrades (maybe?)
 h:  highlight (true/false)
 */
-var twrs = [];
+let twrs = [];
 
 /* List of active projectiles
 x:  position X
@@ -84,8 +80,10 @@ t:  type
 dx: speed X
 dy: speed Y
 d:  distance from source
+k:  has killed
+r:  rotation
 */
-var proj = [];
+let proj = [];
 
 /* Projectile & Tower statistics
 s:  speed (60 = 1 second)
@@ -95,12 +93,13 @@ p:  projectile texture
 ps: projectile speed
 c:  tower cost
 d:  projectile damage
-h: hitbox radius
+h:  hitbox radius
+pw: projectile size
 */
-var stat = [ //Adding towers is too easy: Make a new object in the array with the required values, then define the textures
-    {s:110, r:100, t:new Image(50, 50), p:new Image(10, 10), ps:20, c:150, d:1, h:25},
-    {s:60, r:200, t:new Image(50, 50), p:new Image(20, 20), ps:30, c:350, d:2, h:25},
-    {s:40, r:250, t:new Image(50, 50), p:new Image(20, 20), ps:35, c:750, d:3, h:25}
+let stat = [
+    {s:110, r:100, t:new Image(50, 50), p:new Image(10, 10), ps:35, c:150, d:1, h:20, pw: 10},
+    {s:60, r:200, t:new Image(50, 50), p:new Image(20, 20), ps:35, c:350, d:2, h:20, pw: 20},
+    {s:40, r:250, t:new Image(50, 50), p:new Image(20, 20), ps:35, c:750, d:3, h:20, pw: 20}
     ];
 stat[0].t.src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/pistol_1f52b.png";
 stat[0].p.src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/large-orange-circle_1f7e0.png";
@@ -116,14 +115,14 @@ d:  direction
 p:  current path that enemy is on
 t:  type
 */
-var nmes = [];
+let nmes = [];
 
 /* List of enemy types
 s:  speed
 r:  reward for killing
 t:  texture
 */
-var typs = [
+let typs = [
     {s:2, r:3, t:new Image(50, 50)},
     {s:3, r:5, t:new Image(50, 50)},
     {s:4, r:10, t:new Image(50, 50)},
@@ -136,8 +135,18 @@ typs[2].t.src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thum
 typs[3].t.src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/negative-squared-latin-capital-letter-b_1f171.png";
 typs[4].t.src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/pile-of-poo_1f4a9.png";
 
+/* List of pop particles (may include more particles later) 
+x:  position X
+y:  position Y
+l:  life left (in frames)
+*/
+let pops = [];
+
+let popPart = new Image(50, 50);
+popPart.src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/anger-symbol_1f4a2.png";
+
 // Array of enemies for each wave (See nmes array for enemy info)
-var waves;
+let waves;
 function defineWaves() {
     waves = [
         [
@@ -277,7 +286,7 @@ function defineWaves() {
 defineWaves();
 
 function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
+    let rect = canvas.getBoundingClientRect();
     return {
         x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
         y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
@@ -295,11 +304,11 @@ function updateMouse(e) {
         for (i = 0; i < twrs.length; i++) {
             twrs[i].h = false;
         }
-        var ldist = null,
+        let ldist = null,
             ldtwr = null;
         for (i = 0; i < twrs.length; i++) {
             twr = twrs[i];
-            pos.x = twr.x + 25,
+            pos.x = twr.x + 25;
             pos.y = twr.y + 25;
             dist = Math.sqrt((Math.abs(mouseX - pos.x) * Math.abs(mouseX - pos.x)) + (Math.abs(mouseY - pos.y) * Math.abs(mouseY - pos.y)));
             if (dist <= 25) {
@@ -321,60 +330,79 @@ function updateMouse(e) {
 
 window.addEventListener("mousedown", onClick);
 function onClick(e) {
-    place = getMousePos(canvas, e);
-    var choseT = false;
-    
-    var gridX = 1560,
-        gridY = 20;
-    for (i = 0; i < stat.length; i++) {
-        if (place.x >= gridX && place.x <= gridX + 160 && place.y >= gridY && place.y <= gridY + 160) {
-            placing = i;
-            choseT = true;
-        }
-        if (gridX == 1560) {
-            gridX = 1740;
-        } else {
-            gridY += 180;
-            gridX = 1560;
-        }
-    }
-    
-    if (place.x < 0 || place.y < 0 || place.x > 1520 || place.y > 1080) {
-        place = null;
-        if (choseT === false) {
-            placing = null;
-        }
-    } else if (place.x >= 50 && place.x <= 170 && place.y >= 950 && place.y <= 1070) {
-        if (del === false) {
-            del = true;
-        } else {
-            del = false;
-        }
-        place = null;
-    } else if (place.x >= 1390 && place.x <= 1490 && place.y >= 930 && place.y <= 1030) {
-        place = null;
-        if (canStart) {
-            play = true;
-        } else {
-            if (gameSpeed == 1) {
-                gameSpeed = 2;
-                for (i = 0; i < twrs.length; i++) {
-                    twr = twrs[i];
-                    twr.c = Math.floor(twr.c / 2);
-                }
+    if (built) {
+        place = getMousePos(canvas, e);
+        let choseT = false;
+        
+        let gridX = 1560,
+            gridY = 20;
+        for (i = 0; i < stat.length; i++) {
+            if (place.x >= gridX && place.x <= gridX + 160 && place.y >= gridY && place.y <= gridY + 160) {
+                placing = i;
+                choseT = true;
+            }
+            if (gridX == 1560) {
+                gridX = 1740;
             } else {
-                gameSpeed = 1;
-                for (i = 0; i < twrs.length; i++) {
-                    twr = twrs[i];
-                    twr.c = twr.c * 2;
-                }
+                gridY += 180;
+                gridX = 1560;
             }
         }
-    } else if (del === true) {
-        if (sel !== null) {
-            cash += Math.floor(stat[sel.t].c * 0.8);
-            sel.t = -1;
+        
+        if (place.x < 0 || place.y < 0 || place.x > 1520 || place.y > 1080) {
             place = null;
+            if (choseT === false) {
+                placing = null;
+            }
+        } else if (place.x >= 50 && place.x <= 170 && place.y >= 950 && place.y <= 1070) {
+            if (del === false) {
+                del = true;
+            } else {
+                del = false;
+            }
+            place = null;
+        } else if (place.x >= 1390 && place.x <= 1490 && place.y >= 930 && place.y <= 1030) {
+            place = null;
+            if (canStart) {
+                play = true;
+            } else {
+                if (gameSpeed == 1) {
+                    gameSpeed = 2;
+                    for (i = 0; i < twrs.length; i++) {
+                        twr = twrs[i];
+                        twr.c = Math.floor(twr.c / 2);
+                    }
+                } else {
+                    gameSpeed = 1;
+                    for (i = 0; i < twrs.length; i++) {
+                        twr = twrs[i];
+                        twr.c = twr.c * 2;
+                    }
+                }
+            }
+        } else if (del === true) {
+            if (sel !== null) {
+                cash += Math.floor(stat[sel.t].c * 0.8);
+                sel.t = -1;
+                place = null;
+            }
+        }
+    } else {
+        place = getMousePos(canvas, e);
+        if (place.x >= 1390 && place.x <= 1490 && place.y >= 930 && place.y <= 1030) {
+            pth = paths[paths.length - 1];
+            built = true;
+            if (pth.d === 0) {
+                paths.push({c:"rgb(255,0,0)", x:pth.x + pth.w, y:pth.y, w:50, h:50, d:4});
+            } else if (pth.d === 1) {
+                paths.push({c:"rgb(255,0,0)", x:pth.x, y:pth.y - 50, w:50, h:50, d:4});
+            } else if (pth.d === 2) {
+                paths.push({c:"rgb(255,0,0)", x:pth.x - 50, y:pth.y, w:50, h:50, d:4});
+            } else if (pth.d === 3) {
+                paths.push({c:"rgb(255,0,0)", x:pth.x, y:pth.y + 50, w:50, h:50, d:4});
+            }
+        } else if (newPth.l > 1) {
+            paths.push({c:"rgb(235,191,115)", x:newPth.x, y:newPth.y, w:newPth.w, h:newPth.h, d:newPth.d});
         }
     }
 }
@@ -415,7 +443,7 @@ function canPlace(x, y, r) {
         }
     }
     for (i = 0; i < paths.length; i++) {
-        var circle = {x:x, y:y, r:r};
+        let circle = {x:x, y:y, r:r};
         if (rectCircleColliding(circle, paths[i])) {
             return false;
         }
@@ -424,17 +452,29 @@ function canPlace(x, y, r) {
 }
 
 function rectCircleColliding(circle,rect){
-    var distX = Math.abs(circle.x - rect.x-rect.w/2);
-    var distY = Math.abs(circle.y - rect.y-rect.h/2);
+    let distX = Math.abs(circle.x - rect.x-rect.w/2);
+    let distY = Math.abs(circle.y - rect.y-rect.h/2);
     
-    if (distX > (rect.w/2 + circle.r) || distY > (rect.h/2 + circle.r)) { return false; }
+    if (distX > (rect.w / 2 + circle.r) || distY > (rect.h / 2 + circle.r)) { return false; }
     
-    if (distX <= (rect.w/2) || distY <= (rect.h/2)) { return true; } 
+    if (distX <= (rect.w / 2) || distY <= (rect.h / 2)) { return true; } 
     
-    var dx=distX-rect.w/2;
-    var dy=distY-rect.h/2;
-    return (dx*dx+dy*dy<=(circle.r*circle.r));
+    pos.x = distX-rect.w/2;
+    pos.y = distY-rect.h/2;
+    return (pos.x * pos.x + pos.y * pos.y <= (circle.r * circle.r));
 }
+
+
+        //////////////////////////////////////////////////
+       //                                              //
+      //                                              //
+     //                                              //
+    //                 GAME ENGINE \/               //
+   //                                              //
+  //                                              //
+ //                                              //
+//////////////////////////////////////////////////
+
 
 setInterval(function run() {
     if (place !== null) {
@@ -489,20 +529,20 @@ setInterval(function run() {
                 ctx.fill();
             }
         }
-    }
-    
-    for (i = 0; i < twrs.length; i++) {
-        twr = twrs[i];
         if (twr.t == -1) {
             twrs.splice(i, 1);
         } else {
             s = stat[twr.t].s;
+            ctx.translate(twr.x + 25, twr.y + 25);
+            ctx.rotate(twr.r * Math.PI / 180);
+            ctx.translate(-twr.x - 25, -twr.y - 25);
             ctx.drawImage(stat[twr.t].t, twr.x, twr.y, 50, 50);
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
             if (twr.c !== 0) {
                 twr.c -= 1;
             }
             
-            var clst = null,
+            let clst = null,
                 clsd = null;
             
             if (twr.c === 0) {
@@ -523,14 +563,20 @@ setInterval(function run() {
                     }
                 }
                 if (clsd <= stat[twr.t].r && clst !== null && clsd !== null) {
-                    var tx = clst.x - twr.x,
+                    let tx = clst.x - twr.x,
                         ty = clst.y - twr.y,
                         dstn = Math.sqrt(tx*tx+ty*ty),
                         velX = (tx/dstn)*stat[twr.t].ps,
                         velY = (ty/dstn)*stat[twr.t].ps;
                     
-                    proj.push({t:twr.t, x:twr.x, y:twr.y, dx:velX, dy:velY, d:0});
+                    proj.push({t:twr.t, x:twr.x + 25, y:twr.y + 25, dx:velX, dy:velY, d:0, k:false});
                     
+                    let angle = Math.atan(ty / tx) * 180 / Math.PI;
+                    if (tx > 0) {
+                        angle += 180;
+                    }
+                    twr.r = angle;
+                    console.log(angle);
                     twr.c = stat[twr.t].s * (1 / gameSpeed);
                     
                 } else {
@@ -548,15 +594,16 @@ setInterval(function run() {
         for (j = 0; j < nmes.length; j++) {
             nme = nmes[j];
             
-            var dx = prj.x - nme.x;
-            var dy = prj.y - nme.y;
-            var distance = Math.sqrt(dx * dx + dy * dy);
+            pos.x = prj.x + (stat[prj.t].pw / 2) - nme.x - 25;
+            pos.y = prj.y + (stat[prj.t].pw / 2) - nme.y - 25;
+            let distance = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
             
-            if (distance < 5 + 25) {
-                if (nme.t >= 0) {
-                    cash += typs[nme.t].r;
-                    nme.t -= stat[prj.t].d;
-                }
+            if (distance < 40 && nme.t >= 0 && prj.k === false) {
+                prj.k = true;
+                cash += typs[nme.t].r;
+                pops.push({x:nme.x, y:nme.y, l:7});
+                nme.t -= stat[prj.t].d;
+                proj.splice(i, 1);
             }
         }
         
@@ -564,7 +611,7 @@ setInterval(function run() {
         prj.y += prj.dy * gameSpeed;
         prj.d += Math.sqrt(prj.dx * prj.dx + prj.dy * prj.dy) * gameSpeed;
         
-        if (prj.d > stat[prj.t].r) {
+        if (prj.d - 15 > stat[prj.t].r) {
             proj.splice(i, 1);
         }
     }
@@ -605,7 +652,7 @@ setInterval(function run() {
             }
         } else {
             nmes.splice(i, 1);
-            lives -= 1;
+            lives -= nme.t + 1;
         }
         
         if (nme.t < 0) {
@@ -613,51 +660,151 @@ setInterval(function run() {
         }
     } 
     
-    ctx.font = "bolder 64px Courier New";
-    ctx.fillStyle = "rgba(0,0,0,0.5)";
-    ctx.fillText("$" + cash, 10, 60);
-    
-    ctx.fillText("Wave " + wave, 10, 940);
-    
-    ctx.fillText("♥" + lives, 1340, 60);
-    
-    if (gameSpeed == 2) {
-        ctx.fillStyle = "rgb(255,255,255)";
-        ctx.fillRect(1380, 920, 120, 120); 
+    for (i = 0; i < pops.length; i++) {
+        pop = pops[i];
+        ctx.globalAlpha = pop.l / 7;
+        ctx.drawImage(popPart, pop.x, pop.y, 50, 50);
+        ctx.globalAlpha = 1;
+        pops[i].l -= 1;
+        if (pops[i].l <= 0) {
+            pops.splice(i, 1);
+        }
     }
-    ctx.fillStyle = "rgb(0,0,0)";
-    ctx.fillRect(1390, 930, 100, 100);
-    ctx.font = "bolder 128px Courier New";
-    ctx.fillStyle = "rgb(0,250,0)";
-    ctx.fillText("‣", 1400, 1020);
+
     
     ctx.fillStyle = "rgb(191,173,136)";
     ctx.fillRect(1540, 0, 380, 1080);
     
-    ctx.font = "bolder 64px Courier New";
-    var gridX = 1560,
-        gridY = 20;
-    for (i = 0; i < stat.length; i++) {
-        ctx.fillStyle = "rgba(0,0,0,0.3)";
-        ctx.fillRect(gridX, gridY, 160, 160);
+    if (built) {
         
+        ctx.font = "bolder 64px Courier New";
         ctx.fillStyle = "rgba(0,0,0,0.5)";
-        ctx.drawImage(stat[i].t, gridX + 10, gridY + 10, 140, 140);
-        ctx.fillText("$" + stat[i].c, gridX, gridY + 160);
+        ctx.fillText("$" + cash, 10, 60);
         
-        if (gridX == 1560) {
-            gridX = 1740;
-        } else {
-            gridY += 180;
-            gridX = 1560;
+        ctx.fillText("Wave " + wave, 10, 940);
+        
+        ctx.fillText("♥" + lives, 1340, 60);
+        
+        if (gameSpeed == 2) {
+            ctx.fillStyle = "rgb(255,255,255)";
+            ctx.fillRect(1380, 920, 120, 120); 
         }
-    }
-    
-    ctx.drawImage(bull, 50, 950, 120, 120);
-    if (del === true) {
-        ctx.drawImage(no, 50, 950, 120, 120);
-        ctx.fillStyle = "rgba(255,0,0,0.2)";
-        ctx.fillRect(0, 0, 1920, 1080);
+        ctx.fillStyle = "rgb(0,0,0)";
+        ctx.fillRect(1390, 930, 100, 100);
+        ctx.font = "bolder 128px Courier New";
+        ctx.fillStyle = "rgb(0,250,0)";
+        ctx.fillText("‣", 1400, 1020);
+        
+        ctx.font = "bolder 64px Courier New";
+        let gridX = 1560,
+            gridY = 20;
+        for (i = 0; i < stat.length; i++) {
+            ctx.fillStyle = "rgba(0,0,0,0.3)";
+            ctx.fillRect(gridX, gridY, 160, 160);
+            
+            ctx.fillStyle = "rgba(0,0,0,0.5)";
+            ctx.drawImage(stat[i].t, gridX + 10, gridY + 10, 140, 140);
+            ctx.fillText("$" + stat[i].c, gridX, gridY + 160);
+            
+            if (gridX == 1560) {
+                gridX = 1740;
+            } else {
+                gridY += 180;
+                gridX = 1560;
+            }
+        }
+        
+        ctx.drawImage(bull, 50, 950, 120, 120);
+        if (del === true) {
+            ctx.drawImage(no, 50, 950, 120, 120);
+            ctx.fillStyle = "rgba(255,0,0,0.2)";
+            ctx.fillRect(0, 0, 1920, 1080);
+        }
+    } else {
+        pth = paths[paths.length - 1];
+        
+        ctx.fillStyle = "rgb(0,0,0)";
+        ctx.fillRect(1390, 930, 100, 100);
+        ctx.font = "bolder 128px Courier New";
+        ctx.fillStyle = "rgb(0,250,0)";
+        ctx.fillText("✓", 1400, 1020);
+        
+        ctx.fillStyle = "rgba(235,191,115,0.7)";
+        let rndX = 50 * Math.round(mouseX / 50);
+        let rndY = 50 * Math.round(mouseY / 50);
+        if (pth.d === 0) {
+            if (mouseY < pth.y + 25) {
+                ctx.fillRect(pth.x + pth.w, rndY, 50, pth.y + 50 - rndY);
+                newPth.x = pth.x + pth.w;
+                newPth.y = rndY;
+                newPth.w = 50;
+                newPth.h = pth.y + 50 - rndY;
+                newPth.d = 1;
+                newPth.l = (pth.y + 50 - rndY) / 50;
+            } else {
+                ctx.fillRect(pth.x + pth.w, pth.y, 50, rndY - pth.y);
+                newPth.x = pth.x + pth.w;
+                newPth.y = pth.y;
+                newPth.w = 50;
+                newPth.h = rndY - pth.y;
+                newPth.d = 3;
+                newPth.l = (rndY - pth.y) / 50;
+            }
+        } else if (pth.d == 2) {
+            if (mouseY < pth.y + 25) {
+                ctx.fillRect(pth.x - 50, rndY, 50, pth.y + 50 - rndY);
+                newPth.x = pth.x - 50;
+                newPth.y = rndY;
+                newPth.w = 50;
+                newPth.h = pth.y + 50 - rndY;
+                newPth.d = 1;
+                newPth.l = (pth.y + 50 - rndY) / 50;
+            } else {
+                ctx.fillRect(pth.x - 50, pth.y, 50, rndY - pth.y);
+                newPth.x = pth.x - 50;
+                newPth.y = pth.y;
+                newPth.w = 50;
+                newPth.h = rndY - pth.y;
+                newPth.d = 3;
+                newPth.l = (rndY - pth.y) / 50;
+            }
+        } else if (pth.d == 1) {
+            if (mouseX < pth.x + 25) {
+                ctx.fillRect(rndX, pth.y - 50, pth.x + 50 - rndX, 50);
+                newPth.x = rndX;
+                newPth.y = pth.y - 50;
+                newPth.w = pth.x + 50 - rndX;
+                newPth.h = 50;
+                newPth.d = 2;
+                newPth.l = (pth.x + 50 - rndX) / 50;
+            } else {
+                ctx.fillRect(pth.x, pth.y - 50, rndX - pth.x, 50);
+                newPth.x = pth.x;
+                newPth.y = pth.y - 50;
+                newPth.w = rndX - pth.x;
+                newPth.h = 50;
+                newPth.d = 0;
+                newPth.l = (rndX - pth.x) / 50;
+            }
+        } else if (pth.d == 3) {
+            if (mouseX < pth.x + 25) {
+                ctx.fillRect(rndX, pth.y + pth.h, pth.x + 50 - rndX, 50);
+                newPth.x = rndX;
+                newPth.y = pth.y + pth.h;
+                newPth.w = pth.x + 50 - rndX;
+                newPth.h = 50;
+                newPth.d = 2;
+                newPth.l = (pth.x + 50 - rndX) / 50;
+            } else {
+                ctx.fillRect(pth.x, pth.y + pth.h, rndX - pth.x, 50);
+                newPth.x = pth.x;
+                newPth.y = pth.y + pth.h;
+                newPth.w = rndX - pth.x;
+                newPth.h = 50;
+                newPth.d = 0;
+                newPth.l = (rndX - pth.x) / 50;
+            }
+        }
     }
 
     if (nmes.length === 0) {
@@ -665,8 +812,12 @@ setInterval(function run() {
         if (waveEnd) {
             waveEnd = false;
             cash += 100;
+            if (oldLives == lives) {
+                cash += 100;
+            }
         }
         if (play) {
+            oldLives = lives;
             play = false;
             waveEnd = true;
             wave += 1;
