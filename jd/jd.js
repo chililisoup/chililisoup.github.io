@@ -399,7 +399,7 @@ function onClick(e) {
             } else if (pth.d === 2) {
                 paths.push({c:"rgb(255,0,0)", x:pth.x - 50, y:pth.y, w:50, h:50, d:4});
             } else if (pth.d === 3) {
-                paths.push({c:"rgb(255,0,0)", x:pth.x, y:pth.y + 50, w:50, h:50, d:4});
+                paths.push({c:"rgb(255,0,0)", x:pth.x, y:pth.y + pth.h, w:50, h:50, d:4});
             }
         } else if (newPth.l > 1) {
             paths.push({c:"rgb(235,191,115)", x:newPth.x, y:newPth.y, w:newPth.w, h:newPth.h, d:newPth.d});
