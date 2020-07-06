@@ -4,6 +4,9 @@ canvas.height = 500;
 var ctx = canvas.getContext("2d");
 var color = "#FF0000";
 ctx.lineCap = "round";
+var cache = 4096;
+var circleA = 0.3;
+var lineA = 0.3;
 
 var circleStart = [
     {r:50,v:90,a:0,x:0,y:0},
@@ -37,6 +40,60 @@ function addCircle() {
     createTable();
 }
 
+function setCache() {
+    cache = document.getElementById("cache").value;
+}
+
+function togCircles() {
+    if (circleA == 0.3) {
+        circleA = 0;
+    } else {
+        circleA = 0.3;
+    }
+}
+
+function togLines() {
+    if (lineA == 0.3) {
+        lineA = 0;
+    } else {
+        lineA = 0.3;
+    }
+}
+
+function loadPreset() {
+    switch (document.getElementById("preset").value) {
+        case "clover":
+            circleStart = [
+                {r:50,v:90,a:0,x:0,y:0},
+                {r:30,v:-30,a:0,x:0,y:0}
+            ];
+            createTable();
+            break;
+        case "adobe":
+            circleStart = [
+                {r:90,v:-45,a:0,x:0,y:0},
+                {r:70,v:90,a:0,x:0,y:0}
+            ];
+            createTable();
+            break;
+        case "star":
+            circleStart = [
+                {r:50,v:-60,a:0,x:0,y:0},
+                {r:30,v:90,a:0,x:0,y:0}
+            ];
+            createTable();
+            break;
+        case "firework":
+            circleStart = [
+                {r:50,v:60,a:0,x:0,y:0},
+                {r:50,v:-50,a:0,x:0,y:0},
+                {r:20,v:2020,a:0,x:0,y:0}
+            ];
+            createTable();
+            break;
+    }
+}
+
 function radius(n) {
     circleStart[n].r = document.getElementById("radius" + n).value
 }
@@ -51,7 +108,7 @@ function angle(n) {
 
 function createTable() {
     let text = "";
-    text += "<tr><th></th><th><p>Radius</p></th><th><p>Deg/Sec</p></th><th><p>Degs</p></th></tr>";
+    text += "<tr><th></th><th><p>Radius</p></th><th><p>Degs/Sec</p></th><th><p>Angle</p></th></tr>";
     for (let i = 0; i < circleStart.length; i++) {
         text += "<tr><th><button style='width:100%;' onmousedown='remove(" + i + ")'>X</button></th>";
         text += "<th><input step='0.01' placeholder='50.00' type='number' id='radius" + i + "' onchange='radius(" + i + ")' value='" + circleStart[i].r + "'></input></th>";
@@ -77,8 +134,7 @@ var loop = setInterval(function() {
     }
 
     for (let i = 0; i < circles.length; i++) {
-        ctx.globalAlpha = 0.3;
-
+        ctx.globalAlpha = circleA;
         ctx.strokeStyle = "#FFFFFF";
         ctx.lineWidth = 2.5;
         ctx.beginPath();
@@ -86,6 +142,7 @@ var loop = setInterval(function() {
         ctx.stroke();
         ctx.closePath();
 
+        ctx.globalAlpha = lineA;
         ctx.strokeStyle = "#0000FF";
         ctx.lineWidth = 5;
         ctx.beginPath();
@@ -101,7 +158,7 @@ var loop = setInterval(function() {
             circles[i + 1].y = newy;
         } else {
             points.push({x:newx,y:newy,c:color});
-            if (points.length > 4096) {
+            while (points.length > cache) {
                 points.shift();
             }
         }

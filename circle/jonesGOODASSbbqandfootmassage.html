@@ -9,7 +9,6 @@
 <body>
     <div class="flex2">
         <h1>Jones' Good Ass BBQ & Foot Massage</h1>
-        <button style="width: 80px;" onmousedown="reset()">Reset</button>
     </div>
     <div class="flex">
         <canvas id="cool"></canvas>
@@ -17,6 +16,31 @@
             <h3>Circle Manager</h3>
             <button style="width: 100px; margin-bottom:5px;" onmousedown="addCircle()">New Circle</button>
             <table id="circleManager"></table>
+        </div>
+        <div class="settings">
+            <h3>Tools</h3>
+            <button style="width: 120px;" onmousedown="reset()">Refresh Circles</button>
+            <div class="input">
+                <label for="cache">Point Cache:</label>
+                <input style="width: 80px;" placeholder="4096" type="number" onchange="setCache()" value="4096" id="cache"></input>
+            </div>
+            <div class="input">
+                <label for="preset">Load Preset:</label>
+                <select id="preset" onchange="loadPreset()">
+                    <option value="clover">Clover</option>
+                    <option value="adobe">Adobe</option>
+                    <option value="star">Star</option>
+                    <option value="firework">Firework</option>
+                </select>
+            </div>
+            <div class="input">
+                <label for="vCircles">View Circles</label>
+                <input style="width: 60px;" checked type="checkbox" onchange="togCircles()" id="vCircles"></input>
+            </div>
+            <div class="input">
+                <label for="vLines">View Lines</label>
+                <input style="width: 60px;" checked type="checkbox" onchange="togLines()" id="vLines"></input>
+            </div>
         </div>
     </div>
 </body>
