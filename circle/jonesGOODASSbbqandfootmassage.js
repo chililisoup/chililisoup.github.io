@@ -91,6 +91,14 @@ function loadPreset() {
             ];
             createTable();
             break;
+        case "fish":
+            circleStart = [
+                {r:50,v:30,a:0,x:0,y:0},
+                {r:35,v:60,a:0,x:0,y:0},
+                {r:50,v:-30,a:0,x:0,y:0}
+            ];
+            createTable();
+            break;
     }
 }
 
