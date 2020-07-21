@@ -1,0 +1,257 @@
+<html>
+    <head>
+        <title>MC Biome Generator</title>
+        <script src="biomegen.js" defer></script>
+        <link rel="stylesheet" href="biomegen.css">
+    </head>
+    <body>
+        <h1>MC Biome Generator <i>v0.1</i></h1>
+        <div class="flex mainDiv">
+            <div class="contentDiv" id="starts">
+                <header>
+                    <button class="MedSq" onmousedown="toggleVis('starts')">+</button>
+                    <h3>Starts</h3>
+                </header>
+                <div class="content">
+                    <table id="startsTable">
+                        <tr>
+                            <th class="thbutton">
+                                <button onmousedown="createNew('starts')">+</button>
+                            </th>
+                            <th>
+                                <h4>Structure ID</h4>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="contentDiv" id="spawners">
+                <header>
+                    <button class="MedSq" onmousedown="toggleVis('spawners')">+</button>
+                    <h3>Spawners</h3>
+                </header>
+                <div class="content">
+                    <div class="contentDiv" id="monster">
+                        <header>
+                            <button class="MedSq" onmousedown="toggleVis('monster')">+</button>
+                            <h3>Monster</h3>
+                        </header>
+                        <div class="content">
+                            <table id="monsterTable">
+                                <tr>
+                                    <th class="thbutton">
+                                        <button onmousedown="createNew('monster')">+</button>
+                                    </th>
+                                    <th style="width:52%;">
+                                        <h4>Entity ID</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Weight</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Min Count</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Max Count</h4>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="contentDiv" id="creature">
+                        <header>
+                            <button class="MedSq" onmousedown="toggleVis('creature')">+</button>
+                            <h3>Creature</h3>
+                        </header>
+                        <div class="content">
+                            <table id="creatureTable">
+                                <tr>
+                                    <th class="thbutton">
+                                        <button onmousedown="createNew('creature')">+</button>
+                                    </th>
+                                    <th style="width:52%;">
+                                        <h4>Entity ID</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Weight</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Min Count</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Max Count</h4>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="contentDiv" id="ambient">
+                        <header>
+                            <button class="MedSq" onmousedown="toggleVis('ambient')">+</button>
+                            <h3>Ambient</h3>
+                        </header>
+                        <div class="content">
+                            <table id="ambientTable">
+                                <tr>
+                                    <th class="thbutton">
+                                        <button onmousedown="createNew('ambient')">+</button>
+                                    </th>
+                                    <th style="width:52%;">
+                                        <h4>Entity ID</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Weight</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Min Count</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Max Count</h4>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="contentDiv" id="water_creature">
+                        <header>
+                            <button class="MedSq" onmousedown="toggleVis('water_creature')">+</button>
+                            <h3>Water Creature</h3>
+                        </header>
+                        <div class="content">
+                            <table id="water_creatureTable">
+                                <tr>
+                                    <th class="thbutton">
+                                        <button onmousedown="createNew('water_creature')">+</button>
+                                    </th>
+                                    <th style="width:52%;">
+                                        <h4>Entity ID</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Weight</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Min Count</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Max Count</h4>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="contentDiv" id="water_ambient">
+                        <header>
+                            <button class="MedSq" onmousedown="toggleVis('water_ambient')">+</button>
+                            <h3>Water Ambient</h3>
+                        </header>
+                        <div class="content">
+                            <table id="water_ambientTable">
+                                <tr>
+                                    <th class="thbutton">
+                                        <button onmousedown="createNew('water_ambient')">+</button>
+                                    </th>
+                                    <th style="width:52%;">
+                                        <h4>Entity ID</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Weight</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Min Count</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Max Count</h4>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="contentDiv" id="misc">
+                        <header>
+                            <button class="MedSq" onmousedown="toggleVis('misc')">+</button>
+                            <h3>Misc</h3>
+                        </header>
+                        <div class="content">
+                            <table id="miscTable">
+                                <tr>
+                                    <th class="thbutton">
+                                        <button onmousedown="createNew('misc')">+</button>
+                                    </th>
+                                    <th style="width:52%;">
+                                        <h4>Entity ID</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Weight</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Min Count</h4>
+                                    </th>
+                                    <th style="width:16%;">
+                                        <h4>Max Count</h4>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contentDiv" id="colors">
+                <header>
+                    <button class="MedSq" onmousedown="toggleVis('colors')">+</button>
+                    <h3>Colors</h3>
+                </header>
+                <div class="content">
+                    <div class="contentDiv" id="sky_color">
+                        <header>
+                            <input type="color" value="#78a7ff" class="MedSq" id="colorSky" onchange="modifyColor('Sky', this.value)">
+                            <h3>Sky</h3>
+                            <label for="hexColorSky">Hex Color: </label>
+                            <input type="text" class="inlineInput" placeholder="78a7ff" value="78a7ff" id="hexColorSky" onchange="modifyColor('Sky', this.value)">
+                            <label for="decColorSky">Decimal Color: </label>
+                            <input type="number" min="0" max="16777215" value="7907327" placeholder="7907327" class="inlineInput" id="decColorSky" onchange="modifyColor('Sky', 'dec' + this.value)">
+                        </header>
+                    </div> 
+                    <div class="contentDiv" id="fog_color">
+                        <header>
+                            <input type="color" value="#c0d8ff" class="MedSq" id="colorFog" onchange="modifyColor('Fog', this.value)">
+                            <h3>Fog</h3>
+                            <label for="hexColorFog">Hex Color: </label>
+                            <input type="text" class="inlineInput" placeholder="c0d8ff" value="c0d8ff" id="hexColorFog" onchange="modifyColor('Fog', this.value)">
+                            <label for="decColorFog">Decimal Color: </label>
+                            <input type="number" min="0" max="16777215" value="12638463" placeholder="12638463" class="inlineInput" id="decColorFog" onchange="modifyColor('Fog', 'dec' + this.value)">
+                        </header>
+                    </div>
+                    <div class="contentDiv" id="water_color">
+                        <header>
+                            <input type="color" value="#3f76e4" class="MedSq" id="colorWater" onchange="modifyColor('Water', this.value)">
+                            <h3>Water</h3>
+                            <label for="hexColorWater">Hex Color: </label>
+                            <input type="text" class="inlineInput" placeholder="3f76e4" value="3f76e4" id="hexColorWater" onchange="modifyColor('Water', this.value)">
+                            <label for="decColorWater">Decimal Color: </label>
+                            <input type="number" min="0" max="16777215" value="4159204" placeholder="4159204" class="inlineInput" id="decColorWater" onchange="modifyColor('Water', 'dec' + this.value)">
+                        </header>
+                    </div>
+                    <div class="contentDiv" id="water_fog_color">
+                        <header>
+                            <input type="color" value="#050533" class="MedSq" id="colorWaterFog" onchange="modifyColor('WaterFog', this.value)">
+                            <h3>Water Fog</h3>
+                            <label for="hexColorWaterFog">Hex Color: </label>
+                            <input type="text" class="inlineInput" placeholder="050533" value="050533" id="hexColorWaterFog" onchange="modifyColor('WaterFog', this.value)">
+                            <label for="decColorWaterFog">Decimal Color: </label>
+                            <input type="number" min="0" max="16777215" value="329011" placeholder="329011" class="inlineInput" id="decColorWaterFog" onchange="modifyColor('WaterFog', 'dec' + this.value)">
+                        </header>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu">
+            <div class="menuItem">
+                <a id="download">Download</a>
+            </div>
+            <div class="menuItem" style="flex-direction: column;">
+                <label for="upload" style="margin: 5px;">Upload JSON</label>
+                <input id="upload" accept=".json" type="file" onchange="loadJSON()">
+            </div>
+        </div>
+    </body>
+</html>

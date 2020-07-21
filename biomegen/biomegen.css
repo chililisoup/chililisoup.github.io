@@ -1,0 +1,129 @@
+body {
+    background-color: #303030;
+}
+.flex {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.menuItem {
+    width: 208px;
+    height: 96px;
+    margin: 32px;
+    background-color: #202020;
+    border: solid 5px #404040;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}
+.menuItem a {
+    font-size: 24px;
+    color: white;
+}
+.menuItem a:-webkit-any-link {
+    color: #48b0fa;
+}
+.menuItem a:-webkit-any-link:hover {
+    color: #73c5ff;
+}
+.menuItem a:-webkit-any-link:active {
+    color: #adddff;
+}
+.mainDiv {
+    border: 5px solid #404040;
+    border-radius: 10px;
+    background-color: #101010;
+}
+.contentDiv {
+    border: 2px solid #909090;
+    border-radius: 5px;
+    background-color: #202020;
+    margin: 5px;
+}
+h1 {
+    text-align: center;
+    color: white;
+}
+h3, h4 {
+    color: white;
+    margin: 5px;
+    width: 128px;
+}
+label {
+    color: white;
+    margin-left: 24px;
+    margin-top: 6px;
+    font-size: 18px; 
+}
+header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+button {
+    margin: 5px;
+    background-color: #505050;
+    cursor: pointer;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bolder;
+    color: white;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 2px solid #606060;
+}
+button:hover {
+    background-color: #808080;
+}
+button:active {
+    background-color: #C0C0C0;
+}
+.content {
+    display: none;
+    padding-left: 25px;
+    background-color: rgba(255,255,255,0.1);
+}
+.MedSq {
+    width: 24px;
+    height: 24px;
+    font-size: 20px;
+    padding: 0;
+}
+table, td, th {
+    border-collapse: collapse;
+    border: 2px solid #808080;
+    background-color: #101010; 
+}
+table {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+th {
+    text-align: left;
+    padding-right: 11px;
+}
+input {
+    width: 100%;
+    margin: 5px;
+    background-color: #202020;
+    color: white;
+    border: 3px solid #303030;
+    font-size: 14px;
+}
+.inlineInput {
+    width: 150px;
+}
+.thbutton {
+    width: 30px;
+    padding: 0;
+}
