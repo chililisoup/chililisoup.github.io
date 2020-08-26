@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
@@ -131,59 +131,74 @@
 			</div>
 			<div class="content" style="margin-top:	1em;">
 				<div style="margin-top:	1em;">
-				<div>Tetromino Style:
-				</div><br>
 				<table style="width: 100%;">
+				    <tr>
+						<td>
+							<input type="checkbox" checked onclick="toggle(0)">
+						</td>
+						<td>
+						    <div>Instant Drop</div>
+						</td>
+					</tr>
 					<tr>
 						<td>
 							<input type="radio" name="blstyle" checked onclick="blockStyle(0)">
-						</td><td>
-							<div style="width:14px; height:14px; top:63px; left:33px; background-color: #FF7F00;" class="style0"></div>
-							<div style="width:14px; height:14px; top:63px; left:47px; background-color: #0062ff;" class="style0"></div>
-							<div style="width:14px; height:14px; top:63px; left:61px; background-color: #08f700;" class="style0"></div>
-							<div style="width:14px; height:14px; top:63px; left:75px; background-color: #ff0000;" class="style0"></div>
-							<div style="width:14px; height:14px; top:63px; left:89px; background-color: #bc32fc;" class="style0"></div>
-							<div style="width:14px; height:14px; top:63px; left:103px; background-color: #ffff00;" class="style0"></div>
-							<div style="width:14px; height:14px; top:63px; left:117px; background-color: #00eeff;" class="style0"></div>
+						</td>
+						<td style="display: flex; flex-direction: row;" class="skinTd">
+							<div style="background-color: #FF7F00;" class="style0 styleAll"></div>
+							<div style="background-color: #0062ff;" class="style0 styleAll"></div>
+							<div style="background-color: #08f700;" class="style0 styleAll"></div>
+							<div style="background-color: #ff0000;" class="style0 styleAll"></div>
+							<div style="background-color: #bc32fc;" class="style0 styleAll"></div>
+							<div style="background-color: #ffff00;" class="style0 styleAll"></div>
+							<div style="background-color: #00eeff;" class="style0 styleAll"></div>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<input type="radio" name="blstyle" onclick="blockStyle(1)">
-						</td><td>
-							<div style="width:14px; height:14px; top:86px; left:33px; background-color: #FF7F00;" class="style1"></div>
-							<div style="width:14px; height:14px; top:86px; left:47px; background-color: #0062ff;" class="style1"></div>
-							<div style="width:14px; height:14px; top:86px; left:61px; background-color: #08f700;" class="style1"></div>
-							<div style="width:14px; height:14px; top:86px; left:75px; background-color: #ff0000;" class="style1"></div>
-							<div style="width:14px; height:14px; top:86px; left:89px; background-color: #bc32fc;" class="style1"></div>
-							<div style="width:14px; height:14px; top:86px; left:103px; background-color: #ffff00;" class="style1"></div>
-							<div style="width:14px; height:14px; top:86px; left:117px; background-color: #00eeff;" class="style1"></div>
+						</td>
+						<td style="display: flex; flex-direction: row;" class="skinTd">
+							<div style="background-color: #FF7F00;" class="style1 styleAll"></div>
+							<div style="background-color: #0062ff;" class="style1 styleAll"></div>
+							<div style="background-color: #08f700;" class="style1 styleAll"></div>
+							<div style="background-color: #ff0000;" class="style1 styleAll"></div>
+							<div style="background-color: #bc32fc;" class="style1 styleAll"></div>
+							<div style="background-color: #ffff00;" class="style1 styleAll"></div>
+							<div style="background-color: #00eeff;" class="style1 styleAll"></div>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<input type="radio" name="blstyle" onclick="blockStyle(2)">
-						</td><td>
-							<div style="width:14px; position: absolute; height:14px; top:109px; left:33px; background-color: #FF7F00;" class="style2"></div>
-							<div style="width:14px; position: absolute; height:14px; top:109px; left:47px; background-color: #0062ff;" class="style2"></div>
-							<div style="width:14px; position: absolute; height:14px; top:109px; left:61px; background-color: #08f700;" class="style2"></div>
-							<div style="width:14px; position: absolute; height:14px; top:109px; left:75px; background-color: #ff0000;" class="style2"></div>
-							<div style="width:14px; position: absolute; height:14px; top:109px; left:89px; background-color: #bc32fc;" class="style2"></div>
-							<div style="width:14px; position: absolute; height:14px; top:109px; left:103px; background-color: #ffff00;" class="style2"></div>
-							<div style="width:14px; position: absolute; height:14px; top:109px; left:117px; background-color: #00eeff;" class="style2"></div>
+						</td>
+						<td style="display: flex; flex-direction: row;" class="skinTd">
+							<div style="background-color: #FF7F00;" class="style2 styleAll"></div>
+							<div style="background-color: #0062ff;" class="style2 styleAll"></div>
+							<div style="background-color: #08f700;" class="style2 styleAll"></div>
+							<div style="background-color: #ff0000;" class="style2 styleAll"></div>
+							<div style="background-color: #bc32fc;" class="style2 styleAll"></div>
+							<div style="background-color: #ffff00;" class="style2 styleAll"></div>
+							<div style="background-color: #00eeff;" class="style2 styleAll"></div>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<input type="radio" name="blstyle" onclick="blockStyle(3)">
-						</td><td>
-							<div style="width:14px; position: absolute; height:14px; top:132px; left:33px; background-color: #FF7F00;" class="style3"></div>
-							<div style="width:14px; position: absolute; height:14px; top:132px; left:47px; background-color: #0062ff;" class="style3"></div>
-							<div style="width:14px; position: absolute; height:14px; top:132px; left:61px; background-color: #08f700;" class="style3"></div>
-							<div style="width:14px; position: absolute; height:14px; top:132px; left:75px; background-color: #ff0000;" class="style3"></div>
-							<div style="width:14px; position: absolute; height:14px; top:132px; left:89px; background-color: #bc32fc;" class="style3"></div>
-							<div style="width:14px; position: absolute; height:14px; top:132px; left:103px; background-color: #ffff00;" class="style3"></div>
-							<div style="width:14px; position: absolute; height:14px; top:132px; left:117px; background-color: #00eeff;" class="style3"></div>
+						</td>
+						<td style="display: flex; flex-direction: row;" class="skinTd">
+							<div style="background-color: #FF7F00;" class="style3 styleAll"></div>
+							<div style="background-color: #0062ff;" class="style3 styleAll"></div>
+							<div style="background-color: #08f700;" class="style3 styleAll"></div>
+							<div style="background-color: #ff0000;" class="style3 styleAll"></div>
+							<div style="background-color: #bc32fc;" class="style3 styleAll"></div>
+							<div style="background-color: #ffff00;" class="style3 styleAll"></div>
+							<div style="background-color: #00eeff;" class="style3 styleAll"></div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+						    <input type="text" name="skinUrl" onchange="skinUrl(this.value)" placeholder="Custom Image URL" style="margin-left: 10px;">
 						</td>
 					</tr>
 				</table>
