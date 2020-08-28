@@ -242,6 +242,7 @@ function Tetris() {
 				self.stats.setActions(self.stats.getActions() + 1);
 			}
 		}
+		self.puzzle.highlight();
 	};
 
 	/**
@@ -269,6 +270,7 @@ function Tetris() {
 				self.stats.setActions(self.stats.getActions() + 1);
 			}
 		}
+		self.puzzle.highlight();
 	};
 
 	/**
@@ -282,6 +284,7 @@ function Tetris() {
 				self.stats.setActions(self.stats.getActions() + 1);
 			}
 		}
+		self.puzzle.highlight();
 	};
 
 	/**
@@ -299,6 +302,7 @@ function Tetris() {
 		if (self.puzzle && self.puzzle.isRunning() && !self.puzzle.isStopped()) {
 			self.puzzle.store();
 		}
+		self.puzzle.highlight();
 	};
 
 	// windows
@@ -423,6 +427,7 @@ function Tetris() {
 		this.n = 78;
 		this.p = 80;
 		this.c = 67;
+		this.h = 72;
 		this.space = 32;
 		this.f12 = 123;
 		this.escape = 27;
@@ -1008,6 +1013,7 @@ function Tetris() {
 				}
 			}
 			placeTimer = 0;
+			self.highlight();
 
 		};
 
@@ -1029,7 +1035,23 @@ function Tetris() {
 		};
 
 		this.highlight = function () {
-
+			let hls = document.getElementsByClassName("highlight");
+			while (hls[0]) {
+				hls[0].parentNode.removeChild(hls[0]);
+			}
+		    let notY = this.getY();
+			while (self.mayMoveDownFake(notY)) { notY++ }
+			for (let y = 0; y < this.board.length; y++) {
+				for (let x = 0; x < this.board[y].length; x++) {
+					if (this.board[y][x] != 0) {
+						let el = document.createElement("div");
+						el.className = "block" + this.type + " highlight";
+						el.style.left = this.getX() * this.area.unit + x * this.area.unit + "px";
+						el.style.top = notY * this.area.unit + y * this.area.unit + "px";
+						this.area.el.appendChild(el);
+					}
+				}
+			}
 		}
 
 		this.store = function () {
@@ -1080,6 +1102,7 @@ function Tetris() {
 
 					this.tempPuzzle = this.puzzles[this.type];
 					this.tempHeldType = this.type;
+					this.type = this.heldType;
 
 					this.destroy(1);
 
@@ -1229,7 +1252,6 @@ function Tetris() {
 						self.tetris.stats.setScore(self.tetris.stats.getScore() + 5 + self.tetris.stats.getLevel());
 						self.tetris.stats.setActions(self.tetris.stats.getActions() + 1);
 						self.moveDown();
-						self.forceMoveDownID = setTimeout(self.forceMoveDown, 0);
 					}
 					// move blocks into area board
 					for (var i = 0; i < self.elements.length; i++) {
@@ -1360,6 +1382,22 @@ function Tetris() {
 						}
 						if (this.area.getBlock(this.getY() + y + 1, this.getX() + x)) {
 							this.stopped = true;
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		};
+		
+		this.mayMoveDownFake = function (fakeY) {
+			for (var y = 0; y < this.board.length; y++) {
+				for (var x = 0; x < this.board[y].length; x++) {
+					if (this.board[y][x]) {
+						if (fakeY + y + 1 >= this.area.y) {
+							return false;
+						}
+						if (this.area.getBlock(fakeY + y + 1, this.getX() + x)) {
 							return false;
 						}
 					}

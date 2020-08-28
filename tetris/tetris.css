@@ -112,7 +112,8 @@ input {
   	background-image: url("tile2.png");
 }
 
-#tetris .style3 {
+.highlight {
+	opacity: 20%;
 }
 
 #tetris .left h1, #tetris .left h2 {
@@ -216,7 +217,7 @@ a:hover {
 	left: 25px;
 	top: 135px;
 }
-#tetris div.h5 { margin-bottom: 0.5em; display: block; font-weight: bold; }
+#tetris div.h5 { margin-bottom: 0.1em; margin-top: 0.4em; display: block; font-weight: bold; }
 #tetris-keys td { padding-right: 1px; padding-bottom: 1px; }
 #tetris-keys img { border-width: 0px; }
 
@@ -329,7 +330,7 @@ a:hover {
 }
 #tetris	.window	.top .close:hover {
 	background:	#c6cf2d;
-    bcolor: white;
+    color: white;
 }
 #tetris	.window	.content {
 	margin:	10px;
