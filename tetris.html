@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+	<title>Js Tetris</title>
+	<meta http-equiv="Content-Type"	content="text/html;	charset=utf-8">
+	<link href="tetris.css"	rel="stylesheet" type="text/css">
+	<link href="tetris.ico" rel="shortcut icon">
+	<script	type="text/javascript" src="tetris.js"></script>
+	<style type="text/css">
+	html, body { height: 100%; }
+	#tetris	{ margin: 0	auto; }
+	</style>
+</head>
+<body>
+
+<table style="width: 100%; height: 100%;" cellspacing="0" cellpadding="0"><tr><td style="vertical-align: middle;">
+
+	<div id="tetris">
+		<div class="left">
+			<h1><a href="http://www.gosu.pl/tetris/">Js	Tetris</a></h1>
+			<div class="menu">
+				<div><a href="javascript:void(0)" id="tetris-menu-start">New Game</a></div>
+				<div id="tetris-pause">
+					<a href="javascript:void(0)" id="tetris-menu-pause">Pause</a>
+				</div>
+				<div style="display: none;" id="tetris-resume">
+					<a href="javascript:void(0)" id="tetris-menu-resume">Resume</a>
+				</div>
+				<div><a href="javascript:void(0)" id="tetris-menu-highscores">Highscores</a></div>
+				<div><a href="javascript:void(0)" id="tetris-menu-help">About</a></div>
+				<div><a href="javascript:void(0)" id="tetris-menu-settings">Settings</a></div>
+			</div>
+			<div id="tetris-nextpuzzle"></div>
+            <div id="tetris-heldpuzzle"></div>
+			<div id="tetris-gameover">Game Over</div>
+			<div id="tetris-keys">
+				<div class="h5">Keyboard:</div>
+				<table cellspacing="0" cellpadding="0">
+				<tr>
+					<td>Rotate:</td>
+					<td></td>
+					<td><img src="key-up.gif" width="14" height="14" alt=""></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Move:</td>
+					<td><img src="key-left.gif" width="14" height="14" alt=""></td>
+					<td><img src="key-down.gif" width="14" height="14" alt=""></td>
+					<td><img src="key-right.gif" width="14" height="14" alt=""></td>
+				</tr>
+				<tr>
+					<td>Fall:</td>
+					<td colspan="3">
+						<img src="key-space.gif" width="44" height="13" alt="">
+					</td>
+				</tr>
+        <tr>
+					<td>Hold:</td>
+          <td></td>
+					<td>
+						<img src="key-c.gif" width="14" height="14" alt="">
+					</td>
+          <td></td>
+				</tr>
+				</table>
+			</div>
+			<div class="stats">
+				<div class="h5">Statistics:</div>
+				<table cellspacing="0" cellpadding="0">
+				<tr>
+					<td	class="level">Level:</td>
+					<td><span id="tetris-stats-level">1</span></td>
+				</tr>
+				<tr>
+					<td	class="score">Score:</td>
+					<td><span id="tetris-stats-score">0</span></td>
+				</tr>
+				<tr>
+					<td	class="lines">Lines:</td>
+					<td><span id="tetris-stats-lines">0</span></td>
+				</tr>
+				<tr>
+					<td	class="apm">APM:</td>
+					<td><span id="tetris-stats-apm">0</span></td>
+				</tr>
+				<tr>
+					<td	class="time">Time:</td>
+					<td><span id="tetris-stats-time">0</span></td>
+				</tr>
+
+				</table>
+			</div>
+		</div>
+		<div class="left-border"></div>
+		<div id="tetris-area">
+			<div class="grid"></div>
+		</div>
+		<div id="tetris-help" class="window">
+			<div class="top">
+				About <span id="tetris-help-close" class="close">x</span>
+			</div>
+			<div class="content" style="margin-top:	1em;">
+				<div style="margin-top:	1em;">
+				<div>JsTetris is a highly customizable tetris game written in javascript,
+				full sources available, it is free to modify.
+				</div>
+				<br>
+				<div>Author: Cezary Tomczak</div>
+				<div>Site: <a href="http://www.gosu.pl/tetris/">www.gosu.pl/tetris/</a></div>
+				<br>
+				<div>License: BSD revised (free for any use)</div>
+				<br><hr><br>
+				<div>Edited by rebot333</div>
+				</div>
+			</div>
+		</div>
+		<div id="tetris-highscores"	class="window">
+			<div class="top">
+				Highscores <span id="tetris-highscores-close" class="close">x</span>
+			</div>
+			<div class="content">
+				<div id="tetris-highscores-content"></div>
+				<br>
+				Note: these	scores are kept	in cookies,	they are only visible to your computer.
+			</div>
+		</div>
+		<div id="tetris-settings" class="window">
+			<div class="top">
+				Settings <span id="tetris-settings-close" class="close">x</span>
+			</div>
+			<div class="content" style="margin-top:	1em;">
+				<div style="margin-top:	1em;">
+				<table style="width: 100%;">
+				    <tr>
+						<td>
+							<input type="checkbox" checked onclick="toggle(0)">
+						</td>
+						<td>
+						    <div>Instant Drop</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="radio" name="blstyle" checked onclick="blockStyle(0)">
+						</td>
+						<td style="display: flex; flex-direction: row;" class="skinTd">
+							<div style="position: relative;" class="block0 style0 styleAll"></div>
+							<div style="position: relative;" class="block1 style0 styleAll"></div>
+							<div style="position: relative;" class="block2 style0 styleAll"></div>
+							<div style="position: relative;" class="block3 style0 styleAll"></div>
+							<div style="position: relative;" class="block4 style0 styleAll"></div>
+							<div style="position: relative;" class="block5 style0 styleAll"></div>
+							<div style="position: relative;" class="block6 style0 styleAll"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="radio" name="blstyle" onclick="blockStyle(1)">
+						</td>
+						<td style="display: flex; flex-direction: row;" class="skinTd">
+							<div style="position: relative;" class="block0 style1 styleAll"></div>
+							<div style="position: relative;" class="block1 style1 styleAll"></div>
+							<div style="position: relative;" class="block2 style1 styleAll"></div>
+							<div style="position: relative;" class="block3 style1 styleAll"></div>
+							<div style="position: relative;" class="block4 style1 styleAll"></div>
+							<div style="position: relative;" class="block5 style1 styleAll"></div>
+							<div style="position: relative;" class="block6 style1 styleAll"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="radio" name="blstyle" onclick="blockStyle(2)">
+						</td>
+						<td style="display: flex; flex-direction: row;" class="skinTd">
+							<div style="position: relative;" class="block0 style2 styleAll"></div>
+							<div style="position: relative;" class="block1 style2 styleAll"></div>
+							<div style="position: relative;" class="block2 style2 styleAll"></div>
+							<div style="position: relative;" class="block3 style2 styleAll"></div>
+							<div style="position: relative;" class="block4 style2 styleAll"></div>
+							<div style="position: relative;" class="block5 style2 styleAll"></div>
+							<div style="position: relative;" class="block6 style2 styleAll"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="radio" name="blstyle" onclick="blockStyle(3)">
+						</td>
+						<td style="display: flex; flex-direction: row;" class="skinTd">
+							<div style="position: relative;" class="block0 style3 styleAll"></div>
+							<div style="position: relative;" class="block1 style3 styleAll"></div>
+							<div style="position: relative;" class="block2 style3 styleAll"></div>
+							<div style="position: relative;" class="block3 style3 styleAll"></div>
+							<div style="position: relative;" class="block4 style3 styleAll"></div>
+							<div style="position: relative;" class="block5 style3 styleAll"></div>
+							<div style="position: relative;" class="block6 style3 styleAll"></div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+						    <input type="text" name="skinUrl" onchange="skinUrl(this.value)" placeholder="Custom Image URL" style="margin-left: 10px;">
+						</td>
+					</tr>
+				</table>
+				<table>
+				    <tr>
+					    <td style="display: flex; flex-direction: row;" class="skinTd">
+							<input id="col0" onchange="changeColor(0, this.value)" class="sqIn" value="#ff7f00" type="color" style="margin-left: 10px;">
+							<input id="col1" onchange="changeColor(1, this.value)" class="sqIn" value="#0062ff" type="color">
+							<input id="col2" onchange="changeColor(2, this.value)" class="sqIn" value="#08f700" type="color">
+							<input id="col3" onchange="changeColor(3, this.value)" class="sqIn" value="#ff0000" type="color">
+							<input id="col4" onchange="changeColor(4, this.value)" class="sqIn" value="#bc32fc" type="color">
+							<input id="col5" onchange="changeColor(5, this.value)" class="sqIn" value="#ffff00" type="color">
+							<input id="col6" onchange="changeColor(6, this.value)" class="sqIn" value="#00eeff" type="color">
+						</td>
+					</tr>
+					<tr>
+					    <td>
+					        <button style="font-size: 8px; margin-left: 10px;" onclick="resetColors()">Reset Colors</button>
+					    </td>
+					</tr>
+				</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</td></tr></table>
+
+	<script	type="text/javascript">
+	var tetris = new Tetris();
+	tetris.unit = 14;
+	tetris.areaX = 10;
+	tetris.areaY = 22;
+	</script>
+
+</body>
+</html>
