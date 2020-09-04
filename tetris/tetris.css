@@ -100,6 +100,11 @@ input {
   	background-repeat: round;
 }
 
+.sqIn {
+	width: 10px;
+	height:	14px;
+}
+
 #tetris .style0 {
   	background-image: url("tile0.png");
 }

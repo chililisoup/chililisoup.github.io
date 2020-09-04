@@ -1734,6 +1734,31 @@ function toggle(n) {
 	}
 }
 
+function changeColor(n, color) {
+    var sheet = document.createElement('style');
+    sheet.innerHTML = "#tetris .block" + n + " { background-color: " + color + "; }";
+    document.body.appendChild(sheet);
+}
+
+function resetColors() {
+    var sheet = document.createElement('style');
+    sheet.innerHTML = "#tetris .block0 { background-color: #ff7f00; }" +
+                      "#tetris .block1 { background-color: #0062ff; }" +
+                      "#tetris .block2 { background-color: #08f700; }" +
+                      "#tetris .block3 { background-color: #ff0000; }" +
+                      "#tetris .block4 { background-color: #bc32fc; }" +
+                      "#tetris .block5 { background-color: #ffff00; }" +
+                      "#tetris .block6 { background-color: #00eeff; }";
+    document.body.appendChild(sheet);
+    document.querySelector("#col0").value = "#ff7f00";
+    document.querySelector("#col1").value = "#0062ff";
+    document.querySelector("#col2").value = "#08f700";
+    document.querySelector("#col3").value = "#ff0000";
+    document.querySelector("#col4").value = "#bc32fc";
+    document.querySelector("#col5").value = "#ffff00";
+    document.querySelector("#col6").value = "#00eeff";
+}
+
 if (!String.prototype.trim) {
 	String.prototype.trim = function () {
 		return this.replace(/^\s*|\s*$/g, "");

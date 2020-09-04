@@ -145,13 +145,13 @@
 							<input type="radio" name="blstyle" checked onclick="blockStyle(0)">
 						</td>
 						<td style="display: flex; flex-direction: row;" class="skinTd">
-							<div style="background-color: #FF7F00;" class="style0 styleAll"></div>
-							<div style="background-color: #0062ff;" class="style0 styleAll"></div>
-							<div style="background-color: #08f700;" class="style0 styleAll"></div>
-							<div style="background-color: #ff0000;" class="style0 styleAll"></div>
-							<div style="background-color: #bc32fc;" class="style0 styleAll"></div>
-							<div style="background-color: #ffff00;" class="style0 styleAll"></div>
-							<div style="background-color: #00eeff;" class="style0 styleAll"></div>
+							<div style="position: relative;" class="block0 style0 styleAll"></div>
+							<div style="position: relative;" class="block1 style0 styleAll"></div>
+							<div style="position: relative;" class="block2 style0 styleAll"></div>
+							<div style="position: relative;" class="block3 style0 styleAll"></div>
+							<div style="position: relative;" class="block4 style0 styleAll"></div>
+							<div style="position: relative;" class="block5 style0 styleAll"></div>
+							<div style="position: relative;" class="block6 style0 styleAll"></div>
 						</td>
 					</tr>
 					<tr>
@@ -159,13 +159,13 @@
 							<input type="radio" name="blstyle" onclick="blockStyle(1)">
 						</td>
 						<td style="display: flex; flex-direction: row;" class="skinTd">
-							<div style="background-color: #FF7F00;" class="style1 styleAll"></div>
-							<div style="background-color: #0062ff;" class="style1 styleAll"></div>
-							<div style="background-color: #08f700;" class="style1 styleAll"></div>
-							<div style="background-color: #ff0000;" class="style1 styleAll"></div>
-							<div style="background-color: #bc32fc;" class="style1 styleAll"></div>
-							<div style="background-color: #ffff00;" class="style1 styleAll"></div>
-							<div style="background-color: #00eeff;" class="style1 styleAll"></div>
+							<div style="position: relative;" class="block0 style1 styleAll"></div>
+							<div style="position: relative;" class="block1 style1 styleAll"></div>
+							<div style="position: relative;" class="block2 style1 styleAll"></div>
+							<div style="position: relative;" class="block3 style1 styleAll"></div>
+							<div style="position: relative;" class="block4 style1 styleAll"></div>
+							<div style="position: relative;" class="block5 style1 styleAll"></div>
+							<div style="position: relative;" class="block6 style1 styleAll"></div>
 						</td>
 					</tr>
 					<tr>
@@ -173,13 +173,13 @@
 							<input type="radio" name="blstyle" onclick="blockStyle(2)">
 						</td>
 						<td style="display: flex; flex-direction: row;" class="skinTd">
-							<div style="background-color: #FF7F00;" class="style2 styleAll"></div>
-							<div style="background-color: #0062ff;" class="style2 styleAll"></div>
-							<div style="background-color: #08f700;" class="style2 styleAll"></div>
-							<div style="background-color: #ff0000;" class="style2 styleAll"></div>
-							<div style="background-color: #bc32fc;" class="style2 styleAll"></div>
-							<div style="background-color: #ffff00;" class="style2 styleAll"></div>
-							<div style="background-color: #00eeff;" class="style2 styleAll"></div>
+							<div style="position: relative;" class="block0 style2 styleAll"></div>
+							<div style="position: relative;" class="block1 style2 styleAll"></div>
+							<div style="position: relative;" class="block2 style2 styleAll"></div>
+							<div style="position: relative;" class="block3 style2 styleAll"></div>
+							<div style="position: relative;" class="block4 style2 styleAll"></div>
+							<div style="position: relative;" class="block5 style2 styleAll"></div>
+							<div style="position: relative;" class="block6 style2 styleAll"></div>
 						</td>
 					</tr>
 					<tr>
@@ -187,19 +187,37 @@
 							<input type="radio" name="blstyle" onclick="blockStyle(3)">
 						</td>
 						<td style="display: flex; flex-direction: row;" class="skinTd">
-							<div style="background-color: #FF7F00;" class="style3 styleAll"></div>
-							<div style="background-color: #0062ff;" class="style3 styleAll"></div>
-							<div style="background-color: #08f700;" class="style3 styleAll"></div>
-							<div style="background-color: #ff0000;" class="style3 styleAll"></div>
-							<div style="background-color: #bc32fc;" class="style3 styleAll"></div>
-							<div style="background-color: #ffff00;" class="style3 styleAll"></div>
-							<div style="background-color: #00eeff;" class="style3 styleAll"></div>
+							<div style="position: relative;" class="block0 style3 styleAll"></div>
+							<div style="position: relative;" class="block1 style3 styleAll"></div>
+							<div style="position: relative;" class="block2 style3 styleAll"></div>
+							<div style="position: relative;" class="block3 style3 styleAll"></div>
+							<div style="position: relative;" class="block4 style3 styleAll"></div>
+							<div style="position: relative;" class="block5 style3 styleAll"></div>
+							<div style="position: relative;" class="block6 style3 styleAll"></div>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-						    <input type="text" name="skinUrl" onchange="skinUrl(this.value)" placeholder="Custom Image URL" style="margin-left: 10px; width: 85%;">
+						    <input type="text" name="skinUrl" onchange="skinUrl(this.value)" placeholder="Custom Image URL" style="margin-left: 10px;">
 						</td>
+					</tr>
+				</table>
+				<table>
+				    <tr>
+					    <td style="display: flex; flex-direction: row;" class="skinTd">
+							<input id="col0" onchange="changeColor(0, this.value)" class="sqIn" value="#ff7f00" type="color" style="margin-left: 10px;">
+							<input id="col1" onchange="changeColor(1, this.value)" class="sqIn" value="#0062ff" type="color">
+							<input id="col2" onchange="changeColor(2, this.value)" class="sqIn" value="#08f700" type="color">
+							<input id="col3" onchange="changeColor(3, this.value)" class="sqIn" value="#ff0000" type="color">
+							<input id="col4" onchange="changeColor(4, this.value)" class="sqIn" value="#bc32fc" type="color">
+							<input id="col5" onchange="changeColor(5, this.value)" class="sqIn" value="#ffff00" type="color">
+							<input id="col6" onchange="changeColor(6, this.value)" class="sqIn" value="#00eeff" type="color">
+						</td>
+					</tr>
+					<tr>
+					    <td>
+					        <button style="font-size: 8px; margin-left: 10px;" onclick="resetColors()">Reset Colors</button>
+					    </td>
 					</tr>
 				</table>
 				</div>
