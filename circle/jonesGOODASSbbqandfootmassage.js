@@ -1,18 +1,24 @@
-var canvas = document.getElementById("cool");
+let canvas = document.getElementById("cool");
 canvas.width = 500;
 canvas.height = 500;
-var ctx = canvas.getContext("2d");
-var color = "#FF0000";
+let ctx = canvas.getContext("2d");
+let color = "#FF0000";
 ctx.lineCap = "round";
-var cache = 4096;
-var circleA = 0.3;
-var lineA = 0.3;
 
-var circleStart = [
+let canvas2 = document.getElementById("uber");
+canvas2.width = 500;
+canvas2.height = 500;
+let ctx2 = canvas2.getContext("2d");
+
+let cache = 4096;
+let circleA = 0.3;
+let lineA = 0.3;
+
+let circleStart = [
     {r:50,v:90,a:0,x:0,y:0},
     {r:30,v:-30,a:0,x:0,y:0}
 ];
-var circles = [
+let circles = [
     {r:50,v:90,a:0,x:0,y:0},
     {r:30,v:-30,a:0,x:0,y:0}
 ];
@@ -27,7 +33,7 @@ function reset() {
     }
     circles[0].x = 250;
     circles[0].y = 250;
-    points = [];
+    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 }
 
 function remove(n) {
@@ -38,10 +44,6 @@ function remove(n) {
 function addCircle() {
     circleStart.push({r:50,v:90,a:0,x:0,y:0});
     createTable();
-}
-
-function setCache() {
-    cache = document.getElementById("cache").value;
 }
 
 function togCircles() {
@@ -103,15 +105,15 @@ function loadPreset() {
 }
 
 function radius(n) {
-    circleStart[n].r = document.getElementById("radius" + n).value
+    circleStart[n].r = document.getElementById("radius" + n).value;
 }
 
 function velocity(n) {
-    circleStart[n].v = document.getElementById("velocity" + n).value
+    circleStart[n].v = document.getElementById("velocity" + n).value;
 }
 
 function angle(n) {
-    circleStart[n].a = document.getElementById("angle" + n).value
+    circleStart[n].a = document.getElementById("angle" + n).value;
 }
 
 function createTable() {
@@ -119,27 +121,16 @@ function createTable() {
     text += "<tr><th></th><th><p>Radius</p></th><th><p>Degs/Sec</p></th><th><p>Angle</p></th></tr>";
     for (let i = 0; i < circleStart.length; i++) {
         text += "<tr><th><button style='width:100%;' onmousedown='remove(" + i + ")'>X</button></th>";
-        text += "<th><input step='0.01' placeholder='50.00' type='number' id='radius" + i + "' onchange='radius(" + i + ")' value='" + circleStart[i].r + "'></input></th>";
-        text += "<th><input step='0.01' placeholder='90.00' type='number' id='velocity" + i + "' onchange='velocity(" + i + ")' value='" + circleStart[i].v + "'></input></th>";
-        text += "<th><input step='0.01' placeholder='0.00' type='number' id='angle" + i + "' onchange='angle(" + i + ")' value='" + circleStart[i].a + "'></input></th></tr>";
+        text += "<th><input step='0.01' placeholder='50.00' type='number' id='radius" + i + "' onchange='radius(" + i + ")' value='" + circleStart[i].r + "'></th>";
+        text += "<th><input step='0.01' placeholder='90.00' type='number' id='velocity" + i + "' onchange='velocity(" + i + ")' value='" + circleStart[i].v + "'></th>";
+        text += "<th><input step='0.01' placeholder='0.00' type='number' id='angle" + i + "' onchange='angle(" + i + ")' value='" + circleStart[i].a + "'></th></tr>";
     }
     document.getElementById("circleManager").innerHTML = text;
 }
 createTable();
 
-var points = [];
-
-var loop = setInterval(function() {
+let loop = setInterval(function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < points.length; i++) {
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = points[i].c;
-        ctx.beginPath();
-        ctx.arc(points[i].x, points[i].y, 1, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
-    }
 
     for (let i = 0; i < circles.length; i++) {
         ctx.globalAlpha = circleA;
@@ -165,10 +156,11 @@ var loop = setInterval(function() {
             circles[i + 1].x = newx;
             circles[i + 1].y = newy;
         } else {
-            points.push({x:newx,y:newy,c:color});
-            while (points.length > cache) {
-                points.shift();
-            }
+            ctx2.fillStyle = color;
+            ctx2.beginPath();
+            ctx2.arc(newx, newy, 1, 0, 2 * Math.PI);
+            ctx2.fill();
+            ctx2.closePath();
         }
 
         circles[i].a -= circles[i].v / 60;
@@ -190,7 +182,7 @@ var loop = setInterval(function() {
 
 //Not mine, just a hue shifter thing
 function changeHue(rgb, degree) {
-    var hsl = rgbToHSL(rgb);
+    let hsl = rgbToHSL(rgb);
     hsl.h += degree;
     if (hsl.h > 360) {
         hsl.h -= 360;
@@ -211,7 +203,7 @@ function rgbToHSL(rgb) {
         rgb = rgb.replace(/(.)/g, '$1$1');
     }
 
-    var r = parseInt(rgb.substr(0, 2), 16) / 255,
+    let r = parseInt(rgb.substr(0, 2), 16) / 255,
         g = parseInt(rgb.substr(2, 2), 16) / 255,
         b = parseInt(rgb.substr(4, 2), 16) / 255,
         cMax = Math.max(r, g, b),
@@ -250,7 +242,7 @@ function rgbToHSL(rgb) {
 
 // expects an object and returns a string
 function hslToRGB(hsl) {
-    var h = hsl.h,
+    let h = hsl.h,
         s = hsl.s,
         l = hsl.l,
         c = (1 - Math.abs(2*l - 1)) * s,

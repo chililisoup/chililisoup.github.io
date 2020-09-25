@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -11,7 +12,10 @@
         <h1>Jones' Good Ass BBQ & Foot Massage</h1>
     </div>
     <div class="flex">
-        <canvas id="cool"></canvas>
+        <div class="canvii">
+            <canvas id="uber"></canvas>
+            <canvas id="cool"></canvas>
+        </div>
         <div class="circles">
             <h3>Circle Manager</h3>
             <button style="width: 100px; margin-bottom:5px;" onmousedown="addCircle()">New Circle</button>
@@ -20,10 +24,6 @@
         <div class="settings">
             <h3>Tools</h3>
             <button style="width: 120px;" onmousedown="reset()">Refresh Circles</button>
-            <div class="input">
-                <label for="cache">Point Cache:</label>
-                <input style="width: 80px;" placeholder="4096" type="number" onchange="setCache()" value="4096" id="cache"></input>
-            </div>
             <div class="input">
                 <label for="preset">Load Preset:</label>
                 <select id="preset" onchange="loadPreset()">
@@ -36,11 +36,11 @@
             </div>
             <div class="input">
                 <label for="vCircles">View Circles</label>
-                <input style="width: 60px;" checked type="checkbox" onchange="togCircles()" id="vCircles"></input>
+                <input style="width: 60px;" checked type="checkbox" onchange="togCircles()" id="vCircles">
             </div>
             <div class="input">
                 <label for="vLines">View Lines</label>
-                <input style="width: 60px;" checked type="checkbox" onchange="togLines()" id="vLines"></input>
+                <input style="width: 60px;" checked type="checkbox" onchange="togLines()" id="vLines">
             </div>
         </div>
     </div>
