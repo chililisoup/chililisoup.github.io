@@ -18,8 +18,10 @@ ctx.canvas.width  = 1920;                       // Working space width (not visu
 ctx.canvas.height = 1080;                       // Working space height (not visual size)
 
 let bits = {'20.20':true,
-            '21.20':true,
-            '22.20':true
+            '22.20':true,
+            '22.19':true,
+            '21.19':true,
+            '21.18':true
            }; //holy crap why is this so fast
 let config = {toLive:[2,3],toBirth:[3]};
 
@@ -84,6 +86,7 @@ function center() {
         bits[String(newBits[i][0]).concat('.', newBits[i][1])] = true;
     }
 }
+center()
 
 function startEngine() {
     engine = setInterval(function engine() {
