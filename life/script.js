@@ -171,8 +171,10 @@ function command(cmd, extra) {
             break;
         case 'speed':
             speed = extra;
-            clearInterval(engine);
-            startEngine();
+            if (document.getElementById('pause').innerHTML == '||') {
+                clearInterval(engine);
+                startEngine();
+            }
             break;
         case 'rand':
             bits = {};
