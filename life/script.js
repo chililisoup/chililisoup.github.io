@@ -268,4 +268,7 @@ setInterval(function render() {
     ctx.fillStyle = cursorColor;
     ctx.globalAlpha = 0.4;
     ctx.fillRect(pos.x*size-((cursorSize-1)/2)*size, pos.y*size-((cursorSize-1)/2)*size, size*cursorSize, size*cursorSize);
+    if (cursorSize != 1) {
+        ctx.fillRect(pos.x*size, pos.y*size, size, size);
+    }
 }, (50 / 3));
