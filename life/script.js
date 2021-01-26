@@ -12,6 +12,7 @@ let canvas = document.getElementById('canvas'), // HTML canvas object
     bgColor = '#ffffff',                        // Background color
     cellColor = '#00a0fa',                      // Cell color
     cursorColor = '#fa0000',                    // Cursor Color
+    cursorSize = 1,                             // Cursor Size
     pos = {x:0,y:0},                            // Mouse position relative to canvas
     posKey = '0.0';                             // String form of pos
 ctx.canvas.width  = 1920;                       // Working space width (not visual size)
@@ -22,7 +23,7 @@ let bits = {'20.20':true,
             '22.19':true,
             '21.19':true,
             '21.18':true
-           }; //holy crap why is this so fast
+           }; //holy crap why is this so fast for an otherwise unoptimized alg?
 let config = {toLive:[2,3],toBirth:[3]};
 
 function getMousePos(canvas, evt) {
@@ -39,12 +40,26 @@ window.addEventListener('mousemove', function updateMouse(e) {
     pos.y = Math.floor(pos.y / size);
     posKey = String(pos.x).concat('.', pos.y);
     if (mDown && pos.x >= 0 && pos.y >= 0 && pos.x <= Math.floor(ctx.canvas.width / size) && pos.y <= Math.floor(ctx.canvas.height / size)) {
-        if (posKey in bits) {
-            if (!mAction) {
+        if (!mAction) {
+            if (cursorSize == 1) {
                 delete bits[posKey];
+            } else {
+                for (let x = 0; x < cursorSize; x++) {
+                    for (let y = 0; y < cursorSize; y++) {
+                        delete bits[String(pos.x-((cursorSize-1)/2)+x).concat('.', pos.y-((cursorSize-1)/2)+y)];
+                    }
+                }
             }
-        } else if (mAction) {
-            bits[posKey] = true;
+        } else {
+            if (cursorSize == 1) {
+                bits[posKey] = true;
+            } else {
+                for (let x = 0; x < cursorSize; x++) {
+                    for (let y = 0; y < cursorSize; y++) {
+                        bits[String(pos.x-((cursorSize-1)/2)+x).concat('.', pos.y-((cursorSize-1)/2)+y)] = true;
+                    }
+                }
+            }
         }
     }
 });
@@ -54,9 +69,25 @@ window.addEventListener('mousedown', function onMouseDown(e) {
     if (pos.x >= 0 && pos.y >= 0 && pos.x <= Math.floor(ctx.canvas.width / size) && pos.y <= Math.floor(ctx.canvas.height / size)) {
         if (posKey in bits) {
             mAction = false;
-            delete bits[posKey];
+            if (cursorSize == 1) {
+                delete bits[posKey];
+            } else {
+                for (let x = 0; x < cursorSize; x++) {
+                    for (let y = 0; y < cursorSize; y++) {
+                        delete bits[String(pos.x-((cursorSize-1)/2)+x).concat('.', pos.y-((cursorSize-1)/2)+y)];
+                    }
+                }
+            }
         } else {
-            bits[posKey] = true;
+            if (cursorSize == 1) {
+                bits[posKey] = true;
+            } else {
+                for (let x = 0; x < cursorSize; x++) {
+                    for (let y = 0; y < cursorSize; y++) {
+                        bits[String(pos.x-((cursorSize-1)/2)+x).concat('.', pos.y-((cursorSize-1)/2)+y)] = true;
+                    }
+                }
+            }
             mAction = true;
         }
     }
@@ -86,7 +117,7 @@ function center() {
         bits[String(newBits[i][0]).concat('.', newBits[i][1])] = true;
     }
 }
-center()
+center();
 
 function startEngine() {
     engine = setInterval(function engine() {
@@ -215,6 +246,13 @@ function command(cmd, extra) {
         case 'cursorColor':
             cursorColor = extra;
             break;
+        case 'size':
+            extra.value = Math.floor(extra.value);
+            if (extra.value % 2 === 0) {
+                extra.value--;
+            }
+            cursorSize = extra.value;
+            break;
     }
 }
 
@@ -229,5 +267,5 @@ setInterval(function render() {
     }
     ctx.fillStyle = cursorColor;
     ctx.globalAlpha = 0.4;
-    ctx.fillRect(pos.x*size, pos.y*size, size, size);
+    ctx.fillRect(pos.x*size-((cursorSize-1)/2)*size, pos.y*size-((cursorSize-1)/2)*size, size*cursorSize, size*cursorSize);
 }, (50 / 3));
