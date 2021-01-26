@@ -1,9 +1,10 @@
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Slash Code</title>
     <link rel="stylesheet" href="slashcode.css">
     <script src="slashcode.js" defer></script>
-</head
+</head>
 
 <body>
 <header>
@@ -15,12 +16,17 @@
 <div class="div1">
 <br>
 <h3 align="center">Input</h3>
-<textarea id="input"></textarea>
+<textarea id="input" onkeyup="code(this.value)"></textarea>
 <table align="center">
     <tr>
-        <th style="width: 150px; height: 50px;"><button onmousedown="modeChange(1)">Encoding Mode</button></th>
-        <th style="width: 150px; height: 50px;"><button onmousedown="modeChange(0)">Decoding Mode</button></th>
-	<th style="width: 150px; height: 50px;"><button onmousedown="clearBoxes()">Clear Text Boxes</button></th>
+        <th>
+            <label for="mode">Mode:</label>
+            <select name="mode" onchange="switchMode(this.value)">
+                <option value="encode">Encode</option>
+                <option value="decode">Decoode</option>
+            </select>
+        </th>
+	    <th style="width: 150px; height: 50px;"><button onmousedown="clearBoxes()">Clear Text Boxes</button></th>
     </tr>
 </table>
 <h3 align="center">Output</h3>
