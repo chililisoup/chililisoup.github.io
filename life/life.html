@@ -28,6 +28,8 @@
         <input id="cellColor" type="color" onchange="command('cellColor', this.value)" value="#00a0fa">
         <label for="cellColor">Cursor:</label>
         <input id="cursorColor" type="color" onchange="command('cursorColor', this.value)" value="#fa0000">
+        <label for="cursorSize">Cursor Size:</label>
+        <input id="cursorSize" type="number" value="1" min="1" max="99" step="2" onchange="command('size', this)">
         <canvas id="canvas"></canvas>
     </body>
 </html>
