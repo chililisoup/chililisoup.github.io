@@ -9,8 +9,8 @@
         <button id="pause" onclick="command('pause', this)">||</button>
         <button onclick="command('clear')">Clear</button>
         <button onclick="command('center')">Center</button>
-        <button onclick="command('move', {x:-1,y:0})">&lt;</button>
-        <button onclick="command('move', {x:1,y:0})">&gt;</button>
+        <button onclick="command('move', {x:-1,y:0})"><</button>
+        <button onclick="command('move', {x:1,y:0})">></button>
         <button onclick="command('move', {x:0,y:-1})">^</button>
         <button onclick="command('move', {x:0,y:1})">v</button>
         <label for="scale">Scale:</label>
@@ -26,10 +26,16 @@
         <input id="bgColor" type="color" onchange="command('bgColor', this.value)" value="#ffffff">
         <label for="cellColor">Cell:</label>
         <input id="cellColor" type="color" onchange="command('cellColor', this.value)" value="#00a0fa">
-        <label for="cellColor">Cursor:</label>
+        <label for="cursorColor">Cursor:</label>
         <input id="cursorColor" type="color" onchange="command('cursorColor', this.value)" value="#fa0000">
         <label for="cursorSize">Cursor Size:</label>
         <input id="cursorSize" type="number" value="1" min="1" max="99" step="2" onchange="command('size', this)">
+        <label for="gridColor">Grid:</label>
+        <input id="gridColor" type="color" onchange="command('gridColor', this.value)" value="#bfbfbf">
+        <label for="grid">Grid Toggle:</label>
+        <input id="grid" type="checkbox" onchange="command('grid', this.checked)">
+        <label for="gridThick">Grid Thickness:</label>
+        <input id="gridThick" type="range" step="1" min="1" max="24" value="4" onchange="command('gridThick', this.value)">
         <canvas id="canvas"></canvas>
     </body>
 </html>
