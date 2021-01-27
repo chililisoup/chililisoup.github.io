@@ -13,6 +13,9 @@ let canvas = document.getElementById('canvas'), // HTML canvas object
     cellColor = '#00a0fa',                      // Cell color
     cursorColor = '#fa0000',                    // Cursor Color
     cursorSize = 1,                             // Cursor Size
+    gridColor = '#bfbfbf',                      // Grid Color
+    grid = false,                               // Grid on/off bool
+    gridThick = 4,                              // Grid thickness
     pos = {x:0,y:0},                            // Mouse position relative to canvas
     posKey = '0.0';                             // String form of pos
 ctx.canvas.width  = 1920;                       // Working space width (not visual size)
@@ -253,6 +256,15 @@ function command(cmd, extra) {
             }
             cursorSize = extra.value;
             break;
+        case 'gridColor':
+            gridColor = extra;
+            break;
+        case 'grid':
+            grid = extra;
+            break;
+        case 'gridThick':
+            gridThick = extra;
+            break;
     }
 }
 
@@ -270,5 +282,21 @@ setInterval(function render() {
     ctx.fillRect(pos.x*size-((cursorSize-1)/2)*size, pos.y*size-((cursorSize-1)/2)*size, size*cursorSize, size*cursorSize);
     if (cursorSize != 1) {
         ctx.fillRect(pos.x*size, pos.y*size, size, size);
+    }
+    if (grid) {
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = gridThick;
+        for (let i = 0; i < Math.ceil(ctx.canvas.width / size); i++) {
+            ctx.beginPath();
+            ctx.moveTo(i * size, 0);
+            ctx.lineTo(i * size, ctx.canvas.height);
+            ctx.stroke();
+        }
+        for (let i = 0; i < Math.ceil(ctx.canvas.height / size); i++) {
+            ctx.beginPath();
+            ctx.moveTo(0, i * size);
+            ctx.lineTo(ctx.canvas.width, i * size);
+            ctx.stroke();
+        }
     }
 }, (50 / 3));
