@@ -321,12 +321,16 @@ function command(cmd, extra) {
                 first = false;
             }
             let scale = Math.floor((ctx.canvas.height / (high.y - low.y)) * 0.75);
+            let oldsize = size;
             size = Math.floor((ctx.canvas.width / (high.x - low.x)) * 0.75);
             if (scale < size) {
                 size = scale;
             }
             if (size === 0) {
                 size = 1;
+            }
+            if (isNaN(size)) {
+                size = oldsize;
             }
             document.getElementById('scale').value = size;
             center();
