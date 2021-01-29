@@ -22,6 +22,7 @@ let canvas = document.getElementById('canvas'), // HTML canvas object
     gridColor = '#000000',                      // Grid Color
     grid = false,                               // Grid on/off bool
     gridThick = 2,                              // Grid thickness
+    tempBits = {},                              // Stores alternate bits temporarily
     pos = {x:0,y:0},                            // Mouse position relative to canvas
     posKey = '0.0';                             // String form of pos
 ctx.canvas.width  = 1920;                       // Working space width (not visual size)
@@ -270,6 +271,61 @@ function command(cmd, extra) {
             break;
         case 'gridThick':
             gridThick = extra;
+            break;
+        case 'flipx':
+            tempBits = {};
+            for (const [key, value] of Object.entries(bits)) {
+                tempBits[key.split('.')[0].concat('.',-parseInt(key.split('.')[1]))] = true;
+            }
+            bits = tempBits;
+            center();
+            break;
+        case 'flipy':
+            tempBits = {};
+            for (const [key, value] of Object.entries(bits)) {
+                tempBits[String(-parseInt(key.split('.')[0])).concat('.',key.split('.')[1])] = true;
+            }
+            bits = tempBits;
+            center();
+            break;
+        case 'rotate':
+            tempBits = {};
+            for (const [key, value] of Object.entries(bits)) {
+                tempBits[String(-parseInt(key.split('.')[1])).concat('.',key.split('.')[0])] = true;
+            }
+            bits = tempBits;
+            center();
+            break;
+        case 'fit':
+            let high = {};
+            let low = {};
+            let first = true;
+            for (const [key, value] of Object.entries(bits)) {
+                if (first) {
+                    high.x = parseInt(key.split('.')[0]);
+                    high.y = parseInt(key.split('.')[1]);
+                    low.x = parseInt(key.split('.')[0]);
+                    low.y = parseInt(key.split('.')[1]);
+                } else {
+                    if (parseInt(key.split('.')[0]) > high.x) {
+                        high.x = parseInt(key.split('.')[0]);
+                    } else if (parseInt(key.split('.')[0]) < low.x) {
+                        low.x = parseInt(key.split('.')[0]);
+                    }
+                    if (parseInt(key.split('.')[1]) > high.y) {
+                        high.y = parseInt(key.split('.')[1]);
+                    } else if (parseInt(key.split('.')[1]) < low.y) {
+                        low.y = parseInt(key.split('.')[1]);
+                    }
+                }
+                first = false;
+            }
+            let scale = Math.floor((ctx.canvas.height / (high.y - low.y)) * 0.75);
+            size = Math.floor((ctx.canvas.width / (high.x - low.x)) * 0.75);
+            if (scale < size) {
+                size = scale;
+            }
+            center();
             break;
     }
 }
