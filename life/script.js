@@ -325,6 +325,9 @@ function command(cmd, extra) {
             if (scale < size) {
                 size = scale;
             }
+            if (size === 0) {
+                size = 1;
+            }
             document.getElementById('scale').value = size;
             center();
             break;
