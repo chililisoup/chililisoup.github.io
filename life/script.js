@@ -1,3 +1,9 @@
+//TODO:
+//Life 1.05 saving/loading (ugh I already did loading then I lost it)
+//Saving to cookies possibly
+//Frontend
+//Optimizations
+
 'use strict'; // Forces me to write better
 
 let canvas = document.getElementById('canvas'), // HTML canvas object
@@ -13,9 +19,9 @@ let canvas = document.getElementById('canvas'), // HTML canvas object
     cellColor = '#00a0fa',                      // Cell color
     cursorColor = '#fa0000',                    // Cursor Color
     cursorSize = 1,                             // Cursor Size
-    gridColor = '#bfbfbf',                      // Grid Color
+    gridColor = '#000000',                      // Grid Color
     grid = false,                               // Grid on/off bool
-    gridThick = 4,                              // Grid thickness
+    gridThick = 2,                              // Grid thickness
     pos = {x:0,y:0},                            // Mouse position relative to canvas
     posKey = '0.0';                             // String form of pos
 ctx.canvas.width  = 1920;                       // Working space width (not visual size)
@@ -278,7 +284,7 @@ setInterval(function render() {
         ctx.fillRect(keys[0]*size, keys[1]*size, size, size);
     }
     ctx.fillStyle = cursorColor;
-    ctx.globalAlpha = 0.4;
+    ctx.globalAlpha = 0.5;
     ctx.fillRect(pos.x*size-((cursorSize-1)/2)*size, pos.y*size-((cursorSize-1)/2)*size, size*cursorSize, size*cursorSize);
     if (cursorSize != 1) {
         ctx.fillRect(pos.x*size, pos.y*size, size, size);
@@ -286,6 +292,7 @@ setInterval(function render() {
     if (grid) {
         ctx.strokeStyle = gridColor;
         ctx.lineWidth = gridThick;
+        ctx.globalAlpha = 1;
         for (let i = 0; i < Math.ceil(ctx.canvas.width / size); i++) {
             ctx.beginPath();
             ctx.moveTo(i * size, 0);
