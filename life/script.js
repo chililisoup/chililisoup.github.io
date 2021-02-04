@@ -1,6 +1,5 @@
 //TODO:
-//Life 1.05 saving/loading (ugh I already did loading then I lost it)
-//Saving to cookies possibly
+//Life 1.05 saving/downloading w/ cookies
 //Frontend
 //Optimizations
 
@@ -22,6 +21,7 @@ let canvas = document.getElementById('canvas'), // HTML canvas object
     gridColor = '#000000',                      // Grid Color
     grid = false,                               // Grid on/off bool
     gridThick = 2,                              // Grid thickness
+    tempBits = {},                              // Stores alternate bits temporarily
     pos = {x:0,y:0},                            // Mouse position relative to canvas
     posKey = '0.0';                             // String form of pos
 ctx.canvas.width  = 1920;                       // Working space width (not visual size)
@@ -106,28 +106,6 @@ window.addEventListener('mouseup', function onMouseUp(e) {
     mDown = false;
 });
 
-function center() {
-    let n = 0,
-        tx = 0,
-        ty = 0;
-    for (const [key, value] of Object.entries(bits)) {
-        n++;
-        tx += parseInt(key.split('.')[0]);
-        ty += parseInt(key.split('.')[1]);
-    }
-    let ax = Math.floor(tx / n),
-        ay = Math.floor(ty / n);
-    let newBits = [];
-    for (const [key, value] of Object.entries(bits)) {
-        newBits.push([parseInt(key.split('.')[0]) + Math.floor(0.5 * ctx.canvas.width / size) - ax, parseInt(key.split('.')[1]) + Math.floor(0.5 * ctx.canvas.height / size) - ay]);
-    }
-    bits = {};
-    for (let i = 0; i < newBits.length; i++) {
-        bits[String(newBits[i][0]).concat('.', newBits[i][1])] = true;
-    }
-}
-center();
-
 function startEngine() {
     engine = setInterval(function engine() {
     let die = [],
@@ -177,6 +155,169 @@ function startEngine() {
 }, speed);
 }
 startEngine();
+
+function center() {
+    let n = 0,
+        tx = 0,
+        ty = 0;
+    for (const [key, value] of Object.entries(bits)) {
+        n++;
+        tx += parseInt(key.split('.')[0]);
+        ty += parseInt(key.split('.')[1]);
+    }
+    let ax = Math.floor(tx / n),
+        ay = Math.floor(ty / n);
+    let newBits = [];
+    for (const [key, value] of Object.entries(bits)) {
+        newBits.push([parseInt(key.split('.')[0]) + Math.floor(0.5 * ctx.canvas.width / size) - ax, parseInt(key.split('.')[1]) + Math.floor(0.5 * ctx.canvas.height / size) - ay]);
+    }
+    bits = {};
+    for (let i = 0; i < newBits.length; i++) {
+        bits[String(newBits[i][0]).concat('.', newBits[i][1])] = true;
+    }
+}
+center();
+
+function fit() {
+    let high = {},
+        low = {},
+        first = true;
+    for (const [key, value] of Object.entries(bits)) {
+        if (first) {
+            high.x = parseInt(key.split('.')[0]);
+            high.y = parseInt(key.split('.')[1]);
+            low.x = parseInt(key.split('.')[0]);
+            low.y = parseInt(key.split('.')[1]);
+        } else {
+            if (parseInt(key.split('.')[0]) > high.x) {
+                high.x = parseInt(key.split('.')[0]);
+            } else if (parseInt(key.split('.')[0]) < low.x) {
+                low.x = parseInt(key.split('.')[0]);
+            }
+            if (parseInt(key.split('.')[1]) > high.y) {
+                high.y = parseInt(key.split('.')[1]);
+            } else if (parseInt(key.split('.')[1]) < low.y) {
+                low.y = parseInt(key.split('.')[1]);
+            }
+        }
+        first = false;
+    }
+    let scale = Math.floor((ctx.canvas.height / (high.y - low.y)) * 0.75);
+    let oldsize = size;
+    size = Math.floor((ctx.canvas.width / (high.x - low.x)) * 0.75);
+    if (scale < size) {
+        size = scale;
+    }
+    if (size < 1) {
+        size = 1;
+    } else if (isNaN(size) || size == Infinity) {
+        size = oldsize;
+    } else if (size > 100) {
+        size = 100;
+    }
+    document.getElementById('scale').value = size;
+    center();
+}
+
+function load(lif) {
+    let lines = lif.split('\n');
+    if (lines[0].includes('1.05')) {
+        bits = {};
+        let build = false,
+            loc = [0,0],
+            step = 0;
+        for (let i = 1; i < lines.length; i++) {
+            if (!build) {
+                let tag = lines[i].substring(0, 2);
+                if (tag == '#N') {
+                    config = {toLive:[2,3],toBirth:[3]};
+                    document.getElementById('rules').value = '23/3';
+                } else if (tag == '#R') {
+                    let live = lines[i].substring(3).split('/')[0].split(''),
+                        birth = lines[i].substring(3).split('/')[1].split('');
+                    config = {toLive:live.map(Number), toBirth:birth.map(Number)};
+                    document.getElementById('rules').value = lines[i].substring(3);
+                } else if (tag == '#P') {
+                    loc = [parseInt(lines[i].substring(3).split(' ')[0]), parseInt(lines[i].substring(3).split(' ')[1])];
+                    build = true;
+                } else if (lines[i].substring(0,1) == '.' || lines[i].substring(0,1) == '*') {
+                    build = true;
+                    i--;
+                }
+            } else {
+                if (lines[i].substring(0,2) == '#P') {
+                    loc = [parseInt(lines[i].substring(3).split(' ')[0]), parseInt(lines[i].substring(3).split(' ')[1])];
+                    step = 0;
+                } else {
+                    let cells = lines[i].split('');
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j] == '*') {
+                            bits[String(loc[0] + j).concat('.', loc[1] + step)] = true;
+                        }
+                    }
+                    step++;
+                }
+            }
+        }
+        fit();
+    } else alert('Must be a Life 1.05 file!');
+}
+
+function convertToLife() {
+    let activeBits = false;
+    for (let prop in bits) {
+        if (bits.hasOwnProperty(prop)) activeBits = true;
+    }
+    if (activeBits) {
+        let output = ['#Life 1.05'];
+        if (config.toLive.sort().length == 2 && config.toLive[0] == 2 && config.toLive[1] == 3 && config.toBirth.length == 1 && config.toBirth[0] == 3) {
+            output.push('#N');
+        } else output.push('#R '.concat(config.toLive.join(''), '/', config.toBirth.join('')));
+        let lowx, lowy, highx, highy;
+        for (const [key, value] of Object.entries(bits)) {
+            if (parseInt(key.split('.')[0]) < lowx || !lowx) {
+                lowx = parseInt(key.split('.')[0]);
+            }
+            if (parseInt(key.split('.')[1]) < lowy || !lowy) {
+                lowy = parseInt(key.split('.')[1]);
+            }
+            if (parseInt(key.split('.')[0]) > highx || !highx) {
+                highx = parseInt(key.split('.')[0]);
+            }
+            if (parseInt(key.split('.')[1]) > highy || !highy) {
+                highy = parseInt(key.split('.')[1]);
+            }
+        }
+        let modBits = {};
+        for (const [key, value] of Object.entries(bits)) {
+            let x = parseInt(key.split('.')[0]) - lowx,
+                y = parseInt(key.split('.')[1]) - lowy;
+            if (!modBits[String(y)]) modBits[String(y)] = '.'.repeat(highx - lowx + 1);
+            modBits[String(y)] = modBits[String(y)].substring(0, x) + '*' + modBits[String(y)].substring(x + 1);
+        }
+        for (let i = 0; i < highy - lowy + 1; i++) {
+            if (!modBits[String(i)]) modBits[String(i)] = 'x';
+            let line = modBits[String(i)].replace(/\.+$/gm, '');
+            if (line == 'x') line = '.';
+            output.push(line);
+        }
+        return output.join('\n');
+    } else return false;
+}
+
+function updateSaves() {
+    let patterns = JSON.parse(localStorage.getItem('patterns')),
+        options = '';
+    if (patterns) {
+        for (let i = 0; i < patterns.length; i++) {
+            options += '<option value="' + patterns[i] + '">';
+            options += patterns[i];
+            options += '</option>';
+        }
+        document.getElementById('saves').innerHTML = options;
+    }
+}
+updateSaves();
 
 function command(cmd, extra) {
     switch (cmd) {
@@ -270,6 +411,92 @@ function command(cmd, extra) {
             break;
         case 'gridThick':
             gridThick = extra;
+            break;
+        case 'flipx':
+            tempBits = {};
+            for (const [key, value] of Object.entries(bits)) {
+                tempBits[key.split('.')[0].concat('.',-parseInt(key.split('.')[1]))] = true;
+            }
+            bits = tempBits;
+            center();
+            break;
+        case 'flipy':
+            tempBits = {};
+            for (const [key, value] of Object.entries(bits)) {
+                tempBits[String(-parseInt(key.split('.')[0])).concat('.',key.split('.')[1])] = true;
+            }
+            bits = tempBits;
+            center();
+            break;
+        case 'rotate':
+            tempBits = {};
+            for (const [key, value] of Object.entries(bits)) {
+                tempBits[String(-parseInt(key.split('.')[1])).concat('.',key.split('.')[0])] = true;
+            }
+            bits = tempBits;
+            center();
+            break;
+        case 'fit':
+            fit();
+            break;
+        case 'upload':
+            let reader = new FileReader();
+            reader.onload = function() {
+                load(reader.result);
+            };
+            reader.readAsText(extra);
+            document.getElementById('upload').value = '';
+            break;
+        case 'download':
+            let life = convertToLife();
+            if (life) {
+                let filename = prompt('Download as...') + '.life',
+                    element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(life));
+                element.setAttribute('download', filename);
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            } else alert('Nothing to download!');
+            break;
+        case 'save':
+            let lif = convertToLife();
+            if (lif) {
+                let name = prompt('Name for pattern to be saved:');
+                if (name == 'patterns') {
+                    alert('Sorry, the name \'patterns\' is reserved.');
+                } else if (name.includes('\'')) {
+                alert('Illegal character \'!');
+                } else if (name.includes('"')) {
+                    alert('Illegal character "!');
+                } else if (name !== null && name !== '') {
+                    localStorage.setItem(name, lif);
+                    let patterns = JSON.parse(localStorage.getItem('patterns'));
+                    if (patterns) {
+                        if (!patterns.includes(name)) {
+                            patterns.push(name);
+                            localStorage.setItem('patterns', JSON.stringify(patterns));
+                        }
+                    } else localStorage.setItem('patterns', JSON.stringify([name]));
+                    updateSaves();
+                }
+            } else alert('Nothing to save!');
+            break;
+        case 'load':
+            load(localStorage.getItem(document.getElementById('saves').value));
+            break;
+        case 'delete':
+            let val = document.getElementById('saves').value;
+            if (confirm('Are you sure you want to delete \'' + val + '\'?')) {
+                let patterns = JSON.parse(localStorage.getItem('patterns'));
+                if (patterns.includes(val)) {
+                    patterns.splice(patterns.indexOf(val), 1);
+                    localStorage.removeItem(val);
+                    localStorage.setItem('patterns', JSON.stringify(patterns));
+                    updateSaves();
+                }
+            }
             break;
     }
 }
