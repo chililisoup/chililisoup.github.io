@@ -1,5 +1,4 @@
 //TODO:
-//Life 1.05 saving/downloading w/ cookies
 //Frontend
 //Optimizations
 
