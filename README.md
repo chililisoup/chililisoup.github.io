@@ -19,6 +19,12 @@ Rewritten in 2021. May add more words now that it's easier since the rewrite
 
 
 
+Web MIDI was an attempt to make an in browser MIDI player/editor.
+It is currently used to host a couple wheel deciders for compositional challenges.
+May revisit the idea in the future.
+
+
+
 Art is just a simple drawing program I ~~am~~ was making to get better at using the canvas element.
 
 
