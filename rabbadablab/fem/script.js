@@ -1,6 +1,7 @@
 //todo
+//gain instant rolls over time, else you have to do something else first
+//Add more things to do, most importantly a way to hurt opponents
 //more cards
-//sfx
 
 let canvas = new Canvas('canvas', 1920, 1080),
     ctx = canvas.ctx;
@@ -108,7 +109,7 @@ let cards = [
     {desc:'start a business and become girlboss! This endeavor costs you $#Y', others:0, you:-250},
     {desc:'start a business and become girlboss! wow! you earn $#Y.', others:0, you:250},
     {desc:'wear boots (they are doc martens) (theyre expensive ($#Y) )', others:0, you:-200},
-    {desc:'get caught by police for your various crimes. pay $#Y ticket', others:0, you:150},
+    {desc:'get caught by police for your various crimes. pay $#Y ticket', others:0, you:-150},
     {desc:'get paid $#Y more than men!', others:0, you:180},
     {desc:'start an onlyfans. collect $#Y', others:0, you:400},
     {desc:'get butt plug stuck in ass, go to ER, pay hospital bill of $#Y', others:0, you:-69},
@@ -283,8 +284,8 @@ let engine = new Engine(function() {
             ctx.drawImage(arrow, 700, 300, 400, 400);
             ctx.font = "bold 200px Georgia";
             ctx.fillStyle = '#a4a616';
-            ctx.fillText(player.levl - 1, 508, 608);
-            ctx.fillText(player.levl, 1208, 608);
+            ctx.fillText(player.levl, 508, 608);
+            ctx.fillText(player.levl + 1, 1208, 608);
             ctx.fillStyle = '#e0e314';
             ctx.fillText(player.levl - 1, 500, 600);
             ctx.fillText(player.levl, 1200, 600);
