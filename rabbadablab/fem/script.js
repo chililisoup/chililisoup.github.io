@@ -1,5 +1,4 @@
 //todo
-//gain instant rolls over time, else you have to do something else first
 //Add more things to do, most importantly a way to hurt opponents
 //Continuing from above, randomize the options you get
 //Random events biased to cash
@@ -11,7 +10,9 @@ let canvas = new Canvas('canvas', 1920, 1080),
 let scene = {type: 'default'};
 
 let turn = 0,
-turnturn = 0;
+turnturn = 0,
+   round = 0,
+   start = false;
 
 let bg = new Image(1920, 1080);
 bg.src = 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/09/11/09/ms-monopoly-hasbro-c0-51-900-575-s885x516.jpg';
@@ -37,45 +38,61 @@ let snareRoll = new Audio('sounds/roll.flac');
 let levelUp = new Audio('sounds/upgrade.mp3');
 let sus = new Audio('sounds/among.mp3');
 let wow = new Audio('sounds/wow.wav');
+let pling = new Audio('sounds/pling.wav');
 let bgmusic = new Audio('sounds/germonrye.wav');
 bgmusic.volume = 0.25;
 
 function nextTurn() {
     for (let i = 0; i < players.length; i++) {
-        players[i].went = [false, false];
+        players[i].went = false;
+        players[i].done = [];
     }
     turnturn++;
-    if (turnturn >= players.length) turnturn = 0;
+    let newRound = false;
+    if (turnturn >= players.length) {
+        turnturn = 0;
+        newRound = true;
+    }
     while (players[turnturn].died === true) {
         turnturn++;
-        if (turnturn >= players.length) turnturn = 0;
+        if (turnturn >= players.length) {
+            turnturn = 0;
+            newRound = true;
+        }
+    }
+    if (newRound) {
+        round++;
+        if (round % 4 == 0) {
+            pling.play();
+            for (let i = 0; i < players.length; i++) {
+                if (players[i].roll < 3) players[i].roll++;
+            }
+        }
     }
 }
 
 function upgrade() {
     let cost = Math.round((players[turn].levl + 1)**1.2 * 500);
-    if (players[turn].cash >= cost) {
-        players[turn].levl++;
-        players[turn].cash -= cost;
-        levelUp.play();
-        scene = {type:'upgrade', timeout:240};
-    }
+    players[turn].levl++;
+    players[turn].cash -= cost;
+    players[turn].done.push('Upgrade');
+    players[turn].went = true;
+    levelUp.play();
+    scene = {type:'upgrade', timeout:240};
 }
 
 function besus() {
-    if (players[turn].went[1]) return;
     let cost = Math.round((players[turn].levl + 1)**1.2 * 300);
-    if (players[turn].cash >= cost) {
-        sus.play();
-        players[turn].went[1] = true;
-        players[turn].cash -= cost;
-        scene = {type: 'sus', timeout: 180};
-        for (let i = 0; i < players.length; i++) {
-            if (i != turn && !players[i].died) {
-                players[i].cash -= Math.round(cost / 4);
-                if (players[i].cash < 0) {
-                    players[i].died = true;
-                }
+    sus.play();
+    players[turn].done.push('Be sus');
+    players[turn].went = true;
+    players[turn].cash -= cost;
+    scene = {type: 'sus', timeout: 180};
+    for (let i = 0; i < players.length; i++) {
+        if (i != turn && !players[i].died) {
+            players[i].cash -= Math.round(cost / 4);
+            if (players[i].cash < 0) {
+                players[i].died = true;
             }
         }
     }
@@ -83,12 +100,11 @@ function besus() {
 
 function bet() {
     let cost = Math.round((players[turn].levl + 1)**1.2 * 100);
-    if (players[turn].cash >= cost) {
-        snareRoll.play();
-        if (Math.random() >= 0.5) cost *= -1;
-        players[turn].cash += cost;
-        scene = {type:'bet', data:cost, timeout:180};
-    }
+    snareRoll.play();
+    if (Math.random() >= 0.5) cost *= -1;
+    players[turn].cash += cost;
+    players[turn].went = true;
+    scene = {type:'bet', data:cost, timeout:180};
 }
 
 let cards = [
@@ -150,7 +166,6 @@ let cards = [
 ];
 
 function draw() {
-    if (players[turn].went[0]) return;
     wow.play();
     let card = cards[Math.floor(Math.random() * cards.length)],
         desc = card.desc,
@@ -171,7 +186,8 @@ function draw() {
         }
     }
     players[turn].cash += yAmt;
-    players[turn].went[0] = true;
+    players[turn].went = true;
+    players[turn].done.push('Draw');
 
     if (players[turn].cash < 0) {
         players[turn].died = true;
@@ -180,19 +196,19 @@ function draw() {
 }
 
 function roll() {
-    if (scene.type == 'default') {
-        diceRoll.play();
-        let a = Math.floor(Math.random() * 6) + 1,
-        b = Math.floor(Math.random() * 6) + 1;
-        let cash = Math.round((players[turn].levl + 1)**1.2 * ((a + b) * 5));
-        players[turn].cash += cash;
-        scene = {type: 'dice',
-        data: [a, b, cash], timeout: 180};
-        if (a != b) {
-            nextTurn();
-        }
-        return [a, b];
+    diceRoll.play();
+    let a = Math.floor(Math.random() * 6) + 1,
+    b = Math.floor(Math.random() * 6) + 1;
+    let cash = Math.round((players[turn].levl + 1)**1.2 * ((a + b) * 5));
+    players[turn].cash += cash;
+    if (!players[turn].went) players[turn].roll--;
+    players[turn].went = true;
+    scene = {type: 'dice',
+    data: [a, b, cash], timeout: 180};
+    if (a != b) {
+        nextTurn();
     }
+    return [a, b];
 }
 
 let buttons = [
@@ -216,12 +232,18 @@ let alive = 0;
 
 function addPlayer() {
     let name = prompt('Enter a name:');
+    if (!start) {
+        engine.start();
+        start = true;
+    }
     players.push({
         cash: 100,
         name: name,
         pstn: 0,
         levl: 0,
-        went: [false, false],
+        roll: 3,
+        went: false,
+        done: [],
         died: false
     });
 }
@@ -335,21 +357,25 @@ let engine = new Engine(function() {
 
                 let build = true;
                 ctx.fillStyle = buttonStyle;
-                if (buttons[i].base) {
+                if (buttons[i].base) { //make this a switch
                     let cost = Math.round((player.levl + 1)**1.2 * buttons[i].base);
                     ctx.font = "bold 100px Courier New";
                     ctx.fillStyle = '#34ad2b';
                     ctx.fillText('$' + Math.round((player.levl + 1)**1.2 * buttons[i].base), 1510, 300 + (160*i));
-                    ctx.fillStyle = buttonStyle;
                     if (cost > player.cash || (buttons[i].name == 'Be Sus' && player.went[1])) {
                         build = false;
-                        ctx.fillStyle = '#999999';
                     }
-                } else if (buttons[i].name == 'Draw' && player.went[0]) {
-                    ctx.fillStyle = '#999999';
+                } else if (buttons[i].name == 'Draw' && player.done.indexOf('Draw') != -1) { //or this instead maybe
                     build = false;
+                } else if (buttons[i].name == 'Roll') {
+                    if (!player.went && player.roll == 0) build = false;
+                    ctx.font = "bold 100px Courier New";
+                    ctx.fillStyle = '#34ad2b';
+                    if (player.went) ctx.fillStyle = '#999999';
+                    ctx.fillText(player.roll + '(' + (4 - (round % 4)) + ')', 1510, 300 + (160*i));
                 }
-                if (scene.type == 'dice') ctx.fillStyle = '#999999';
+                ctx.fillStyle = buttonStyle;
+                if (!build) ctx.fillStyle = '#999999';
                 ctx.fillRect(1000, 200 + (160*i), 500, 130);
                 ctx.font = "130px Trebuchet MS";
                 ctx.fillStyle = '#000000';
@@ -379,4 +405,3 @@ let engine = new Engine(function() {
     }
     
 }, 1000 / 60);
-engine.start();
