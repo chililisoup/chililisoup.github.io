@@ -2,6 +2,7 @@
 //Add more things to do, most importantly a way to hurt opponents
 //Continuing from above, randomize the options you get
 //Random events biased to cash
+//used card deck to avoid repeats
 //more cards
 
 let canvas = new Canvas('canvas', 1920, 1080),
