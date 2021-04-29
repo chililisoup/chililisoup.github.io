@@ -312,8 +312,8 @@ let engine = new Engine(function() {
             ctx.fillText(player.levl, 508, 608);
             ctx.fillText(player.levl + 1, 1208, 608);
             ctx.fillStyle = '#e0e314';
-            ctx.fillText(player.levl - 1, 500, 600);
-            ctx.fillText(player.levl, 1200, 600);
+            ctx.fillText(player.levl, 500, 600);
+            ctx.fillText(player.levl + 1, 1200, 600);
             break;
         case 'sus':
             ctx.drawImage(amongsus, 1000, 300);
