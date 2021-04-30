@@ -1,8 +1,6 @@
 //todo
 //Add more things to do, most importantly a way to hurt opponents
-//Continuing from above, randomize the options you get
 //Random events biased to cash
-//used card deck to avoid repeats
 //more cards
 
 let canvas = new Canvas('canvas', 1920, 1080),
@@ -33,7 +31,6 @@ arrow.src = 'https://i.pinimg.com/originals/bb/81/0e/bb810ea3c1ce83c2b7168e62c21
 let question = new Image();
 question.src = 'https://i.pinimg.com/originals/6c/5b/36/6c5b36cd1e28930e9321e7a715422990.png';
 
-
 let diceRoll = new Audio('sounds/dice.flac');
 let snareRoll = new Audio('sounds/roll.flac');
 let levelUp = new Audio('sounds/upgrade.mp3');
@@ -42,6 +39,36 @@ let wow = new Audio('sounds/wow.wav');
 let pling = new Audio('sounds/pling.wav');
 let bgmusic = new Audio('sounds/germonrye.wav');
 bgmusic.volume = 0.25;
+
+
+
+let buttons5 = [
+    {name:'Upgrade', func:upgrade, base:500}
+];
+
+let buttons3 = [
+    {name:'Be Sus', func:besus, base:300}
+];
+
+let buttons1 = [
+    {name:'Bet', func:bet, base:100, noLimit:true}
+];
+
+let buttons0 = [
+    {name:'Draw', func:draw}
+];
+
+let buttons = [];
+
+function randomizeButtons() {
+    buttons = [];
+    buttons.push(buttons5[Math.floor(Math.random() * buttons5.length)]);
+    buttons.push(buttons3[Math.floor(Math.random() * buttons3.length)]);
+    buttons.push(buttons1[Math.floor(Math.random() * buttons1.length)]);
+    buttons.push(buttons0[Math.floor(Math.random() * buttons0.length)]);
+    buttons.push({name:'Roll', func:roll, noLimit:true});
+}
+randomizeButtons();
 
 function nextTurn() {
     for (let i = 0; i < players.length; i++) {
@@ -63,12 +90,28 @@ function nextTurn() {
     }
     if (newRound) {
         round++;
-        if (round % 4 == 0) {
+        if (round % 4 === 0) {
             pling.play();
             for (let i = 0; i < players.length; i++) {
                 if (players[i].roll < 3) players[i].roll++;
             }
         }
+    }
+    randomizeButtons();
+}
+
+function findButton(id) {
+    for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].name == id) return buttons[i];
+    }
+    return false;
+}
+
+function useButton(btn) {
+    if (players[turn].done.indexOf(btn.id) == -1 || findButton(btn.id)?.noLimit) {
+        findButton(btn.id)?.func();
+        players[turn].done.push(btn.id);
+        players[turn].went = true;
     }
 }
 
@@ -76,8 +119,6 @@ function upgrade() {
     let cost = Math.round((players[turn].levl + 1)**1.2 * 500);
     players[turn].levl++;
     players[turn].cash -= cost;
-    players[turn].done.push('Upgrade');
-    players[turn].went = true;
     levelUp.play();
     scene = {type:'upgrade', timeout:240};
 }
@@ -85,8 +126,6 @@ function upgrade() {
 function besus() {
     let cost = Math.round((players[turn].levl + 1)**1.2 * 300);
     sus.play();
-    players[turn].done.push('Be sus');
-    players[turn].went = true;
     players[turn].cash -= cost;
     scene = {type: 'sus', timeout: 180};
     for (let i = 0; i < players.length; i++) {
@@ -104,7 +143,6 @@ function bet() {
     snareRoll.play();
     if (Math.random() >= 0.5) cost *= -1;
     players[turn].cash += cost;
-    players[turn].went = true;
     scene = {type:'bet', data:cost, timeout:180};
 }
 
@@ -166,12 +204,21 @@ let cards = [
     {desc:'u r sus. to take heat off yourself, you give each of your friends $#O', others:-25, you:0}
 ];
 
+let usedCards = [];
+
 function draw() {
     wow.play();
-    let card = cards[Math.floor(Math.random() * cards.length)],
+    let cardNo = Math.floor(Math.random() * cards.length);
+    let card = cards[cardNo],
         desc = card.desc,
         oAmt = Math.round((players[turn].levl + 1)**1.2 * card.others),
         yAmt = Math.round((players[turn].levl + 1)**1.2 * card.you);
+    usedCards.push(cards[cardNo]);
+    cards.splice(cardNo, 1);
+    if (cards.length == 0) {
+        cards = usedCards;
+        usedCards = [];
+    }
     desc = desc.replace(/#O/g, Math.abs(oAmt));
     desc = desc.replace(/#T/g, Math.abs(oAmt * (alive - 1) + Math.abs(yAmt)));
     desc = desc.replace(/#Y/g, Math.abs(yAmt));
@@ -187,8 +234,6 @@ function draw() {
         }
     }
     players[turn].cash += yAmt;
-    players[turn].went = true;
-    players[turn].done.push('Draw');
 
     if (players[turn].cash < 0) {
         players[turn].died = true;
@@ -203,7 +248,6 @@ function roll() {
     let cash = Math.round((players[turn].levl + 1)**1.2 * ((a + b) * 5));
     players[turn].cash += cash;
     if (!players[turn].went) players[turn].roll--;
-    players[turn].went = true;
     scene = {type: 'dice',
     data: [a, b, cash], timeout: 180};
     if (a != b) {
@@ -211,14 +255,6 @@ function roll() {
     }
     return [a, b];
 }
-
-let buttons = [
-    {name:'Upgrade', func:upgrade, base:500},
-    {name:'Be Sus', func:besus, base:300},
-    {name:'Bet', func:bet, base:100},
-    {name:'Draw', func:draw},
-    {name:'Roll', func:roll}
-];
 
 function resetContext() {
     ctx.globalAlpha = 1;
@@ -355,18 +391,19 @@ let engine = new Engine(function() {
                 let buttonStyle = ctx.createLinearGradient(0, 200 + (160*i), 0, 330 + (160*i))
                 buttonStyle.addColorStop(0, '#00ffaa');
                 buttonStyle.addColorStop(1, '#009e69');
-
+                
                 let build = true;
                 ctx.fillStyle = buttonStyle;
-                if (buttons[i].base) { //make this a switch
+                if (buttons[i].base) {
                     let cost = Math.round((player.levl + 1)**1.2 * buttons[i].base);
                     ctx.font = "bold 100px Courier New";
                     ctx.fillStyle = '#34ad2b';
-                    ctx.fillText('$' + Math.round((player.levl + 1)**1.2 * buttons[i].base), 1510, 300 + (160*i));
-                    if (cost > player.cash || (buttons[i].name == 'Be Sus' && player.went[1])) {
+                    ctx.fillText('$' + cost, 1510, 300 + (160*i));
+                    if (cost > player.cash) {
                         build = false;
                     }
-                } else if (buttons[i].name == 'Draw' && player.done.indexOf('Draw') != -1) { //or this instead maybe
+                }
+                if (player.done.indexOf(buttons[i].name) != -1 && !buttons[i].noLimit) {
                     build = false;
                 } else if (buttons[i].name == 'Roll') {
                     if (!player.went && player.roll == 0) build = false;
@@ -381,7 +418,7 @@ let engine = new Engine(function() {
                 ctx.font = "130px Trebuchet MS";
                 ctx.fillStyle = '#000000';
                 ctx.fillText(buttons[i].name, 1000, 315 + (160*i));
-                if (build) canvas.createButton(buttons[i].name, buttons[i].func, 1000, 200 + (160*i), 500, 130);
+                if (build) canvas.createButton(buttons[i].name, useButton, 1000, 200 + (160*i), 500, 130);
             }
         
             ctx.font = "100px Arial";
