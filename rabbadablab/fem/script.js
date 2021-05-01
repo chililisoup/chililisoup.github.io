@@ -230,7 +230,7 @@ function gift(btn) {
     wow.play();
     scene = {type:'sus', timeout: 180, data:[
         `${players[turn].name} gifted ${players[id].name}!`,
-        `They both received ${cost}!`
+        `They both received $${cost}!`
     ]};
 }
 
