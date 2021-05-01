@@ -547,7 +547,7 @@ let engine = new Engine(function() {
             for (let i = 0; i < players.length; i++) {
                 if (i == turn || players[i].died) {
                     height--;
-                } else createButton(50, 50 + (160*height), players[i].name, (btn) => scene.data?.(btn), {id:`player${i}`, width:750});
+                } else createButton(50, 50 + (160*height), players[i].name, (btn) => scene.data?.(btn), {id:`player${i}`, width:750, bonus:`$${players[i].cash}`});
                 height++
             }
             break;
