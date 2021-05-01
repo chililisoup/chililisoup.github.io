@@ -1,7 +1,6 @@
 //todo
-//Add more things to do, most importantly a way to hurt opponents
 //Random events biased to cash
-//more cards
+//even more cards! Cant ever have enough cards
 
 let canvas = new Canvas('canvas', 1920, 1080),
     ctx = canvas.ctx;
@@ -42,30 +41,45 @@ bgmusic.volume = 0.25;
 
 
 
-let buttons5 = [
-    {name:'Upgrade', func:upgrade, base:500}
+let buttons3 = [
+    {name:'Upgrade', func:upgrade, base:500, weight:7},
+    {name:'Bomb', func:bomb, base:750},
+    {name:'Snipe', func:snipe, base:500, weight:2}
 ];
 
-let buttons3 = [
-    {name:'Be Sus', func:besus, base:300}
+let buttons2 = [
+    {name:'Be Sus', func:besus, base:300, weight:2},
+    {name:'Target', func:target, base:300}
 ];
 
 let buttons1 = [
-    {name:'Bet', func:bet, base:100, noLimit:true}
+    {name:'Bet', func:bet, base:100, noLimit:true, weight: 4},
+    {name:'Punch', func:punch, base:75}
 ];
 
 let buttons0 = [
-    {name:'Draw', func:draw}
+    {name:'Draw', func:draw, weight: 7},
+    {name:'Gift', func:gift, weight: 2},
+    {name:'Leech', func:leech}
 ];
 
 let buttons = [];
 
+function weightedPick(list) {
+    let weightedList = [];
+    for (let i = 0; i < list.length; i++) {
+        let weight = list[i].weight || 1;
+        for (let j = 0; j < weight; j++) weightedList.push(list[i]);
+    }
+    return weightedList[Math.floor(Math.random() * weightedList.length)];
+}
+
 function randomizeButtons() {
     buttons = [];
-    buttons.push(buttons5[Math.floor(Math.random() * buttons5.length)]);
-    buttons.push(buttons3[Math.floor(Math.random() * buttons3.length)]);
-    buttons.push(buttons1[Math.floor(Math.random() * buttons1.length)]);
-    buttons.push(buttons0[Math.floor(Math.random() * buttons0.length)]);
+    buttons.push(weightedPick(buttons3));
+    buttons.push(weightedPick(buttons2));
+    buttons.push(weightedPick(buttons1));
+    buttons.push(weightedPick(buttons0));
     buttons.push({name:'Roll', func:roll, noLimit:true});
 }
 randomizeButtons();
@@ -82,6 +96,12 @@ function nextTurn() {
         newRound = true;
     }
     while (players[turnturn].died === true) {
+        if (players.length == 1) {
+            players[turnturn].died = false;
+            players[turnturn].cash = 69420;
+            wow.play();
+            scene = {type:'card', data:'You absolute buffoon. You played yourself. Literally. And you lost. So now nobody wins. Dumb shit.', timeout:600};
+        }
         turnturn++;
         if (turnturn >= players.length) {
             turnturn = 0;
@@ -116,18 +136,131 @@ function useButton(btn) {
 }
 
 function upgrade() {
-    let cost = Math.round((players[turn].levl + 1)**1.2 * 500);
+    players[turn].cash -= players[turn].mult * 500;
     players[turn].levl++;
-    players[turn].cash -= cost;
+    players[turn].mult = Math.round(4*((players[turn].levl)**0.8)) / 4;
     levelUp.play();
     scene = {type:'upgrade', timeout:240};
 }
 
-function besus() {
-    let cost = Math.round((players[turn].levl + 1)**1.2 * 300);
+function bomb() {
+    const cost = Math.round(players[turn].mult * 750);
     sus.play();
     players[turn].cash -= cost;
-    scene = {type: 'sus', timeout: 180};
+    scene = {type:'sus', timeout: 180, data:[
+        `${players[turn].name} bombed the city!`,
+        `Everyone else lost $${Math.round(cost / 2)} :(`
+    ]};
+    for (let i = 0; i < players.length; i++) {
+        if (i != turn && !players[i].died) {
+            players[i].cash -= Math.round(cost / 2);
+            if (players[i].cash < 0) {
+                players[i].died = true;
+            }
+        }
+    }
+}
+
+function snipe(btn) {
+    const cost = Math.round(players[turn].mult * 500);
+    if (!btn) {
+        players[turn].cash -= cost;
+        scene = {type:'select', data:snipe};
+        return;
+    }
+    const id = btn.id.split('player')[1];
+    players[id].cash -= cost;
+    if (players[id].cash < 0) {
+        players[id].died = true;
+    }
+    sus.play();
+    scene = {type:'sus', timeout: 180, data:[
+        `${players[turn].name} sniped ${players[id].name}!`,
+        `$${cost} was taken from both!`
+    ]};
+}
+
+function target(btn) {
+    const cost = Math.round(players[turn].mult * 300);
+    if (!btn) {
+        players[turn].cash -= cost;
+        scene = {type:'select', data:target};
+        return;
+    }
+    const id = btn.id.split('player')[1];
+    players[id].cash -= cost;
+    if (players[id].cash < 0) {
+        players[id].died = true;
+    }
+    sus.play();
+    scene = {type:'sus', timeout: 180, data:[
+        `${players[turn].name} targetted ${players[id].name}!`,
+        `$${cost} was taken from both!`
+    ]};
+}
+
+function punch(btn) {
+    const cost = Math.round(players[turn].mult * 75);
+    if (!btn) {
+        players[turn].cash -= cost;
+        scene = {type:'select', data:punch};
+        return;
+    }
+    const id = btn.id.split('player')[1];
+    players[id].cash -= cost;
+    if (players[id].cash < 0) {
+        players[id].died = true;
+    }
+    sus.play();
+    scene = {type:'sus', timeout: 180, data:[
+        `${players[turn].name} punched ${players[id].name}!`,
+        `They both paid $${cost} in fees!`
+    ]};
+}
+
+function gift(btn) {
+    const cost = Math.round(players[turn].mult * 100);
+    if (!btn) {
+        players[turn].cash += cost;
+        scene = {type:'select', data:gift};
+        return;
+    }
+    const id = btn.id.split('player')[1];
+    players[id].cash += cost;
+    wow.play();
+    scene = {type:'sus', timeout: 180, data:[
+        `${players[turn].name} gifted ${players[id].name}!`,
+        `They both received ${cost}!`
+    ]};
+}
+
+function leech(btn) {
+    const cost = Math.round(players[turn].mult * 50);
+    if (!btn) {
+        players[turn].cash += cost;
+        scene = {type:'select', data:leech};
+        return;
+    }
+    const id = btn.id.split('player')[1];
+    players[id].cash -= cost;
+    if (players[id].cash < 0) {
+        players[id].died = true;
+    }
+    sus.play();
+    scene = {type:'sus', timeout: 180, data:[
+        `${players[turn].name} leeched from ${players[id].name}!`,
+        `$${cost} was given to ${players[turn].name}!`
+    ]};
+}
+
+function besus() {
+    const cost = Math.round(players[turn].mult * 300);
+    sus.play();
+    players[turn].cash -= cost;
+    scene = {type:'sus', timeout: 180, data:[
+        `${players[turn].name} was sus!`,
+        `$${Math.round(cost / 4)} was taken from all others.`
+    ]};
     for (let i = 0; i < players.length; i++) {
         if (i != turn && !players[i].died) {
             players[i].cash -= Math.round(cost / 4);
@@ -139,7 +272,7 @@ function besus() {
 }
 
 function bet() {
-    let cost = Math.round((players[turn].levl + 1)**1.2 * 100);
+    let cost = Math.round(players[turn].mult * 100);
     snareRoll.play();
     if (Math.random() >= 0.5) cost *= -1;
     players[turn].cash += cost;
@@ -201,7 +334,33 @@ let cards = [
     {desc:'Get mugged! Lose $#Y.', others:0, you:-80},
     {desc:'go to halloween store, buy slutty cat costume for $#Y', others:0, you:-69},
     {desc:'Haha look at the funny man down there in the bottom right', others:0, you:0},
-    {desc:'u r sus. to take heat off yourself, you give each of your friends $#O', others:-25, you:0}
+    {desc:'u r sus. to take heat off yourself, you give each of your friends $#O', others:-25, you:0},
+    {desc:'You were speeding 48mph over in a school zone. Pay $#Y.', others:0, you:-350},
+    {desc:'You are winner. Win $#Y.', others:0, you:100},
+    {desc:'live', others:0, you:500},
+    {desc:'ride in ambulance. Pay $#Y.', others:0, you:-250},
+    {desc:'meet oaken. he bestows upon you $#Y', others:0, you:350},
+    {desc:'eat at chilis. spend $#Y', others:0, you:-50},
+    {desc:'lose $9999. ha u got trolled!! that was le epic. win $#Y', others:0, you:250},
+    {desc:'ask ppl for money. every1 gives u $#O', others:20, you:0},
+    {desc:'you get paid $#Y! wow! give each of ur friends $#O!', others:-20, you:200},
+    {desc:'u were walkin in a circle when you found a piece of paper that was a $#Y bill', others:0, you:250},
+    {desc:'its splurge time! spend $#Y!', others:0, you:-125},
+    {desc:'ur playin some jazz, then you play a wrong note. thats p jazzy. Wow! crowds a cheerin\'. They pay you $#Y!', others:0, you:80},
+    {desc:'ur a classical musican, then you play a wrong note. Boo you suck! Cry and lose $#Y.', others:0, you:-80},
+    {desc:'you like to do laundry, so you launder $#Y.', others:0, you:300},
+    {desc:'smoke a fat cig (if you must know, the cig was fancy and costed $#Y just for the one!)', others:0, you:-10},
+    {desc:'pay some random ass $#Y to do your homework', others:0, you:-25},
+    {desc:'you dumb bitch! You maxed out your credit card! That\'s gonna cost you $#Y!', others:0, you:-200},
+    {desc:'You say: ok, ok, for reals now. You didnt really f my mom, did you? you did? well, then give me $#Y you dirty dumb', others:0, you:250},
+    {desc:'gonna cry? piss and shit? maybe shit and cum? Thats what you get for losing $#Y', others:0, you:-150},
+    {desc:'moto moto likes you. He bribes you with $#Y', others:0, you:250},
+    {desc:'Damn daughter, whered ya find this $#Y?', others:0, you:300},
+    {desc:'steal lunch money. Profit $#Y!!', others:0, you:20},
+    {desc:'Stare at the sun! Ow! Why would you do that? Lose $#Y', others:0, you:-50},
+    {desc:'Thank you for choosing draw card. Please accept this customary $#Y.', others:0, you:100},
+    {desc:'1) play minecraft manhunt. 2) post it to youtube. 3) ?????? 4) profit $#Y', others:0, you:400},
+    {desc:'open merch store. your merch is solid color w/ generic logo. Brilliant! You earn $#Y from this.', others:0, you:100}
 ];
 
 let usedCards = [];
@@ -211,8 +370,8 @@ function draw() {
     let cardNo = Math.floor(Math.random() * cards.length);
     let card = cards[cardNo],
         desc = card.desc,
-        oAmt = Math.round((players[turn].levl + 1)**1.2 * card.others),
-        yAmt = Math.round((players[turn].levl + 1)**1.2 * card.you);
+        oAmt = Math.round(players[turn].mult * card.others),
+        yAmt = Math.round(players[turn].mult * card.you);
     usedCards.push(cards[cardNo]);
     cards.splice(cardNo, 1);
     if (cards.length == 0) {
@@ -245,7 +404,7 @@ function roll() {
     diceRoll.play();
     let a = Math.floor(Math.random() * 6) + 1,
     b = Math.floor(Math.random() * 6) + 1;
-    let cash = Math.round((players[turn].levl + 1)**1.2 * ((a + b) * 5));
+    let cash = Math.round(players[turn].mult * ((a + b) * 5));
     players[turn].cash += cash;
     if (!players[turn].went) players[turn].roll--;
     scene = {type: 'dice',
@@ -269,20 +428,52 @@ let alive = 0;
 
 function addPlayer() {
     let name = prompt('Enter a name:');
+    if (!name) return;
     if (!start) {
         engine.start();
         start = true;
     }
     players.push({
-        cash: 100,
+        cash: 250,
         name: name,
         pstn: 0,
-        levl: 0,
+        levl: 1,
+        mult: 1,
         roll: 3,
         went: false,
         done: [],
         died: false
     });
+}
+
+
+
+function createButton(x, y, name, func, params) {
+    params.height = params.height || 130;
+    params.width = params.width || 500;
+    params.id = params.id || name;
+
+    const heightRatio = Math.round((10/13)*params.height);
+    const heightRatio2 = Math.round((23/26)*params.height);
+
+    let buttonStyle = ctx.createLinearGradient(0, y, 0, y + params.height)
+    buttonStyle.addColorStop(0, '#00ffaa');
+    buttonStyle.addColorStop(1, '#009e69');
+
+    ctx.fillStyle = buttonStyle;
+    if (params.disabled) ctx.fillStyle = '#999999';
+    ctx.fillRect(x, y, params.width, params.height);
+    ctx.font = `${params.height}px Trebuchet MS`;
+    ctx.fillStyle = '#000000';
+    ctx.fillText(name, x, heightRatio2 + y);
+    if (!params.disabled) canvas.createButton(params.id, func, x, y, params.width, params.height);
+
+    if (params.bonus) {
+        ctx.font = `bold ${heightRatio}px Courier New`;
+        ctx.fillStyle = '#34ad2b';
+        if (params.disabled || params.bonusDisabled) ctx.fillStyle = '#999999';
+        ctx.fillText(params.bonus, heightRatio*0.1 + x + params.width, heightRatio + y);
+    }
 }
 
 let engine = new Engine(function() {
@@ -345,19 +536,28 @@ let engine = new Engine(function() {
             ctx.drawImage(arrow, 700, 300, 400, 400);
             ctx.font = "bold 200px Georgia";
             ctx.fillStyle = '#a4a616';
-            ctx.fillText(player.levl, 508, 608);
-            ctx.fillText(player.levl + 1, 1208, 608);
+            ctx.fillText(player.levl - 1, 508, 608);
+            ctx.fillText(player.levl, 1208, 608);
             ctx.fillStyle = '#e0e314';
-            ctx.fillText(player.levl, 500, 600);
-            ctx.fillText(player.levl + 1, 1200, 600);
+            ctx.fillText(player.levl - 1, 500, 600);
+            ctx.fillText(player.levl, 1200, 600);
+            break;
+        case 'select':
+            let height = 0;
+            for (let i = 0; i < players.length; i++) {
+                if (i == turn || players[i].died) {
+                    height--;
+                } else createButton(50, 50 + (160*height), players[i].name, (btn) => scene.data?.(btn), {id:`player${i}`, width:750});
+                height++
+            }
             break;
         case 'sus':
             ctx.drawImage(amongsus, 1000, 300);
             ctx.font = "200px Georgia";
             ctx.fillStyle = '#ff0000';
-            ctx.fillText(player.name + ' was sus!', 20, 400);
+            canvas.wrapText(scene.data[0], 20, 400, 1880, 200);
             ctx.font = "100px Georgia";
-            ctx.fillText('$' + Math.round(Math.round((player.levl + 1)**1.2 * 300) / 4) + ' was taken from all others.', 20, 800);
+            canvas.wrapText(scene.data[1], 20, 800, 1880, 200);
             break;
         case 'bet':
             if (scene.timeout > 105) {
@@ -388,42 +588,27 @@ let engine = new Engine(function() {
             ctx.font = "200px cursive";
             ctx.fillText('Lol!', 10, 200);
             for (let i = 0; i < buttons.length; i++) {
-                let buttonStyle = ctx.createLinearGradient(0, 200 + (160*i), 0, 330 + (160*i))
-                buttonStyle.addColorStop(0, '#00ffaa');
-                buttonStyle.addColorStop(1, '#009e69');
-                
-                let build = true;
-                ctx.fillStyle = buttonStyle;
+                let params = {};
                 if (buttons[i].base) {
-                    let cost = Math.round((player.levl + 1)**1.2 * buttons[i].base);
-                    ctx.font = "bold 100px Courier New";
-                    ctx.fillStyle = '#34ad2b';
-                    ctx.fillText('$' + cost, 1510, 300 + (160*i));
+                    const cost = Math.round(player.mult * buttons[i].base);
+                    params.bonus = `$${cost}`;
                     if (cost > player.cash) {
-                        build = false;
+                        params.disabled = true;
                     }
                 }
                 if (player.done.indexOf(buttons[i].name) != -1 && !buttons[i].noLimit) {
-                    build = false;
+                    params.disabled = true;
                 } else if (buttons[i].name == 'Roll') {
-                    if (!player.went && player.roll == 0) build = false;
-                    ctx.font = "bold 100px Courier New";
-                    ctx.fillStyle = '#34ad2b';
-                    if (player.went) ctx.fillStyle = '#999999';
-                    ctx.fillText(player.roll + '(' + (4 - (round % 4)) + ')', 1510, 300 + (160*i));
+                    if (!player.went && player.roll == 0) params.disabled = true;
+                    if (player.went) ctx.fillStyle = params.bonusDisabled = true;
+                    params.bonus = `${player.roll}(${4 - (round % 4)})`;
                 }
-                ctx.fillStyle = buttonStyle;
-                if (!build) ctx.fillStyle = '#999999';
-                ctx.fillRect(1000, 200 + (160*i), 500, 130);
-                ctx.font = "130px Trebuchet MS";
-                ctx.fillStyle = '#000000';
-                ctx.fillText(buttons[i].name, 1000, 315 + (160*i));
-                if (build) canvas.createButton(buttons[i].name, useButton, 1000, 200 + (160*i), 500, 130);
+                createButton(1000, 200 + (160*i), buttons[i].name, useButton, params);
             }
         
             ctx.font = "100px Arial";
             ctx.fillStyle = '#ff0000';
-            ctx.fillText('Level ' + (player.levl + 1) + ' | Multiplier: ' + ((player.levl + 1)**1.2).toFixed(2), 400, 140);
+            ctx.fillText('Level ' + (player.levl) + ' | Multiplier: ' + (player.mult).toFixed(2), 400, 140);
             
             for (let i = 0; i < players.length; i++) {
                 ctx.font = "110px Trebuchet MS";
