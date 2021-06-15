@@ -469,7 +469,7 @@ function command(cmd, extra) {
                 alert('Illegal character \'!');
                 } else if (name.includes('"')) {
                     alert('Illegal character "!');
-                } else if (name !== null && name !== '') {
+                } else if (name !== null && name !== '' && name) {
                     localStorage.setItem(name, lif);
                     let patterns = JSON.parse(localStorage.getItem('patterns'));
                     if (patterns) {
