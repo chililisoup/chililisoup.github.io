@@ -4,12 +4,17 @@ function formatPrice(amt) {
 
 let score = {
     earned: 0,
+    earned_total: 0,
+    clicks: 0,
     cash: 0,
     update: function(amt, set=false) {
         if (set) {
             this.cash = amt;
         } else this.cash += amt;
-        if (amt > 0) this.earned += amt;
+        if (amt > 0) {
+            this.earned += amt;
+            this.earned_total += amt;
+        }
         document.getElementById("counter").innerHTML = "You have " + formatPrice(score.cash) + " jefs";
     }
 };
@@ -25,35 +30,36 @@ let upgrades = {
     AClick: {
         lvl: 0,
         base: 10,
-        rate: 4,
+        rate: 3,
         max: 1000,
         name: 'Auto Click'
     },
     Trainer: {
         lvl: 0,
         base: 100,
-        rate: 4,
+        rate: 3,
         max: 20,
         name: 'Jef Trainer'
     },
     Polisher: {
         lvl: 0,
         base: 2500,
-        rate: 4,
+        rate: 3,
         max: 16,
         name: 'Jef Polisher'
     }
 }
 for (const upgrade in upgrades) {
     let button = document.createElement("button");
-    button.innerHTML = '[' + upgrades[upgrade].lvl + '] ' + upgrades[upgrade].name + ' - $' + getPrice(upgrade);
+    button.innerHTML = '[' + upgrades[upgrade].lvl + '] ' + upgrades[upgrade].name + ' - $' + formatPrice(getPrice(upgrade));
     button.setAttribute('onclick','buy("' + upgrade + '")');
     button.id = upgrade;
     document.getElementById('buttons').appendChild(button);
 }
 
 function sendClick(amt=1) {
-    score.update(amt ** (upgrades.SClick.lvl + 1));
+    score.update(amt * (2 ** upgrades.SClick.lvl));
+    score.clicks++;
 }
 
 function getPrice(product) {
@@ -79,9 +85,11 @@ function engine() {
     setTimeout(function () {
         if (upgrades.AClick.lvl) score.update(upgrades.AClick.lvl);
         if (upgrades.Trainer.lvl) score.update(upgrades.Trainer.lvl * 5);
-        if (upgrades.Polisher.lvl) score.update(upgrades.Polisher.lvl * (score.earned * 0.05));
+        if (upgrades.Polisher.lvl) score.update(Math.round(upgrades.Polisher.lvl * (score.earned * 0.15)));
         engine();
         document.getElementById("speed").innerHTML = formatPrice(score.earned) + " jefs/s";
+        document.getElementById("total_jefs").innerHTML = formatPrice(score.earned_total) + " total jefs earned";
+        document.getElementById("total_clicks").innerHTML = formatPrice(score.clicks) + " total clicks";
         score.earned = 0;
     }, 1000);
 }
