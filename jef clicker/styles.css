@@ -1,6 +1,26 @@
 .flex {
     display: flex;
 }
+.flex-vert {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+.flex-vert button {
+    display: flex;
+    width: 250px;
+    height: 40px;
+    font-size: large;
+}
 h2 {
     margin: 15px;
+}
+.alert {
+    color: red;
+    display: none;
+}
+img {
+    border: 5px solid black;
+    border-radius: 200px;
+    cursor: pointer;
 }

@@ -2,12 +2,24 @@
 <html>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
-    <h1 id="counter">You have 0 jefs</h1>
     <div class="flex">
-        <h2 id="speed">0 jefs/s</h2>
-        <h2 id="total_jefs">0 total jefs earned</h2>
+        <h1 id="counter">$0</h1>
+        <h1 id="sales_alert" class="alert">!! You are producing more Jefs than you can sell!</h1>
+    </div>
+    <div class="flex">
+        <h2 id="cash_psec">0 $/s</h2>
+        <h2 id="jefs_psec">0 jefs/s</h2>
+        <h2 id="jefs_max">Max 20 jefs/s</h2>
+        <h2 id="jefs_rate">$1/jef</h2>
+        <h2 id="total_cash">0 total cash earned</h2>
+        <h2 id="total_jefs">0 total jefs sold</h2>
         <h2 id="total_clicks">0 total clicks</h2>
     </div>
     <img src="https://logos.flamingtext.com/Name-Logos/Jef-design-china-name.png" onmousedown="sendClick()">
-    <div class="flex" id="buttons"></div>
+    <div class="flex" id="buttons">
+        <div class="flex-vert" id="special_buttons"><h2>Special</h2></div>
+        <div class="flex-vert" id="produce_buttons"><h2>Production</h2></div>
+        <div class="flex-vert" id="improve_buttons"><h2>Improvement</h2></div>
+        <div class="flex-vert" id="sales_buttons"><h2>Sales</h2></div>
+    </div>
 </html>
