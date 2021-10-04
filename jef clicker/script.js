@@ -252,11 +252,13 @@ function buy(product) {
 function load() {
     let upgrades_ld = JSON.parse(localStorage.getItem('upgrades'));
     let score_ld = JSON.parse(localStorage.getItem('score'));
-    for (const scr in score) {
-        if (scr != 'update') score[scr] = score_ld[scr];
-    }
-    for (const upgrade in upgrades_ld) {
-        upgrades[upgrade].lvl = upgrades_ld[upgrade].lvl;
+    if (upgrades_ld && score_ld) {
+        for (const scr in score) {
+            if (scr != 'update') score[scr] = score_ld[scr];
+        }
+        for (const upgrade in upgrades_ld) {
+            upgrades[upgrade].lvl = upgrades_ld[upgrade].lvl;
+        }
     }
     loadUpgradeButtons();
 }
