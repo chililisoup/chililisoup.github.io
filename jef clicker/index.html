@@ -2,11 +2,13 @@
 <html>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
+    <button onclick="download()">Download Save</button>
     <div class="flex">
         <h1 id="counter">$0</h1>
         <h1 id="sales_alert" class="alert">!! You are producing more Jefs than you can sell!</h1>
     </div>
     <div class="flex">
+        <h2 id="jef_type">Standard Jef</h2>
         <h2 id="cash_psec">0 $/s</h2>
         <h2 id="jefs_psec">0 jefs/s</h2>
         <h2 id="jefs_max">Max 20 jefs/s</h2>
@@ -21,5 +23,6 @@
         <div class="flex-vert" id="produce_buttons"><h2>Production</h2></div>
         <div class="flex-vert" id="improve_buttons"><h2>Improvement</h2></div>
         <div class="flex-vert" id="sales_buttons"><h2>Sales</h2></div>
+        <div class="flex-vert" id="jef_buttons"><h2>Jefs</h2></div>
     </div>
 </html>
