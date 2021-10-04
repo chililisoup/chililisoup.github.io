@@ -194,6 +194,11 @@ let upgrades = {
 let default_upgrades = JSON.stringify(upgrades);
 
 function loadUpgradeButtons() {
+    document.getElementById("produce_buttons").innerHTML = "";
+    document.getElementById("improve_buttons").innerHTML = "";
+    document.getElementById("sales_buttons").innerHTML = "";
+    document.getElementById("jef_buttons").innerHTML = "";
+    document.getElementById("special_buttons").innerHTML = "";
     for (const upgrade in upgrades) {
         let button = document.createElement("button");
         if (upgrades[upgrade].lvl == upgrades[upgrade].max) {
@@ -254,6 +259,7 @@ function buy(product) {
             score.jefs_sold = 0;
             score.jef = upgrades[product].name;
             score.jef_price = upgrades[product].cost;
+            loadUpgradeButtons();
         }
     }
 
