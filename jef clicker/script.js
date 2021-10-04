@@ -191,6 +191,7 @@ let upgrades = {
         cost: 35
     },
 }
+let default_upgrades = JSON.stringify(upgrades);
 
 function loadUpgradeButtons() {
     for (const upgrade in upgrades) {
@@ -242,6 +243,15 @@ function buy(product) {
         if (upgrades[product].type == 3) {
             score.sale_rate += upgrades[product].sale;
         } else if (upgrades[product].type == 4) {
+            let default_upgrades_copy = JSON.parse(default_upgrades);
+            for (const upgrade in default_upgrades_copy) {
+                if (default_upgrades_copy[upgrade].type != 4) upgrades[upgrade].lvl = default_upgrades_copy[upgrade].lvl;
+            }
+            score.sale_rate = 50;
+            score.sale_alert_cool = 0;
+            score.cash = 0;
+            score.cash_earned = 0;
+            score.jefs_sold = 0;
             score.jef = upgrades[product].name;
             score.jef_price = upgrades[product].cost;
         }
@@ -283,7 +293,7 @@ function save() {
 }
 
 function engine() {
-    let rate = 1;
+    let rate = score.jef_price;
     for (const upgrade in upgrades) {
         upg = upgrades[upgrade];
         if (upg.type == 1 && upg.lvl) score.update(upg.lvl * upg.psec);
