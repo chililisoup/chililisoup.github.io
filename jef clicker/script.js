@@ -1,5 +1,31 @@
 function formatNumber(amt) {
-    return amt.toLocaleString();
+    let suffix = '';
+    if (amt >= 1000000000000000000000000) {
+        amt = Math.round((amt / 1000000000000000000000000) * 100) / 100;
+        suffix = 'S';
+    } else if (amt >= 1000000000000000000000) {
+        amt = Math.round((amt / 1000000000000000000000) * 100) / 100;
+        suffix = 's';
+    } else if (amt >= 1000000000000000000) {
+        amt = Math.round((amt / 1000000000000000000) * 100) / 100;
+        suffix = 'Q';
+    } else if (amt >= 1000000000000000) {
+        amt = Math.round((amt / 1000000000000000) * 100) / 100;
+        suffix = 'q';
+    } else if (amt >= 1000000000000) {
+        amt = Math.round((amt / 1000000000000) * 100) / 100;
+        suffix = 'T';
+    } else if (amt >= 1000000000) {
+        amt = Math.round((amt / 1000000000) * 100) / 100;
+        suffix = 'B';
+    } else if (amt >= 1000000) {
+        amt = Math.round((amt / 1000000) * 100) / 100;
+        suffix = 'M';
+    } else if (amt >= 1000) {
+        amt = Math.round((amt / 1000) * 100) / 100;
+        suffix = 'K';
+    }
+    return amt.toLocaleString() + suffix;
 }
 
 let score = {
@@ -11,7 +37,7 @@ let score = {
     cash: 0,
     sale_rate: 50,
     sale_alert_cool: 0,
-    jef: 'Standard Jef',
+    jef: 'Homeless Jef',
     jef_price: 1,
     update: function(amt, jef=true, set=false) {
         let overflow = false
@@ -36,13 +62,14 @@ let score = {
         document.getElementById("counter").innerHTML = "$" + formatNumber(score.cash);
     }
 };
+let default_score = JSON.stringify(score);
 
 let upgrades = {
     SClick: {
         lvl: 0,
         base: 500,
-        rate: 6,
-        max: 9,
+        rate: 7,
+        max: 32,
         type: 0,
         name: 'Super Click'
     },
@@ -91,6 +118,51 @@ let upgrades = {
         psec: 500,
         name: 'Factory'
     },
+    JefCloner: {
+        lvl: 0,
+        base: 5000000000,
+        rate: 2,
+        max: 20,
+        type: 1,
+        psec: 1500,
+        name: 'Jef Cloner'
+    },
+    ReallyFastGuy: {
+        lvl: 0,
+        base: 420000000000,
+        rate: 2,
+        max: 20,
+        type: 1,
+        psec: 3600,
+        name: 'Really Fast Guy'
+    },
+    ExtradimensionalSourcing: {
+        lvl: 0,
+        base: 69000000000000,
+        rate: 2,
+        max: 20,
+        type: 1,
+        psec: 9500,
+        name: 'Extradimensional Sourcing'
+    },
+    JefsFromPoo: {
+        lvl: 0,
+        base: 38953000000000000,
+        rate: 2,
+        max: 20,
+        type: 1,
+        psec: 29000,
+        name: 'Jefs From Poo'
+    },
+    JefRain: {
+        lvl: 0,
+        base: 1793953000000000000,
+        rate: 2,
+        max: 20,
+        type: 1,
+        psec: 117000,
+        name: 'Jef Rain'
+    },
     Polisher: {
         lvl: 0,
         base: 1000,
@@ -136,11 +208,65 @@ let upgrades = {
         perc: 0.15,
         name: 'Jef School'
     },
+    Clothes: {
+        lvl: 0,
+        base: 5000000000,
+        rate: 1.2,
+        max: 20,
+        type: 2,
+        perc: 0.15,
+        name: 'Jef Clothes'
+    },
+    Perfume: {
+        lvl: 0,
+        base: 170000000000,
+        rate: 1.2,
+        max: 20,
+        type: 2,
+        perc: 0.15,
+        name: 'Jef Perfume'
+    },
+    Friendly: {
+        lvl: 0,
+        base: 45000000000000,
+        rate: 4,
+        max: 3,
+        type: 2,
+        perc: 1,
+        name: 'Jef Friendly'
+    },
+    AntiDumbs: {
+        lvl: 0,
+        base: 7800000000000000,
+        rate: 4,
+        max: 20,
+        type: 2,
+        perc: 0.2,
+        name: 'Jef Anti-Dumbs'
+    },
+    LuxuryPack: {
+        lvl: 0,
+        base: 590000000000000000,
+        rate: 4,
+        max: 3,
+        type: 2,
+        perc: 1,
+        name: 'Jef Luxury Pack'
+    },
+    ExtraBrainCells: {
+        lvl: 0,
+        base: 2700000000000000000,
+        rate: 4,
+        max: 3,
+        type: 2,
+        perc: 1,
+        name: 'Jef Extra Brain Cells'
+    },
     PhoneAd: {
         lvl: 1,
         base: 500,
         rate: 1.2,
-        max: 25,
+        max: 16,
         type: 3,
         name: 'Phone Ad',
         sale: 50
@@ -149,47 +275,110 @@ let upgrades = {
         lvl: 0,
         base: 125000,
         rate: 1.2,
-        max: 25,
+        max: 16,
         type: 3,
         name: 'TV Ad',
         sale: 500
     },
     Billboard: {
         lvl: 0,
-        base: 500000,
+        base: 500000000,
         rate: 1.2,
-        max: 25,
+        max: 16,
         type: 3,
         name: 'Billboard',
         sale: 2500
     },
-    Jef: {
+    SalesAdvisor: {
+        lvl: 0,
+        base: 69000000000,
+        rate: 1.2,
+        max: 16,
+        type: 3,
+        name: 'Sales Advisor',
+        sale: 10000
+    },
+    DreamAd: {
+        lvl: 0,
+        base: 4200000000000,
+        rate: 1.2,
+        max: 16,
+        type: 3,
+        name: 'Dream Ad',
+        sale: 75000
+    },
+    VaccineChip: {
+        lvl: 0,
+        base: 379900000000000,
+        rate: 1.2,
+        max: 16,
+        type: 3,
+        name: 'Vaccine Chip',
+        sale: 168000
+    },
+    BrainController: {
+        lvl: 0,
+        base: 84924900000000000,
+        rate: 1.2,
+        max: 16,
+        type: 3,
+        name: 'Brain Controller',
+        sale: 420000
+    },
+    TikTokTrend: {
+        lvl: 0,
+        base: 6492244900000000000,
+        rate: 1.2,
+        max: 16,
+        type: 3,
+        name: 'Tik Tok Trend',
+        sale: 1000000
+    },
+    HomelessJef: {
         lvl: 1,
         base: 0,
         rate: 1,
         max: 1,
         type: 4,
-        name: 'Standard Jef',
+        name: 'Homeless Jef',
         cost: 1
     },
-    MetalJef: {
+    StandardJef: {
         lvl: 0,
         base: 500000,
         rate: 1,
         max: 1,
         type: 4,
-        name: 'Metal Jef',
+        name: 'Standard Jef',
         cost: 10
     },
-    GoldJef: {
+    EducatedJef: {
         lvl: 0,
-        base: 25000000,
+        base: 10000000000,
         rate: 1,
         max: 1,
         type: 4,
-        name: 'Golden Jef',
+        name: 'Educated Jef',
         cost: 35
     },
+    BeautifulJef: {
+        lvl: 0,
+        base: 500000000000000,
+        rate: 1,
+        max: 1,
+        type: 4,
+        name: 'Beautiful Jef',
+        cost: 80
+    },
+    FlyingJef: {
+        lvl: 0,
+        base: 4200000000000000000,
+        rate: 1,
+        max: 1,
+        type: 4,
+        name: 'Flying Jef',
+        cost: 250
+    }
 }
 let default_upgrades = JSON.stringify(upgrades);
 
@@ -296,6 +485,14 @@ function download() {
 function save() {
     localStorage.setItem('upgrades', JSON.stringify(upgrades));
     localStorage.setItem('score', JSON.stringify(score));
+}
+
+function reset() {
+    if (confirm('This will delete ALL your progress. Remember to make a backup if neeeded. Continue?')) {
+        localStorage.setItem('upgrades', default_upgrades);
+        localStorage.setItem('score', default_score);
+        load();
+    }
 }
 
 function engine() {
