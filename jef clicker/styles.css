@@ -24,3 +24,7 @@ img {
     border-radius: 200px;
     cursor: pointer;
 }
+img:active {
+    margin-top: 5px;
+    margin-bottom: -5px;
+}
