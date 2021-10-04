@@ -267,12 +267,14 @@ load();
 function download() {
     let filename = prompt('Download as...') + '.json',
         element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent([JSON.stringify(upgrades), JSON.stringify(score)]));
-    element.setAttribute('download', filename);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+    if (filename != 'null.json') {
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent([JSON.stringify(upgrades), JSON.stringify(score)]));
+        element.setAttribute('download', filename);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
 }
 
 function save() {
