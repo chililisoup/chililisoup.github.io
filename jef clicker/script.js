@@ -68,7 +68,7 @@ let upgrades = {
     SClick: {
         lvl: 0,
         base: 500,
-        rate: 7,
+        rate: 8,
         max: 32,
         type: 0,
         name: 'Super Click'
@@ -266,7 +266,7 @@ let upgrades = {
         lvl: 1,
         base: 500,
         rate: 1.2,
-        max: 16,
+        max: 50,
         type: 3,
         name: 'Phone Ad',
         sale: 50
@@ -275,7 +275,7 @@ let upgrades = {
         lvl: 0,
         base: 125000,
         rate: 1.2,
-        max: 16,
+        max: 50,
         type: 3,
         name: 'TV Ad',
         sale: 500
@@ -284,7 +284,7 @@ let upgrades = {
         lvl: 0,
         base: 500000000,
         rate: 1.2,
-        max: 16,
+        max: 50,
         type: 3,
         name: 'Billboard',
         sale: 2500
@@ -293,7 +293,7 @@ let upgrades = {
         lvl: 0,
         base: 69000000000,
         rate: 1.2,
-        max: 16,
+        max: 50,
         type: 3,
         name: 'Sales Advisor',
         sale: 10000
@@ -302,7 +302,7 @@ let upgrades = {
         lvl: 0,
         base: 4200000000000,
         rate: 1.2,
-        max: 16,
+        max: 50,
         type: 3,
         name: 'Dream Ad',
         sale: 75000
@@ -311,7 +311,7 @@ let upgrades = {
         lvl: 0,
         base: 379900000000000,
         rate: 1.2,
-        max: 16,
+        max: 50,
         type: 3,
         name: 'Vaccine Chip',
         sale: 168000
@@ -320,7 +320,7 @@ let upgrades = {
         lvl: 0,
         base: 84924900000000000,
         rate: 1.2,
-        max: 16,
+        max: 50,
         type: 3,
         name: 'Brain Controller',
         sale: 420000
@@ -329,7 +329,7 @@ let upgrades = {
         lvl: 0,
         base: 6492244900000000000,
         rate: 1.2,
-        max: 16,
+        max: 50,
         type: 3,
         name: 'Tik Tok Trend',
         sale: 1000000
@@ -473,13 +473,25 @@ function download() {
     let filename = prompt('Download as...') + '.json',
         element = document.createElement('a');
     if (filename != 'null.json') {
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent([JSON.stringify(upgrades), JSON.stringify(score)]));
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify([upgrades, score])));
         element.setAttribute('download', filename);
         element.style.display = 'none';
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);
     }
+}
+
+function upload(file) {
+    let reader = new FileReader();
+    reader.onload = function() {
+        let save = JSON.parse(reader.result);
+        localStorage.setItem('upgrades', JSON.stringify(save[0]));
+        localStorage.setItem('score', JSON.stringify(save[1]));
+        load();
+    };
+    reader.readAsText(file);
+    document.getElementById('upload').value = '';
 }
 
 function save() {
