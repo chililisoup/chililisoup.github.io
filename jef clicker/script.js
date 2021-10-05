@@ -447,7 +447,7 @@ function sendClick(amt=1) {
 
 function getPrice(product) {
     product = upgrades[product];
-    if (product.type != 5)
+    if (product.type != 5 && product.type != 4)
         return Math.round((1 - (0.05 * upgrades.Swindling.lvl)) * product.base * ((product.lvl) ** product.rate + 1));
     else
         return Math.round(product.base * ((product.lvl) ** product.rate + 1));
