@@ -392,7 +392,7 @@ let upgrades = {
     Swindling: {
         lvl: 0,
         base: 100,
-        rate: 4,
+        rate: 2,
         max: 16,
         type: 5,
         name: 'Swindling'
