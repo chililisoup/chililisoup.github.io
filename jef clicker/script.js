@@ -388,6 +388,14 @@ let upgrades = {
         type: 4,
         name: 'CEO Jef',
         cost: 1000
+    },
+    Swindling: {
+        lvl: 0,
+        base: 100,
+        rate: 4,
+        max: 16,
+        type: 5,
+        name: 'Swindling'
     }
 }
 let default_upgrades = JSON.stringify(upgrades);
@@ -398,6 +406,7 @@ function loadUpgradeButtons() {
     document.getElementById("sales_buttons").innerHTML = "<h2>Sales</h2>";
     document.getElementById("jef_buttons").innerHTML = "<h2>Jefs</h2>";
     document.getElementById("special_buttons").innerHTML = "<h2>Special</h2>";
+    document.getElementById("token_buttons").innerHTML = "<h2>Jef Token Store</h2>";
     for (const upgrade in upgrades) {
         let button = document.createElement("button");
         if (upgrades[upgrade].lvl == upgrades[upgrade].max) {
@@ -418,6 +427,11 @@ function loadUpgradeButtons() {
             case 4:
                 document.getElementById("jef_buttons").appendChild(button);
                 break;
+            case 5:
+                let string = button.innerHTML;
+                button.innerHTML = string.replace(/\$/g, "") + "&#10026;";
+                document.getElementById("token_buttons").appendChild(button);
+                break;
             default:
                 document.getElementById("special_buttons").appendChild(button);
                 break;
@@ -433,13 +447,17 @@ function sendClick(amt=1) {
 
 function getPrice(product) {
     product = upgrades[product];
-    return Math.round(product.base * ((product.lvl) ** product.rate + 1));
+    if (product.type != 5)
+        return Math.round((1 - (0.05 * upgrades.Swindling.lvl)) * product.base * ((product.lvl) ** product.rate + 1));
+    else
+        return Math.round(product.base * ((product.lvl) ** product.rate + 1));
 }
 
 function buy(product) {
     let price = getPrice(product);
     if (score.cash >= price && upgrades[product].lvl < upgrades[product].max
-        && (upgrades[product].type != 4 || upgrades[product].cost > score.jef_price)) {
+        && (upgrades[product].type != 4 || upgrades[product].cost > score.jef_price)
+        && upgrades[product].type != 5) {
         score.update(-price);
         score.jef_tokens++;
         upgrades[product].lvl++;
@@ -462,6 +480,10 @@ function buy(product) {
             score.jef_price = upgrades[product].cost;
             loadUpgradeButtons();
         }
+    } else if (upgrades[product].type == 5 && score.jef_tokens >= price && upgrades[product].lvl < upgrades[product].max) {
+        score.jef_tokens -= price;
+        upgrades[product].lvl++;
+        loadUpgradeButtons();
     }
 
 }
