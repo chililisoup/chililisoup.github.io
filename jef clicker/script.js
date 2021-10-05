@@ -297,7 +297,7 @@ let upgrades = {
         max: 50,
         type: 3,
         name: 'Sales Advisor',
-        sale: 10000
+        sale: 50000
     },
     DreamAd: {
         lvl: 0,
@@ -306,7 +306,7 @@ let upgrades = {
         max: 50,
         type: 3,
         name: 'Dream Ad',
-        sale: 75000
+        sale: 800000
     },
     VaccineChip: {
         lvl: 0,
@@ -315,7 +315,7 @@ let upgrades = {
         max: 50,
         type: 3,
         name: 'Vaccine Chip',
-        sale: 168000
+        sale: 1680000
     },
     BrainController: {
         lvl: 0,
@@ -324,7 +324,7 @@ let upgrades = {
         max: 50,
         type: 3,
         name: 'Brain Controller',
-        sale: 420000
+        sale: 42000000
     },
     TikTokTrend: {
         lvl: 0,
@@ -333,7 +333,7 @@ let upgrades = {
         max: 50,
         type: 3,
         name: 'Tik Tok Trend',
-        sale: 1000000
+        sale: 500000000
     },
     HomelessJef: {
         lvl: 1,
@@ -489,6 +489,7 @@ function buy(product) {
 }
 
 function load() {
+    score.sale_rate = 50;
     let upgrades_ld = JSON.parse(localStorage.getItem('upgrades'));
     let score_ld = JSON.parse(localStorage.getItem('score'));
     if (upgrades_ld && score_ld) {
@@ -497,6 +498,9 @@ function load() {
         }
         for (const upgrade in upgrades_ld) {
             upgrades[upgrade].lvl = upgrades_ld[upgrade].lvl;
+            if (upgrades[upgrade].type == 3) {
+                score.sale_rate += upgrades[upgrade].sale;
+            }
         }
     }
     if (score.jef_tokens == null) score.jef_tokens = 0;
