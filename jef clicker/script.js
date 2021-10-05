@@ -301,7 +301,7 @@ let upgrades = {
     },
     DreamAd: {
         lvl: 0,
-        base: 420000000000,
+        base: 10000000000,
         rate: 1.2,
         max: 50,
         type: 3,
@@ -310,7 +310,7 @@ let upgrades = {
     },
     VaccineChip: {
         lvl: 0,
-        base: 37990000000000,
+        base: 3799000000000,
         rate: 1.2,
         max: 50,
         type: 3,
@@ -319,7 +319,7 @@ let upgrades = {
     },
     BrainController: {
         lvl: 0,
-        base: 8492490000000000,
+        base: 84924900000000,
         rate: 1.2,
         max: 50,
         type: 3,
@@ -328,7 +328,7 @@ let upgrades = {
     },
     TikTokTrend: {
         lvl: 0,
-        base: 649224490000000000,
+        base: 6492244900000000,
         rate: 1.2,
         max: 50,
         type: 3,
