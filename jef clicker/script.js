@@ -428,6 +428,7 @@ function loadUpgradeButtons() {
 function sendClick(amt=1) {
     score.update(amt * (2 ** upgrades.SClick.lvl));
     score.clicks++;
+    if (score.clicks % 200 == 0) score.jef_tokens++;
 }
 
 function getPrice(product) {
