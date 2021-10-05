@@ -283,7 +283,7 @@ let upgrades = {
     },
     Billboard: {
         lvl: 0,
-        base: 500000000,
+        base: 50000000,
         rate: 1.2,
         max: 50,
         type: 3,
