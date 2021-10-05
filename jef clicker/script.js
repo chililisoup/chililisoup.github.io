@@ -489,13 +489,13 @@ function buy(product) {
 }
 
 function load() {
-    score.sale_rate = 50;
     let upgrades_ld = JSON.parse(localStorage.getItem('upgrades'));
     let score_ld = JSON.parse(localStorage.getItem('score'));
     if (upgrades_ld && score_ld) {
         for (const scr in score) {
             if (scr != 'update') score[scr] = score_ld[scr];
         }
+        score.sale_rate = 50;
         for (const upgrade in upgrades_ld) {
             upgrades[upgrade].lvl = upgrades_ld[upgrade].lvl;
             if (upgrades[upgrade].type == 3) {
