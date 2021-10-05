@@ -469,7 +469,7 @@ function buy(product) {
         } else if (upgrades[product].type == 4) {
             let default_upgrades_copy = JSON.parse(default_upgrades);
             for (const upgrade in default_upgrades_copy) {
-                if (default_upgrades_copy[upgrade].type != 4) upgrades[upgrade].lvl = default_upgrades_copy[upgrade].lvl;
+                if (default_upgrades_copy[upgrade].type != 4 && default_upgrades_copy[upgrade].type != 5) upgrades[upgrade].lvl = default_upgrades_copy[upgrade].lvl;
             }
             score.sale_rate = 50;
             score.sale_alert_cool = 0;
