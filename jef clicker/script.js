@@ -35,6 +35,7 @@ let score = {
     cash_earned_total: 0,
     clicks: 0,
     cash: 0,
+    jef_tokens: 0,
     sale_rate: 50,
     sale_alert_cool: 0,
     jef: 'Homeless Jef',
@@ -68,7 +69,7 @@ let upgrades = {
     SClick: {
         lvl: 0,
         base: 500,
-        rate: 8,
+        rate: 7.5,
         max: 32,
         type: 0,
         name: 'Super Click'
@@ -291,7 +292,7 @@ let upgrades = {
     },
     SalesAdvisor: {
         lvl: 0,
-        base: 69000000000,
+        base: 690000000,
         rate: 1.2,
         max: 50,
         type: 3,
@@ -300,7 +301,7 @@ let upgrades = {
     },
     DreamAd: {
         lvl: 0,
-        base: 4200000000000,
+        base: 420000000000,
         rate: 1.2,
         max: 50,
         type: 3,
@@ -309,7 +310,7 @@ let upgrades = {
     },
     VaccineChip: {
         lvl: 0,
-        base: 379900000000000,
+        base: 37990000000000,
         rate: 1.2,
         max: 50,
         type: 3,
@@ -318,7 +319,7 @@ let upgrades = {
     },
     BrainController: {
         lvl: 0,
-        base: 84924900000000000,
+        base: 8492490000000000,
         rate: 1.2,
         max: 50,
         type: 3,
@@ -327,7 +328,7 @@ let upgrades = {
     },
     TikTokTrend: {
         lvl: 0,
-        base: 6492244900000000000,
+        base: 649224490000000000,
         rate: 1.2,
         max: 50,
         type: 3,
@@ -378,16 +379,25 @@ let upgrades = {
         type: 4,
         name: 'Flying Jef',
         cost: 250
+    },
+    CEOJef: {
+        lvl: 0,
+        base: 6951200000000000000000,
+        rate: 1,
+        max: 1,
+        type: 4,
+        name: 'CEO Jef',
+        cost: 1000
     }
 }
 let default_upgrades = JSON.stringify(upgrades);
 
 function loadUpgradeButtons() {
-    document.getElementById("produce_buttons").innerHTML = "";
-    document.getElementById("improve_buttons").innerHTML = "";
-    document.getElementById("sales_buttons").innerHTML = "";
-    document.getElementById("jef_buttons").innerHTML = "";
-    document.getElementById("special_buttons").innerHTML = "";
+    document.getElementById("produce_buttons").innerHTML = "<h2>Production</h2>";
+    document.getElementById("improve_buttons").innerHTML = "<h2>Improvement</h2>";
+    document.getElementById("sales_buttons").innerHTML = "<h2>Sales</h2>";
+    document.getElementById("jef_buttons").innerHTML = "<h2>Jefs</h2>";
+    document.getElementById("special_buttons").innerHTML = "<h2>Special</h2>";
     for (const upgrade in upgrades) {
         let button = document.createElement("button");
         if (upgrades[upgrade].lvl == upgrades[upgrade].max) {
@@ -430,6 +440,7 @@ function buy(product) {
     if (score.cash >= price && upgrades[product].lvl < upgrades[product].max
         && (upgrades[product].type != 4 || upgrades[product].cost > score.jef_price)) {
         score.update(-price);
+        score.jef_tokens++;
         upgrades[product].lvl++;
         if (upgrades[product].lvl == upgrades[product].max) {
             document.getElementById(product).innerHTML = "[" + upgrades[product].lvl + "] " + upgrades[product].name + " - MAX";
@@ -465,6 +476,7 @@ function load() {
             upgrades[upgrade].lvl = upgrades_ld[upgrade].lvl;
         }
     }
+    if (score.jef_tokens == null) score.jef_tokens = 0;
     loadUpgradeButtons();
 }
 load();
@@ -518,6 +530,10 @@ function engine() {
     }
     score.update(Math.round(score.jefs_sold * (rate - 1)), false);
     if (score.sale_alert_cool > 0) score.sale_alert_cool--;
+
+    if (score.jef_tokens == 1) document.getElementById("counter_tokens").innerHTML = formatNumber(score.jef_tokens) + " Jef Token";
+    else document.getElementById("counter_tokens").innerHTML = formatNumber(score.jef_tokens) + " Jef Tokens";
+    
 
     document.getElementById("jef_type").innerHTML = score.jef;
     document.getElementById("cash_psec").innerHTML = formatNumber(score.cash_earned) + " $/s";
