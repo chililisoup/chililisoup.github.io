@@ -499,7 +499,7 @@ function load() {
         for (const upgrade in upgrades_ld) {
             upgrades[upgrade].lvl = upgrades_ld[upgrade].lvl;
             if (upgrades[upgrade].type == 3) {
-                score.sale_rate += upgrades[upgrade].sale;
+                score.sale_rate += upgrades[upgrade].sale * upgrades[upgrade].lvl;
             }
         }
     }
