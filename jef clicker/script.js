@@ -28,44 +28,6 @@ function formatNumber(amt) {
     return amt.toLocaleString() + suffix;
 }
 
-let score = {
-    jefs_sold: 0,
-    jefs_sold_total: 0,
-    cash_earned: 0,
-    cash_earned_total: 0,
-    clicks: 0,
-    cash: 0,
-    jef_tokens: 0,
-    sale_rate: 50,
-    sale_alert_cool: 0,
-    jef: 'Homeless Jef',
-    jef_price: 1,
-    update: function(amt, jef=true, set=false) {
-        let overflow = false
-        if (this.jefs_sold > this.sale_rate) {
-            document.getElementById("sales_alert").style.display = "block";
-            this.sale_alert_cool = 5;
-            overflow = true;
-        } else if (this.sale_alert_cool == 0) document.getElementById("sales_alert").style.display = "none";
-        if (!overflow || !jef) {
-            if (set) {
-                this.cash = amt;
-            } else this.cash += amt;
-            if (amt > 0 ) {
-                this.cash_earned += amt;
-                this.cash_earned_total += amt;
-                if (jef) {
-                    this.jefs_sold += amt;
-                    this.jefs_sold_total += amt;
-                }
-            }
-        } 
-        document.getElementById("counter").innerHTML = "$" + formatNumber(score.cash);
-        loadUpgradeButtons();
-    }
-};
-let default_score = JSON.stringify(score);
-
 let upgrades = {
     SClick: {
         lvl: 0,
@@ -397,9 +359,63 @@ let upgrades = {
         max: 16,
         type: 5,
         name: 'Swindling'
+    },
+    Slaves: {
+        lvl: 0,
+        base: 100,
+        rate: 1.5,
+        max: 100,
+        type: 5,
+        name: 'Slaves'
+    },
+    SlaveCare: {
+        lvl: 0,
+        base: 100,
+        rate: 2,
+        max: 10,
+        type: 5,
+        name: 'Slave Care'
     }
 }
 let default_upgrades = JSON.stringify(upgrades);
+
+let score = {
+    jefs_sold: 0,
+    jefs_sold_total: 0,
+    cash_earned: 0,
+    cash_earned_total: 0,
+    clicks: 0,
+    cash: 0,
+    jef_tokens: 0,
+    sale_rate: 50,
+    sale_alert_cool: 0,
+    jef: 'Homeless Jef',
+    jef_price: 1,
+    update: function(amt, jef=true, set=false) {
+        let overflow = false
+        if (this.jefs_sold > this.sale_rate) {
+            document.getElementById("sales_alert").style.display = "block";
+            this.sale_alert_cool = 5;
+            overflow = true;
+        } else if (this.sale_alert_cool == 0) document.getElementById("sales_alert").style.display = "none";
+        if (!overflow || !jef) {
+            if (set) {
+                this.cash = amt;
+            } else this.cash += amt;
+            if (amt > 0 ) {
+                this.cash_earned += amt;
+                this.cash_earned_total += amt;
+                if (jef) {
+                    this.jefs_sold += amt;
+                    this.jefs_sold_total += amt;
+                }
+            }
+        } 
+        document.getElementById("counter").innerHTML = "$" + formatNumber(score.cash);
+        loadUpgradeButtons();
+    }
+};
+let default_score = JSON.stringify(score);
 
 function loadUpgradeButtons() {
     document.getElementById("produce_buttons").innerHTML = "<h2>Production</h2>";
@@ -493,6 +509,35 @@ function buy(product) {
 
 }
 
+function calculateOfflineProduction() {
+    let old_date = localStorage.getItem('date');
+    if (old_date) {
+        let new_date = new Date().getTime();
+        let seconds = Math.floor((new_date - old_date) / 1000);
+        if (seconds > upgrades.Slaves.lvl * 3600) seconds = upgrades.Slaves.lvl * 3600;
+        if (seconds > 0 && upgrades.SlaveCare.lvl > 0) {
+            let rate = score.jef_price;
+            let psec = 0;
+            for (const upgrade in upgrades) {
+                upg = upgrades[upgrade];
+                if (upg.type == 1) {
+                    psec += upg.lvl * upg.psec;
+                    score.update(upg.lvl * upg.psec);
+                }
+                if (upg.type == 2) {
+                    rate *= 1 + (upg.lvl * upg.perc);
+                }
+            }
+            if (psec > score.sale_rate) psec = score.sale_rate;
+            sold = psec * seconds;
+            cash = Math.floor(rate * psec * seconds * upgrades.SlaveCare.lvl * 0.1);
+            score.update(cash, false);
+            score.jefs_sold_total += sold;
+            alert('While you were away, your slaves sold ' + formatNumber(sold) + ' jefs for $' + formatNumber(cash));
+        }
+    }
+}
+
 function load() {
     let upgrades_ld = JSON.parse(localStorage.getItem('upgrades'));
     let score_ld = JSON.parse(localStorage.getItem('score'));
@@ -509,6 +554,7 @@ function load() {
         }
     }
     if (score.jef_tokens == null) score.jef_tokens = 0;
+    calculateOfflineProduction();
     loadUpgradeButtons();
 }
 load();
@@ -517,7 +563,7 @@ function download() {
     let filename = prompt('Download as...') + '.json',
         element = document.createElement('a');
     if (filename != 'null.json') {
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify([upgrades, score])));
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify([upgrades, score, new Date().getTime()])));
         element.setAttribute('download', filename);
         element.style.display = 'none';
         document.body.appendChild(element);
@@ -532,6 +578,7 @@ function upload(file) {
         let save = JSON.parse(reader.result);
         localStorage.setItem('upgrades', JSON.stringify(save[0]));
         localStorage.setItem('score', JSON.stringify(save[1]));
+        localStorage.setItem('date', JSON.stringify(save[2]));
         load();
     };
     reader.readAsText(file);
@@ -541,6 +588,7 @@ function upload(file) {
 function save() {
     localStorage.setItem('upgrades', JSON.stringify(upgrades));
     localStorage.setItem('score', JSON.stringify(score));
+    localStorage.setItem('date', new Date().getTime());
 }
 
 function reset() {
@@ -565,16 +613,19 @@ function engine() {
 
     if (score.jef_tokens == 1) document.getElementById("counter_tokens").innerHTML = formatNumber(score.jef_tokens) + " Jef Token";
     else document.getElementById("counter_tokens").innerHTML = formatNumber(score.jef_tokens) + " Jef Tokens";
-    
 
     document.getElementById("jef_type").innerHTML = score.jef;
     document.getElementById("cash_psec").innerHTML = formatNumber(score.cash_earned) + " $/s";
     document.getElementById("jefs_psec").innerHTML = formatNumber(score.jefs_sold) + " jefs/s";
     document.getElementById("jefs_max").innerHTML = "Max " + formatNumber(score.sale_rate) + " jefs/s";
     document.getElementById("jefs_rate").innerHTML = "$" + formatNumber(rate) + "/jef";
+    document.getElementById("off_hours").innerHTML = "Max " + upgrades.Slaves.lvl + "hr(s) offline";
+    document.getElementById("off_rate").innerHTML = upgrades.SlaveCare.lvl * 10 + "% production offline";
+
     document.getElementById("total_cash").innerHTML = formatNumber(score.cash_earned_total) + " total cash earned";
-    document.getElementById("total_jefs").innerHTML = formatNumber(score.jefs_sold_total) + " total jefs earned";
+    document.getElementById("total_jefs").innerHTML = formatNumber(score.jefs_sold_total) + " total jefs sold";
     document.getElementById("total_clicks").innerHTML = formatNumber(score.clicks) + " total clicks";
+
     score.jefs_sold = 0;
     score.cash_earned = 0;
 
