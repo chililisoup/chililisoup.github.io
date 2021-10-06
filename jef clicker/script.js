@@ -127,6 +127,15 @@ let upgrades = {
         psec: 117000,
         name: 'Jef Rain'
     },
+    JefMakeJef: {
+        lvl: 0,
+        base: 2541793953000000000000,
+        rate: 2,
+        max: 20,
+        type: 1,
+        psec: 889000,
+        name: 'Jef Make Jef'
+    },
     Polisher: {
         lvl: 0,
         base: 1000,
@@ -226,6 +235,15 @@ let upgrades = {
         perc: 1,
         name: 'Jef Extra Brain Cells'
     },
+    JefHipNCool: {
+        lvl: 0,
+        base: 891000000000000000000,
+        rate: 4,
+        max: 3,
+        type: 2,
+        perc: 0.25,
+        name: 'Jef Hip n Cool'
+    },
     PhoneAd: {
         lvl: 0,
         base: 500,
@@ -298,6 +316,15 @@ let upgrades = {
         name: 'Tik Tok Trend',
         sale: 500000000
     },
+    ForceFeed: {
+        lvl: 0,
+        base: 1536492244900000000,
+        rate: 1.2,
+        max: 50,
+        type: 3,
+        name: 'Force Feed',
+        sale: 69000000000
+    },
     HomelessJef: {
         lvl: 1,
         base: 0,
@@ -351,6 +378,15 @@ let upgrades = {
         type: 4,
         name: 'CEO Jef',
         cost: 1000
+    },
+    JefBezos: {
+        lvl: 0,
+        base: 5285551200000000000000000,
+        rate: 1,
+        max: 1,
+        type: 4,
+        name: 'Jef Bezos',
+        cost: 7200
     },
     Swindling: {
         lvl: 0,
@@ -533,7 +569,7 @@ function calculateOfflineProduction() {
             cash = Math.floor(rate * psec * seconds * upgrades.SlaveCare.lvl * 0.1);
             score.update(cash, false);
             score.jefs_sold_total += sold;
-            alert('While you were away, your slaves sold ' + formatNumber(sold) + ' jefs for $' + formatNumber(cash));
+            setTimeout(() => alert('While you were away, your slaves sold ' + formatNumber(sold) + ' jefs for $' + formatNumber(cash)), 100);
         }
     }
 }
