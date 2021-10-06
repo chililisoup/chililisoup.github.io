@@ -468,7 +468,7 @@ function loadUpgradeButtons() {
             button.innerHTML = "[" + upgrades[upgrade].lvl + "] " + upgrades[upgrade].name + " - $" + formatNumber(getPrice(upgrade));
             if (score.cash >= getPrice(upgrade)) button.setAttribute('class','available');
         }
-        button.setAttribute('onclick','buy("' + upgrade + '")');
+        button.setAttribute('onmousedown','buy("' + upgrade + '")');
         button.id = upgrade;
         switch (upgrades[upgrade].type) {
             case 1:
