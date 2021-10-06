@@ -61,6 +61,7 @@ let score = {
             }
         } 
         document.getElementById("counter").innerHTML = "$" + formatNumber(score.cash);
+        loadUpgradeButtons();
     }
 };
 let default_score = JSON.stringify(score);
@@ -409,9 +410,12 @@ function loadUpgradeButtons() {
     document.getElementById("token_buttons").innerHTML = "<h2>Jef Token Store</h2>";
     for (const upgrade in upgrades) {
         let button = document.createElement("button");
-        if (upgrades[upgrade].lvl == upgrades[upgrade].max) {
+        if (upgrades[upgrade].lvl == upgrades[upgrade].max) 
             button.innerHTML = "[" + upgrades[upgrade].lvl + "] " + upgrades[upgrade].name + " - MAX";
-        } else button.innerHTML = "[" + upgrades[upgrade].lvl + "] " + upgrades[upgrade].name + " - $" + formatNumber(getPrice(upgrade));
+        else {
+            button.innerHTML = "[" + upgrades[upgrade].lvl + "] " + upgrades[upgrade].name + " - $" + formatNumber(getPrice(upgrade));
+            if (score.cash >= getPrice(upgrade)) button.setAttribute('class','available');
+        }
         button.setAttribute('onclick','buy("' + upgrade + '")');
         button.id = upgrade;
         switch (upgrades[upgrade].type) {
@@ -430,6 +434,7 @@ function loadUpgradeButtons() {
             case 5:
                 let string = button.innerHTML;
                 button.innerHTML = string.replace(/\$/g, "") + "&#10026;";
+                if (score.jef_tokens < getPrice(upgrade)) button.setAttribute('class','');
                 document.getElementById("token_buttons").appendChild(button);
                 break;
             default:

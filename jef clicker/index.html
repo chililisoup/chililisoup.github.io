@@ -3,12 +3,12 @@
     <title>Jef Clicker!!!</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
-    <button onclick="download()">Download Save</button>
 
-    <label class="button" for="upload">Upload</label>
+    <button class="available" onclick="download()">Download Save</button>
+    <label class="button" for="upload">Upload Save</label>
     <input id="upload" type="file" accept=".json" onchange="upload(this.files[0])">
+    <button class="available" style="background-color: rgb(255, 83, 83);" onclick="reset()">RESET PROGRESS</button>
 
-    <button onclick="reset()">RESET PROGRESS</button>
     <div class="flex">
         <h1 id="counter">$0</h1>
         <h1 id="counter_tokens">0 Jef Tokens</h1>
