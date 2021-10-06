@@ -67,3 +67,7 @@ Will probably finish once 1.17 is released.
 Life is a Game of Life simulation with many features, like custom rules and saving/loading.
 Current algorithm is basic, an object with locations stored as key names is iterated through.
 I plan to implement the hashlife algorithm, and make the front end better.
+
+Rabbadablab is very good!
+
+Jef clicker is even better!
