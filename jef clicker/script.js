@@ -227,7 +227,7 @@ let upgrades = {
         name: 'Jef Extra Brain Cells'
     },
     PhoneAd: {
-        lvl: 1,
+        lvl: 0,
         base: 500,
         rate: 1.2,
         max: 50,
