@@ -1,4 +1,8 @@
-# rebot333.github.io
+# chililisoup.github.io
+old code its all bad mkay look away theres nothing good here
+
+
+#old \/\/\/
 A site compilation of all of my JavaScript projects. (And python projects but not really)
 
 
