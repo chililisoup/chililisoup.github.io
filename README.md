@@ -2,7 +2,7 @@
 old code its all bad mkay look away theres nothing good here
 
 
-#old \/\/\/
+# old ⬇⬇⬇
 A site compilation of all of my JavaScript projects. (And python projects but not really)
 
 
