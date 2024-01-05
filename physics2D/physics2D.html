@@ -1,147 +1,149 @@
 <html>
   
-<p>Physics program using matter.js</p>
+<head>
+    <link rel="stylesheet" href="physics2D.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="physics2D.js" defer></script>
+</head>
 
-<link rel="stylesheet" href="physics2D.css">
-<script src="matter.js" type="text/javascript"></script>
-<script src="physics2D.js" type="text/javascript" defer></script>    
+<body>
+    <p>Physics program using matter.js</p>
+    <div class="sidebar">
+        <table align="center"><tr><th>
+            
+        <button class="dropdown-btn">Object Options</button>
+        <div class="dropdown-container">
+            
+        <table align="center">
+            <tr>
+                <th><label id="sideTxt">Circle</label></th>
+            </tr>
+            <tr>
+                <th><input type="range" min="0" max="8" value="0" step="1" id="sideSlider"></th>
+            </tr>
+            <tr>
+                <th><label id="sizeTxt">Size: 50</label></th>
+            </tr>
+            <tr>
+                <th><input type="range" min="5" max="150" value="50" step="5" id="sizeSlider"></th>
+            </tr>
+            <tr>
+                <th><label id="densityTxt">Density: 10</label></th>
+            </tr>
+            <tr>
+                <th><input type="range" min="0.0001" max="0.01" value="0.001" step="0.0001" id="densitySlider"></th>
+            </tr>
+            <tr>
+                <th><label id="bounceTxt">Restitution: 40%</label></th>
+            </tr>
+            <tr>
+                <th><input type="range" min="0" max="1.5" value="0.4" step=".05" id="bounceSlider"></th>
+            </tr>
+            <tr>
+                <th><label id="frictionTxt">Friction: 10%</label></th>
+            </tr>
+            <tr>
+                <th><input type="range" min="0" max="1" value="0.1" step=".05" id="frictionSlider"></th>
+            </tr>
+            <tr>
+                <th><label>Color: </label><input type="color" value="#ff8000" id="colorInput"></th>
+            </tr>
+            
+            <tr><th><br></th></tr>
+            
+            <tr>
+                <th><label id="opacityTxt">Opacity: 100%</label></th>
+            </tr>
+            <tr>
+                <th><input type="range" min="0" max="1" value="1" step=".05" id="opacitySlider"></th>
+            </tr>
+            
+            <tr><th><br></th></tr>
+            
+            <tr>
+                <th><label id="sizeOutlineTxt">Outline Width: 0</label></th>
+            </tr>
+            <tr>
+                <th><input type="range" min="0" max="50" value="0" step="1" id="sizeOutlineSlider"></th>
+            </tr>
+            <tr>
+                <th><label>Outline Color: </label><input type="color" value="#000000" id="colorOutlineInput"></th>
+            </tr>
+        </table>
+            
+        </div>
+            
+        </th></tr><tr><th>    
+        <button class="dropdown-btn">Tools</button>
+        <div class="dropdown-container">
+            
+        <table align="center">
+            <tr>
+                <th>
+                    <input type="radio" name="tool" id="tool0" onclick="setTool(0)" checked>
+                    <label for="tool0">Create</label>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="radio" name="tool" id="tool1" onclick="setTool(1)">
+                    <label for="tool1">Move</label>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="radio" name="tool" id="tool2" onclick="setTool(2)">
+                    <label for="tool2">Erase</label>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="radio" name="tool" id="tool3" onclick="setTool(3)">
+                    <label for="tool3">Modify Object</label>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="radio" name="tool" id="tool4" onclick="setTool(4)">
+                    <label for="tool4">Scale (Use KB)</label>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="radio" name="tool" id="tool5" onclick="setTool(5)">
+                    <label for="tool5">Freeze</label>
+                </th>
+            </tr>
+        </table>
+        
+        </div>
+            
+        </th></tr><tr><th>
+        <button class="dropdown-btn">Render Options</button>
+        <div class="dropdown-container">
     
-<div class="sidebar">
-    <table align="center"><tr><th>
+        <table align="center">
+            <tr>
+                <th><button onclick="toggleWire()">Toggle Wireframes</button></th>
+            </tr>
+            <tr>
+                <th><button onclick="toggleAngle()">Toggle Angle Indicators</button></th>
+            </tr>
+            <tr><th><br></th></tr>
+        </table>
         
-    <button class="dropdown-btn">Object Options</button>
-    <div class="dropdown-container">
+        </div>
         
-    <table align="center">
-        <tr>
-            <th><label id="sideTxt">Circle</label></th>
-        </tr>
-        <tr>
-            <th><input type="range" min="0" max="8" value="0" step="1" id="sideSlider"></th>
-        </tr>
-        <tr>
-            <th><label id="sizeTxt">Size: 50</label></th>
-        </tr>
-        <tr>
-            <th><input type="range" min="5" max="150" value="50" step="5" id="sizeSlider"></th>
-        </tr>
-        <tr>
-            <th><label id="densityTxt">Density: 10</label></th>
-        </tr>
-        <tr>
-            <th><input type="range" min="0.0001" max="0.01" value="0.001" step="0.0001" id="densitySlider"></th>
-        </tr>
-        <tr>
-            <th><label id="bounceTxt">Restitution: 40%</label></th>
-        </tr>
-        <tr>
-            <th><input type="range" min="0" max="1.5" value="0.4" step=".05" id="bounceSlider"></th>
-        </tr>
-        <tr>
-            <th><label id="frictionTxt">Friction: 10%</label></th>
-        </tr>
-        <tr>
-            <th><input type="range" min="0" max="1" value="0.1" step=".05" id="frictionSlider"></th>
-        </tr>
-        <tr>
-            <th><label>Color: </label><input type="color" value="#ff8000" id="colorInput"></th>
-        </tr>
+        <table align="center">
+            <tr>
+                <th><button onclick="clearWorld()">Reset</button></th>
+                <th><button onclick="pauseSim()" id="pauseButton">Pause</button></th>
+            </tr>
+        </table>
         
-        <tr><th><br></th></tr>
-        
-        <tr>
-            <th><label id="opacityTxt">Opacity: 100%</label></th>
-        </tr>
-        <tr>
-            <th><input type="range" min="0" max="1" value="1" step=".05" id="opacitySlider"></th>
-        </tr>
-        
-        <tr><th><br></th></tr>
-        
-        <tr>
-            <th><label id="sizeOutlineTxt">Outline Width: 0</label></th>
-        </tr>
-        <tr>
-            <th><input type="range" min="0" max="50" value="0" step="1" id="sizeOutlineSlider"></th>
-        </tr>
-        <tr>
-            <th><label>Outline Color: </label><input type="color" value="#000000" id="colorOutlineInput"></th>
-        </tr>
-    </table>
-        
-    </div>
-        
-    </th></tr><tr><th>    
-    <button class="dropdown-btn">Tools</button>
-    <div class="dropdown-container">
-        
-    <table align="center">
-        <tr>
-            <th>
-                <input type="radio" name="tool" id="tool0" onclick="setTool(0)" checked>
-                <label for="tool0">Create</label>
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <input type="radio" name="tool" id="tool1" onclick="setTool(1)">
-                <label for="tool1">Move</label>
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <input type="radio" name="tool" id="tool2" onclick="setTool(2)">
-                <label for="tool2">Erase</label>
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <input type="radio" name="tool" id="tool3" onclick="setTool(3)">
-                <label for="tool3">Modify Object</label>
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <input type="radio" name="tool" id="tool4" onclick="setTool(4)">
-                <label for="tool4">Scale (Use KB)</label>
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <input type="radio" name="tool" id="tool5" onclick="setTool(5)">
-                <label for="tool5">Freeze</label>
-            </th>
-        </tr>
-    </table>
-    
-    </div>
-        
-    </th></tr><tr><th>
-    <button class="dropdown-btn">Render Options</button>
-    <div class="dropdown-container">
-  
-    <table align="center">
-        <tr>
-            <th><button onclick="toggleWire()">Toggle Wireframes</button></th>
-        </tr>
-        <tr>
-            <th><button onclick="toggleAngle()">Toggle Angle Indicators</button></th>
-        </tr>
-        <tr><th><br></th></tr>
-    </table>
-    
-    </div>
-    
-    <table align="center">
-        <tr>
-            <th><button onclick="clearWorld()">Reset</button></th>
-            <th><button onclick="pauseSim()" id="pauseButton">Pause</button></th>
-        </tr>
-    </table>
-    
-    </th></tr></table>
-        
-</div>    
-
+        </th></tr></table>
+            
+    </div>    
+</body>
 
 </html>
